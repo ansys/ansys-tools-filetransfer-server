@@ -1,5 +1,6 @@
 [requires]
-grpc/1.39.1
+grpc/1.47.0
+protobuf/3.21.1
 
 [generators]
 cmake
