@@ -1,0 +1,45 @@
+# check spelling, codestyle
+name: GitHub CI
+
+# run only on main branch.  This avoids duplicated actions on PRs
+on:
+  pull_request:
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+
+jobs:
+  style:
+    name: Pre-commit Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Install dev dependencies
+        run: |
+          pip install -r requirements_dev.txt
+      - name: Run pre-commit checks
+        run: |
+          pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
+
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Install dev dependencies
+        run: |
+          pip install -r requirements_dev.txt
+      - name: Run conan
+        run: |
+          conan
