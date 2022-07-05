@@ -1,4 +1,3 @@
+build
 .vscode
 .conan
-build
-dev_env

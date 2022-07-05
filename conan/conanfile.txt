@@ -6,5 +6,3 @@ protobuf/3.21.1
 cmake
 
 [imports]
-bin, protoc* -> . @ root_package=protobuf
-bin, grpc_cpp_plugin -> . @ root_package=grpc
