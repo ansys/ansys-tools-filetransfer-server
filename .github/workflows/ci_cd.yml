@@ -34,7 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             conan_config: linux_x86_64_Release
           - os: windows-latest
             conan_config: windows_x86_64_Release
@@ -45,11 +45,6 @@ jobs:
       - name: Install dev dependencies
         run: |
           pip install -r requirements_dev.txt
-      - name: Install system dependencies (Linux)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          sudo apt update
-          sudo apt install -y gcc-11
       - name: Run conan
         run: |
           conan install -if build --profile ./conan/${{ matrix.conan_config }} ./conan
