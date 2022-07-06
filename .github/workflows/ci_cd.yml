@@ -102,7 +102,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: true
-          # push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
+          push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{  github.repository }}/${{ env.IMAGE_NAME }}:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{  github.repository }}/${{ env.IMAGE_NAME }}:latest
