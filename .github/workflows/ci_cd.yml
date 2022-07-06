@@ -32,7 +32,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            conan_config: linux_x86_64_Release
+          - os: windows-latest
+            conan_config: windows_x86_64_Release
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
@@ -42,4 +46,9 @@ jobs:
           pip install -r requirements_dev.txt
       - name: Run conan
         run: |
-          conan
+          conan install -if build --profile ./conan/${{ matrix.conan_config }} ./conan
+          cmake -B build .
+          cmake --build build
+      - name: Test
+        run: |
+          ./build/bin/server
