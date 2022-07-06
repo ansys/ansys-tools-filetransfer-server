@@ -57,3 +57,15 @@ jobs:
       - name: Test
         run: |
           ./build/bin/server
+
+  docker-build:
+    needs: [style, build] # run only for successful build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
+      - name: Build docker image
+        run: |
+          docker build .
