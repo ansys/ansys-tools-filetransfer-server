@@ -29,6 +29,7 @@ jobs:
           pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
   build:
+    name: Compile and Test
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
@@ -59,6 +60,7 @@ jobs:
           ./build/bin/server
 
   docker-build:
+    name: Build Docker container
     needs: [style, build] # run only for successful build
     runs-on: ubuntu-22.04
     steps:
@@ -68,4 +70,4 @@ jobs:
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
       - name: Build docker image
         run: |
-          docker build .
+          DOCKER_BUILDKIT=1 docker build -t ansys-utilities-filetransfer-server .
