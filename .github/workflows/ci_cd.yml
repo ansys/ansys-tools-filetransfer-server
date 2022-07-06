@@ -16,11 +16,18 @@ jobs:
   style:
     name: Pre-commit Check
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: actions/setup-python@v2
+      - uses: actions/cache@v3
+        name: Pip cache
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements_dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Install dev dependencies
         run: |
           pip install -r requirements_dev.txt
@@ -29,17 +36,72 @@ jobs:
           pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
   build:
+    name: Compile and Test
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-22.04
+            conan_config: linux_x86_64_Release
+          - os: windows-2019
+            conan_config: windows_x86_64_Release
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
+          token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
       - name: Setup Python
         uses: actions/setup-python@v2
+      - uses: actions/cache@v3
+        name: Pip cache
+        with:
+          path: ${{ startsWith(runner.os, 'Linux') && '~/.cache/pip' || '~\AppData\Local\pip\Cache' }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements_dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Install dev dependencies
         run: |
           pip install -r requirements_dev.txt
       - name: Run conan
         run: |
-          conan
+          conan install -if build --profile ./conan/${{ matrix.conan_config }} ./conan
+          cmake -B build .
+          cmake --build build
+      - name: Test
+        run: |
+          ./build/bin/server
+
+  docker-build:
+    name: Build Docker container
+    needs: [style, build] # run only for successful build
+    runs-on: ubuntu-22.04
+    env:
+      REGISTRY: ghcr.io
+      REPO_NAME: ${{ github.repository }}
+      IMAGE_NAME: filetransfer-server
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
+
+      # - name: Setup Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
+
+      - name: Login to ghcr.io
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and export to GHCR
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
+          tags: ${{ env.REGISTRY }}/${{  github.repository }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{  github.repository }}/${{ env.IMAGE_NAME }}:latest
