@@ -34,7 +34,7 @@ RUN . dev_env/bin/activate && \
     cmake --build build
 
 
-FROM ubuntu:22.04 AS app
+FROM ubuntu:22.04 AS app_full
 
 RUN useradd container
 
@@ -46,3 +46,13 @@ COPY --from=builder \
 USER container
 
 CMD ["/home/container/server"]
+
+FROM scratch AS app_minimal
+
+COPY --from=builder \
+    --chmod=755 \
+    /home/container/build/bin/server /server
+
+USER 1000:1000
+
+CMD ["/server"]

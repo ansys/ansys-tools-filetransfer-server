@@ -74,7 +74,7 @@ jobs:
           ./build/bin/server
 
   docker-build:
-    name: Build Docker container
+    name: Build and publish Docker container
     needs: [style, build] # run only for successful build
     runs-on: ubuntu-22.04
     env:
@@ -94,11 +94,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and export to GHCR
+      - name: Build full image and export to GHCR
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile
+          file: ./docker/Dockerfile
           push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
-          tags: ${{ env.REGISTRY }}/${{  github.repository }}/${{ env.IMAGE_NAME }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{  github.repository }}/${{ env.IMAGE_NAME }}:latest
+          target: app_full
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Build minimal image and export to GHCR
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./docker/Dockerfile
+          push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
+          target: app_minimal
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-minimal:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-minimal:latest
