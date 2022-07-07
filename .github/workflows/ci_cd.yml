@@ -65,14 +65,14 @@ jobs:
         run: |
           pip install -U pip wheel
           pip install -r requirements_dev.txt
-      - name: Run conan
+      - name: Run Conan and build with CMake
         run: |
           conan install -if build --profile ./conan/${{ matrix.conan_config }} ./conan
           cmake -B build .
-          cmake --build build
-      - name: Test
-        run: |
-          ./build/bin/server
+          cmake --build build --config Release
+      # - name: Test
+      #   run: |
+      #     ./build/bin/server
 
   docker-build:
     name: Build and publish Docker container
