@@ -63,6 +63,7 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install dev dependencies
         run: |
+          pip install -U pip wheel
           pip install -r requirements_dev.txt
       - name: Run conan
         run: |
