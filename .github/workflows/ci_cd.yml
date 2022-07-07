@@ -63,6 +63,7 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install dev dependencies
         run: |
+          pip install -U pip wheel
           pip install -r requirements_dev.txt
       - name: Run conan
         run: |
@@ -79,8 +80,8 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       REGISTRY: ghcr.io
-      REPO_NAME: ${{ github.repository }}
-      IMAGE_NAME: filetransfer-server
+      IMAGE_OWNER: ansys
+      IMAGE_NAME_BASE: filetransfer-server
     steps:
       - uses: actions/checkout@v3
         with:
@@ -101,8 +102,8 @@ jobs:
           file: ./docker/Dockerfile
           push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
           target: app_full
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest
 
       - name: Build minimal image and export to GHCR
         uses: docker/build-push-action@v2
@@ -111,5 +112,5 @@ jobs:
           file: ./docker/Dockerfile
           push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
           target: app_minimal
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-minimal:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-minimal:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}-minimal:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}-minimal:latest
