@@ -102,7 +102,7 @@ jobs:
           file: ./docker/Dockerfile
           push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
           target: app_full
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest
 
       - name: Build minimal image and export to GHCR
@@ -112,5 +112,5 @@ jobs:
           file: ./docker/Dockerfile
           push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
           target: app_minimal
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-minimal:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}-minimal:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}-minimal:latest
