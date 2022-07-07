@@ -43,9 +43,11 @@ COPY --from=builder \
     --chmod=755 \
     /home/container/build/bin/server /home/container/server
 
+EXPOSE 50000
+
 USER container
 
-CMD ["/home/container/server"]
+CMD ["/home/container/server", "--server-address", "0.0.0.0:50000"]
 
 FROM scratch AS app_minimal
 
@@ -53,6 +55,8 @@ COPY --from=builder \
     --chmod=755 \
     /home/container/build/bin/server /server
 
+EXPOSE 50000
+
 USER 1000:1000
 
-CMD ["/server"]
+CMD ["/server", "--server-address", "0.0.0.0:50000"]

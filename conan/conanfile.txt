@@ -1,6 +1,7 @@
 [requires]
 grpc/1.47.0
 protobuf/3.21.1
+boost/1.79.0
 
 [generators]
 cmake
