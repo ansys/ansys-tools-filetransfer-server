@@ -47,7 +47,8 @@ EXPOSE 50000
 
 USER container
 
-CMD ["/home/container/server", "--server-address", "0.0.0.0:50000"]
+ENTRYPOINT ["/home/container/server"]
+CMD ["--server-address", "0.0.0.0:50000"]
 
 FROM scratch AS app_minimal
 
@@ -59,4 +60,5 @@ EXPOSE 50000
 
 USER 1000:1000
 
-CMD ["/server", "--server-address", "0.0.0.0:50000"]
+ENTRYPOINT ["/server"]
+CMD ["--server-address", "0.0.0.0:50000"]
