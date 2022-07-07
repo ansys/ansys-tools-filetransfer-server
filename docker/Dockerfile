@@ -40,7 +40,7 @@ RUN useradd container
 
 COPY --from=builder \
     --chown=container \
-    --chmod=777 \
+    --chmod=755 \
     /home/container/build/bin/server /home/container/server
 
 USER container

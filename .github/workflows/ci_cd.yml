@@ -79,8 +79,8 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       REGISTRY: ghcr.io
-      REPO_NAME: ${{ github.repository }}
-      IMAGE_NAME: filetransfer-server
+      IMAGE_OWNER: ansys
+      IMAGE_NAME_BASE: filetransfer-server
     steps:
       - uses: actions/checkout@v3
         with:
@@ -102,7 +102,7 @@ jobs:
           push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
           target: app_full
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest
 
       - name: Build minimal image and export to GHCR
         uses: docker/build-push-action@v2
@@ -112,4 +112,4 @@ jobs:
           push: ${{ env.GITHUB_REF == 'refs/heads/main' }}
           target: app_minimal
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-minimal:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-minimal:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}-minimal:latest
