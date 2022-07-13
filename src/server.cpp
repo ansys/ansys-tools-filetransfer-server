@@ -1,5 +1,12 @@
 #include <cstdlib>
 
+#ifdef _MSC_VER
+#pragma warning(push, 3)
+#else
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 #include <boost/filesystem/path.hpp>
 #include <boost/locale.hpp>
 #include <boost/program_options.hpp>
@@ -8,12 +15,21 @@
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 
-#include <ansys/api/utilities/filetransfer/v1/file_transfer_service.grpc.pb.h>
+#ifdef _MSC_VER
+#pragma warning(pop)
+#else
+#pragma GCC diagnostic pop
+#endif
+
+#include "filetransfer_service.h"
 
 void run_server(const std::string& server_address) {
     grpc::EnableDefaultHealthCheckService(true);
     grpc::reflection::InitProtoReflectionServerBuilderPlugin();
     grpc::ServerBuilder builder;
+
+    file_transfer::FileTransferServiceImpl file_transfer_service{};
+    builder.RegisterService(&file_transfer_service);
 
     // TODO: Add secure channel option
     // Listen on the given address without any authentication mechanism.
