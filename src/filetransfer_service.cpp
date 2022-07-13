@@ -27,9 +27,13 @@
 
 namespace file_transfer {
 
-using progress_t = int32_t;
+using pb_progress_t =
+    decltype(::ansys::api::utilities::filetransfer::v1::ProgressResponse()
+                 .state());
+using pb_filesize_t =
+    decltype(::ansys::api::utilities::filetransfer::v1::FileInfo().size());
 
-enum Progress : progress_t {
+enum Progress : pb_progress_t {
     INITIALIZED = 0,
     COMPLETED = 100,
 };
@@ -93,8 +97,7 @@ enum Progress : progress_t {
     auto& file_info = *(initialize_response.mutable_file_info());
     file_info.set_name(file_path.string());
     const std::size_t file_size = std::filesystem::file_size(file_path);
-    file_info.set_size(
-        boost::numeric_cast<decltype(file_info.size())>(file_size));
+    file_info.set_size(boost::numeric_cast<pb_filesize_t>(file_size));
     initialize_response.mutable_progress()->set_state(Progress::INITIALIZED);
 
     BOOST_LOG_TRIVIAL(info)
@@ -132,7 +135,7 @@ enum Progress : progress_t {
     for (; chunk_index < num_full_chunks; ++chunk_index) {
         BOOST_LOG_TRIVIAL(debug) << "Sending chunk " << chunk_index;
         transfer_response.mutable_progress()->set_state(
-            boost::numeric_cast<decltype(transfer_response.progress().state())>(
+            boost::numeric_cast<pb_progress_t>(
                 (100 * chunk_index) / num_full_chunks));
 
         file_chunk->set_offset(chunk_index * chunk_size);
@@ -241,7 +244,7 @@ enum Progress : progress_t {
                     "Received more data than the specified file size."));
         }
         out_file << chunk;
-        progress->set_state(boost::numeric_cast<decltype(progress->state())>(
+        progress->set_state(boost::numeric_cast<pb_progress_t>(
             (100 * num_bytes_received) / file_size));
         stream->Write(response);
     }
