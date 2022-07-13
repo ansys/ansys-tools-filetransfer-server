@@ -19,4 +19,4 @@ target_link_libraries(filetransfer_service ${CONAN_LIBS})
 
 add_executable(server server.cpp)
 target_link_libraries(server filetransfer_service)
-target_link_libraries(filetransfer_service ${CONAN_LIBS})
+target_link_libraries(server ${CONAN_LIBS})
