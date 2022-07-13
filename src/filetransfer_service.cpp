@@ -4,6 +4,8 @@
 #include <exception>
 #include <filesystem>
 #include <fstream>
+#include <ios>
+#include <sstream>
 #include <string>
 #include <utility>
 
@@ -16,6 +18,7 @@
 
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/uuid/detail/sha1.hpp>
 
 #include <google/protobuf/arena.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -27,6 +30,32 @@
 #endif
 
 namespace file_transfer {
+
+namespace detail {
+std::string get_sha1_hex_digest(
+    const std::filesystem::path& path_, const std::size_t chunk_size_ = 1024) {
+    std::string buffer(chunk_size_, '\0');
+    std::ifstream in_file{path_};
+    boost::uuids::detail::sha1 sha_value{};
+    if (!in_file.good()) {
+        throw std::runtime_error("Could not open file.");
+    }
+    while (in_file.good()) {
+        in_file.read(&buffer[0], chunk_size_);
+        sha_value.process_bytes(&buffer[0], in_file.gcount());
+    }
+    boost::uuids::detail::sha1::digest_type res_int;
+    sha_value.get_digest(res_int);
+
+    // std::format not yet supported in our toolchains
+    std::stringstream ss;
+    ss << std::hex;
+    for (int i = 0; i < 5; ++i) {
+        ss << std::setfill('0') << std::setw(8) << res_int[i];
+    }
+    return ss.str();
+}
+} // namespace detail
 
 using pb_progress_t =
     decltype(::ansys::api::utilities::filetransfer::v1::ProgressResponse()
@@ -69,16 +98,26 @@ enum Progress : pb_progress_t {
                 std::string("The download has not been initialized."));
         }
 
+        ::ansys::api::utilities::filetransfer::v1::DownloadFileResponse&
+            initialize_response = *(google::protobuf::Arena::CreateMessage<
+                                    ::ansys::api::utilities::filetransfer::v1::
+                                        DownloadFileResponse>(&responseArena));
+
         const ::ansys::api::utilities::filetransfer::v1::DownloadFileRequest::
             Initialize& initialize = request.initialize();
         const std::filesystem::path file_path{initialize.filename()};
         const std::size_t chunk_size =
             initialize.chunk_size() > 0 ? initialize.chunk_size() : 1 << 16;
-        const bool compute_sha1_checksum = initialize.compute_sha1_checksum();
         if (!std::filesystem::exists(file_path)) {
             return ::grpc::Status(
                 ::grpc::StatusCode::FAILED_PRECONDITION,
                 std::string("The desired file does not exist."));
+        }
+
+        auto& file_info = *(initialize_response.mutable_file_info());
+        if (initialize.compute_sha1_checksum()) {
+            const auto hex_digest = detail::get_sha1_hex_digest(file_path);
+            file_info.mutable_sha1()->set_hex_digest(hex_digest);
         }
 
         std::ifstream in_file{file_path};
@@ -87,17 +126,7 @@ enum Progress : pb_progress_t {
                 ::grpc::StatusCode::INTERNAL,
                 std::string("Could not open the desired file."));
         }
-        if (compute_sha1_checksum) {
-            return ::grpc::Status(
-                ::grpc::StatusCode::INTERNAL,
-                std::string("Checksum is not implemented."));
-        }
 
-        ::ansys::api::utilities::filetransfer::v1::DownloadFileResponse&
-            initialize_response = *(google::protobuf::Arena::CreateMessage<
-                                    ::ansys::api::utilities::filetransfer::v1::
-                                        DownloadFileResponse>(&responseArena));
-        auto& file_info = *(initialize_response.mutable_file_info());
         file_info.set_name(file_path.string());
         const std::size_t file_size = std::filesystem::file_size(file_path);
         file_info.set_size(boost::numeric_cast<pb_filesize_t>(file_size));
@@ -182,9 +211,6 @@ enum Progress : pb_progress_t {
                                       DownloadFileResponse>(&responseArena));
         finalize_response.mutable_progress()->set_state(Progress::COMPLETED);
 
-        // TODO: set SHA1
-        // finalize_response.mutable_file_info()->mutable_sha1()->set_hex_digest("");
-
         stream->Write(finalize_response);
         return ::grpc::Status::OK;
     } catch (const std::exception& e) {
@@ -227,7 +253,7 @@ enum Progress : pb_progress_t {
         const std::filesystem::path file_path{file_info.name()};
         const auto file_size =
             boost::numeric_cast<std::size_t>(file_info.size());
-        const std::string source_sha1_sum = file_info.sha1().hex_digest();
+        const std::string source_sha1_hex = file_info.sha1().hex_digest();
 
         std::ofstream out_file;
         try {
@@ -277,8 +303,16 @@ enum Progress : pb_progress_t {
                 ::grpc::StatusCode::INVALID_ARGUMENT,
                 std::string("Received an incorrect number of bytes."));
         }
-        if (!source_sha1_sum.empty()) {
-            // TODO: compute and compare SHA1
+        out_file.close();
+
+        if (!source_sha1_hex.empty()) {
+            const auto dest_sha1_hex = detail::get_sha1_hex_digest(file_path);
+            if (source_sha1_hex != dest_sha1_hex) {
+                return ::grpc::Status(
+                    ::grpc::StatusCode::DATA_LOSS,
+                    "SHA1 of the received file does not match indicated "
+                    "value.");
+            }
         }
 
         progress->set_state(Progress::COMPLETED);
