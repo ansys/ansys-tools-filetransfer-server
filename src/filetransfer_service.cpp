@@ -220,7 +220,7 @@ enum Progress : pb_progress_t {
     } catch (const std::exception& e) {
         return ::grpc::Status(
             ::grpc::StatusCode::FAILED_PRECONDITION,
-            std::string("Could not open output file."));
+            std::string("Could not open output file.\n") + e.what());
     }
     ::ansys::api::utilities::filetransfer::v1::UploadFileResponse& response =
         *(google::protobuf::Arena::CreateMessage<
