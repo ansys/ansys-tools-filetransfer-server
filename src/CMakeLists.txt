@@ -7,7 +7,6 @@ if(MSVC)
     )
 else()
     add_compile_options(-Wall -Wextra -Wpedantic -Werror)
-    # add_compile_options(-Wall -Wextra -Wpedantic)
     add_link_options(-static)
 endif()
 

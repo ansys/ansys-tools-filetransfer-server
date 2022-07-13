@@ -31,7 +31,6 @@ using progress_t = int32_t;
 
 enum Progress : progress_t {
     INITIALIZED = 0,
-    // STARTED = 1,
     COMPLETED = 100,
 };
 
@@ -94,7 +93,8 @@ enum Progress : progress_t {
     auto& file_info = *(initialize_response.mutable_file_info());
     file_info.set_name(file_path.string());
     const std::size_t file_size = std::filesystem::file_size(file_path);
-    file_info.set_size(boost::numeric_cast<google::protobuf::int64>(file_size));
+    file_info.set_size(
+        boost::numeric_cast<decltype(file_info.size())>(file_size));
     initialize_response.mutable_progress()->set_state(Progress::INITIALIZED);
 
     BOOST_LOG_TRIVIAL(info)
@@ -183,39 +183,88 @@ enum Progress : progress_t {
     ::grpc::ServerContext*,
     ::grpc::ServerReaderWriter<
         ::ansys::api::utilities::filetransfer::v1::UploadFileResponse,
-        ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>*) {
+        ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>* stream) {
 
-    // google::protobuf::Arena requestArena;
-    // google::protobuf::Arena responseArena;
-    // ::ansys::api::utilities::filetransfer::v1::UploadFileRequest& request =
-    //     *(google::protobuf::Arena::CreateMessage<
-    //         ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>(
-    //         &requestArena));
+    google::protobuf::Arena requestArena;
+    google::protobuf::Arena responseArena;
+    ::ansys::api::utilities::filetransfer::v1::UploadFileRequest& request =
+        *(google::protobuf::Arena::CreateMessage<
+            ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>(
+            &requestArena));
 
-    // // ==== INITIALIZE ====
-    // stream->Read(&request);
-    // if (!stream->Read(&request)) {
-    //     return ::grpc::Status(
-    //         ::grpc::StatusCode::INVALID_ARGUMENT,
-    //         std::string("Empty download request stream."));
-    // }
-    // if (request.sub_step_case() !=
-    // ::ansys::api::utilities::filetransfer::v1::
-    //                                    UploadFileRequest::kInitialize) {
-    //     return ::grpc::Status(
-    //         ::grpc::StatusCode::INVALID_ARGUMENT,
-    //         std::string(
-    //             "Upload stream did not start with an initialize step."));
-    // }
-    // const auto &file_info = request.initialize().file_info();
+    // ==== INITIALIZE ====
+    if (!stream->Read(&request)) {
+        return ::grpc::Status(
+            ::grpc::StatusCode::INVALID_ARGUMENT,
+            std::string("Empty download request stream."));
+    }
+    if (request.sub_step_case() != ::ansys::api::utilities::filetransfer::v1::
+                                       UploadFileRequest::kInitialize) {
+        return ::grpc::Status(
+            ::grpc::StatusCode::INVALID_ARGUMENT,
+            std::string(
+                "Upload stream did not start with an initialize step."));
+    }
+    const auto& file_info = request.initialize().file_info();
 
-    // const std::filesystem::path file_path {file_info.name()};
-    // // TODO: convert (?)
-    // const std::size_t file_size = file_info.size();
+    const std::filesystem::path file_path{file_info.name()};
+    const auto file_size = boost::numeric_cast<std::size_t>(file_info.size());
+    const std::string source_sha1_sum = file_info.sha1().hex_digest();
 
-    // // ==== TRANSFER ====
+    std::ofstream out_file;
+    try {
+        out_file.open(file_path);
+    } catch (const std::exception& e) {
+        return ::grpc::Status(
+            ::grpc::StatusCode::FAILED_PRECONDITION,
+            std::string("Could not open output file."));
+    }
+    ::ansys::api::utilities::filetransfer::v1::UploadFileResponse& response =
+        *(google::protobuf::Arena::CreateMessage<
+            ::ansys::api::utilities::filetransfer::v1::UploadFileResponse>(
+            &responseArena));
+    auto* progress = response.mutable_progress();
+    progress->set_state(Progress::INITIALIZED);
+    stream->Write(response);
 
-    // // ==== FINALIZE ====
+    // ==== TRANSFER ====
+    std::size_t num_bytes_received = 0;
+    while (stream->Read(&request) && request.sub_step_case() ==
+                                         ::ansys::api::utilities::filetransfer::
+                                             v1::UploadFileRequest::kSendData) {
+        const auto chunk = request.send_data().file_data().data();
+        num_bytes_received += chunk.size();
+        if (num_bytes_received > file_size) {
+            return ::grpc::Status(
+                ::grpc::StatusCode::INVALID_ARGUMENT,
+                std::string(
+                    "Received more data than the specified file size."));
+        }
+        out_file << chunk;
+        progress->set_state(boost::numeric_cast<decltype(progress->state())>(
+            (100 * num_bytes_received) / file_size));
+        stream->Write(response);
+    }
+
+    // ==== FINALIZE ====
+    if (request.sub_step_case() != ::ansys::api::utilities::filetransfer::v1::
+                                       UploadFileRequest::kFinalize) {
+        return ::grpc::Status(
+            ::grpc::StatusCode::INVALID_ARGUMENT,
+            std::string("Unexpected upload step, should be 'finalize'."));
+    }
+    if (num_bytes_received != file_size) {
+        return ::grpc::Status(
+            ::grpc::StatusCode::INVALID_ARGUMENT,
+            std::string("Received an incorrect number of bytes."));
+    }
+    if (!source_sha1_sum.empty()) {
+        // TODO: compute and compare SHA1
+    }
+
+    progress->set_state(Progress::COMPLETED);
+    stream->Write(response);
+
     return ::grpc::Status::OK;
 }
 
