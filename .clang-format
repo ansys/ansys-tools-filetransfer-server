@@ -5,7 +5,7 @@ IndentWidth: 4
 Language: Cpp
 PointerAlignment: Left
 AccessModifierOffset: -4
-# IndentAccessModifiers: False  # only available from clang-format 13
+IndentAccessModifiers: False
 AlignAfterOpenBracket: AlwaysBreak
 # QualifierAlignment: Left # only available from clang-format 14
 ---
