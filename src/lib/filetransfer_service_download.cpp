@@ -85,7 +85,7 @@ initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
 
     BOOST_LOG_TRIVIAL(info)
         << "Initializing download of file " << file_path.generic_string()
-        << "\n  file size: " << file_size << "\n  chunk_size: " << chunk_size;
+        << "\n  file size: " << file_size << "\n  chunk size: " << chunk_size;
 
     stream_->Write(response);
     return std::make_tuple(file_path, file_size, chunk_size);
@@ -109,7 +109,7 @@ void transfer(
     auto& transfer_response =
         *(google::protobuf::Arena::CreateMessage<api::DownloadFileResponse>(
             &arena_));
-    auto* file_chunk = transfer_response.mutable_file_data();
+    auto& file_chunk = *transfer_response.mutable_file_data();
     std::string buffer(chunk_size_, '\0');
 
     std::size_t chunk_index = 0;
@@ -119,21 +119,21 @@ void transfer(
             boost::numeric_cast<pb_progress_t>(
                 (100 * chunk_index) / num_full_chunks));
 
-        file_chunk->set_offset(chunk_index * chunk_size_);
+        file_chunk.set_offset(chunk_index * chunk_size_);
 
         input_file_stream.read(&buffer[0], chunk_size_);
-        file_chunk->set_data(buffer);
+        file_chunk.set_data(buffer);
         stream_->Write(transfer_response);
     }
     if (partial_chunk_size) {
         BOOST_LOG_TRIVIAL(debug) << "Sending final partial chunk.";
         transfer_response.mutable_progress()->set_state(Progress::COMPLETED);
 
-        file_chunk->set_offset(chunk_index * chunk_size_);
+        file_chunk.set_offset(chunk_index * chunk_size_);
 
         buffer.resize(partial_chunk_size);
         input_file_stream.read(&buffer[0], partial_chunk_size);
-        file_chunk->set_data(buffer);
+        file_chunk.set_data(buffer);
 
         stream_->Write(transfer_response);
     }
@@ -148,6 +148,7 @@ void finalize(google::protobuf::Arena& arena_, stream_t* stream_) {
     response.mutable_progress()->set_state(Progress::COMPLETED);
 
     stream_->Write(response);
+    BOOST_LOG_TRIVIAL(info) << "Download complete.";
 }
 
 } // namespace download_impl
