@@ -31,7 +31,7 @@ COPY --chown=container \
 
 RUN . dev_env/bin/activate && \
     cmake -B build . && \
-    cmake --build build
+    cmake --build build --parallel
 
 
 FROM ubuntu:22.04 AS app_full

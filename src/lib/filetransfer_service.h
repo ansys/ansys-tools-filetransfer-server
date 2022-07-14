@@ -17,6 +17,19 @@
 
 namespace file_transfer {
 
+// namespace detail {
+using pb_progress_t =
+    decltype(::ansys::api::utilities::filetransfer::v1::ProgressResponse()
+                 .state());
+using pb_filesize_t =
+    decltype(::ansys::api::utilities::filetransfer::v1::FileInfo().size());
+
+enum Progress : pb_progress_t {
+    INITIALIZED = 0,
+    COMPLETED = 100,
+};
+// }
+
 /// <summary>This class implements the file transfer service.</summary>
 class FileTransferServiceImpl final
     : public ::ansys::api::utilities::filetransfer::v1::FileTransferService::

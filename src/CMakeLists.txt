@@ -10,11 +10,7 @@ else()
     add_link_options(-static)
 endif()
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/api)
-
-add_library(filetransfer_service filetransfer_service.cpp)
-target_link_libraries(filetransfer_service file_transfer_api)
-target_link_libraries(filetransfer_service ${CONAN_LIBS})
+add_subdirectory("lib")
 
 add_executable(server server.cpp)
 target_link_libraries(server filetransfer_service)

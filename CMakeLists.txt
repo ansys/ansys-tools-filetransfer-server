@@ -10,6 +10,7 @@ if(WIN32)
     # undefined symbols when linking the final binary.
     add_definitions(-DBOOST_USE_WINAPI_VERSION=_WIN32_WINNT_WIN7)
 endif()
+add_definitions(-DBOOST_STACKTRACE_LINK)
 
 # Variables used by the API subdirectory
 set(filetransfer_api_libs ${CONAN_LIBS})
