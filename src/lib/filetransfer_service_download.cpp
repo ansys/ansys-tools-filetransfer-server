@@ -2,8 +2,7 @@
 
 #include <cstdint>
 #include <exception>
-#include <filesystem>
-#include <fstream>
+#include <ios>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -14,6 +13,10 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
+
+#include <boost/filesystem/fstream.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -53,19 +56,20 @@ api::DownloadFileRequest* get_request_checked(
     return request;
 }
 
-std::tuple<const std::filesystem::path, const std::size_t, const std::size_t>
+std::tuple<const boost::filesystem::path, const std::size_t, const std::size_t>
 initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
 
     auto& request = *get_request_checked(
         arena_, stream_, api::DownloadFileRequest::kInitialize);
 
     const auto& initialize = request.initialize();
-    const std::filesystem::path file_path{initialize.filename()};
+    const boost::filesystem::path file_path{initialize.filename()};
     const std::size_t chunk_size =
         initialize.chunk_size() > 0 ? initialize.chunk_size() : 1 << 16;
 
-    if (!std::filesystem::exists(file_path)) {
-        throw exceptions::not_found("The desired file does not exist.");
+    if (!boost::filesystem::exists(file_path)) {
+        throw exceptions::not_found(
+            "The desired file " + file_path.string() + " does not exist.");
     }
 
     auto& response =
@@ -79,7 +83,7 @@ initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
     }
 
     file_info.set_name(file_path.string());
-    const std::size_t file_size = std::filesystem::file_size(file_path);
+    const std::size_t file_size = boost::filesystem::file_size(file_path);
     file_info.set_size(boost::numeric_cast<pb_filesize_t>(file_size));
     response.mutable_progress()->set_state(Progress::INITIALIZED);
 
@@ -92,7 +96,7 @@ initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
 }
 
 void transfer(
-    const std::filesystem::path file_path_, const std::size_t file_size_,
+    const boost::filesystem::path file_path_, const std::size_t file_size_,
     const std::size_t chunk_size_, google::protobuf::Arena& arena_,
     stream_t* stream_
 
@@ -101,7 +105,8 @@ void transfer(
     get_request_checked(
         arena_, stream_, api::DownloadFileRequest::kReceiveData);
 
-    std::ifstream input_file_stream{file_path_};
+    boost::filesystem::ifstream input_file_stream{
+        file_path_, std::ios_base::binary};
 
     const std::size_t num_full_chunks = file_size_ / chunk_size_;
     const std::size_t partial_chunk_size = file_size_ % chunk_size_;

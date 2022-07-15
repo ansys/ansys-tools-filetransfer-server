@@ -1,8 +1,7 @@
 
 #include "sha1_digest.h"
 
-#include <filesystem>
-#include <fstream>
+#include <iomanip>
 #include <ios>
 #include <sstream>
 #include <string>
@@ -14,6 +13,8 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
+#include <boost/filesystem/fstream.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/uuid/detail/sha1.hpp>
 
 #ifdef _MSC_VER
@@ -25,9 +26,9 @@
 namespace file_transfer {
 namespace detail {
 std::string get_sha1_hex_digest(
-    const std::filesystem::path& path_, const std::size_t chunk_size_) {
+    const boost::filesystem::path& path_, const std::size_t chunk_size_) {
     std::string buffer(chunk_size_, '\0');
-    std::ifstream in_file{path_};
+    boost::filesystem::ifstream in_file{path_, std::ios_base::binary};
     boost::uuids::detail::sha1 sha_value{};
     if (!in_file.good()) {
         throw std::runtime_error("Could not open file.");

@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <locale>
 
 #ifdef _MSC_VER
 #pragma warning(push, 3)
@@ -9,6 +10,8 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/locale.hpp>
+
+#include <boost/log/trivial.hpp>
 #include <boost/program_options.hpp>
 
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
@@ -24,6 +27,10 @@
 #include <filetransfer_service.h>
 
 void run_server(const std::string& server_address) {
+    // Set encoding for paths to UTF-8
+    boost::filesystem::path::imbue(
+        boost::locale::generator().generate("en_US.UTF-8"));
+
     grpc::EnableDefaultHealthCheckService(true);
     grpc::reflection::InitProtoReflectionServerBuilderPlugin();
     grpc::ServerBuilder builder;
@@ -37,6 +44,8 @@ void run_server(const std::string& server_address) {
 
     // Assemble the server.
     std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
+
+    BOOST_LOG_TRIVIAL(info) << "File transfer server started.";
 
     // Wait for the server to shutdown. Note that some other thread must be
     // responsible for shutting down the server for this call to ever return.

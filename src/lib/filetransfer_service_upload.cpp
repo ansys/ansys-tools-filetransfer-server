@@ -2,8 +2,6 @@
 
 #include <cstdint>
 #include <exception>
-#include <filesystem>
-#include <fstream>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -15,6 +13,8 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
+#include <boost/filesystem/fstream.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -62,14 +62,14 @@ api::UploadFileRequest* get_request_checked(
     return request;
 }
 
-std::tuple<const std::filesystem::path, const std::size_t, const std::string>
+std::tuple<const boost::filesystem::path, const std::size_t, const std::string>
 initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
     auto& request = *get_request_checked(
         arena_, stream_, api::UploadFileRequest::kInitialize);
 
     const auto& file_info = request.initialize().file_info();
 
-    const std::filesystem::path file_path{file_info.name()};
+    const boost::filesystem::path file_path{file_info.name()};
     const auto file_size = boost::numeric_cast<std::size_t>(file_info.size());
     const std::string source_sha1_hex = file_info.sha1().hex_digest();
 
@@ -89,11 +89,11 @@ initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
 }
 
 void transfer(
-    const std::filesystem::path& file_path_, const std::size_t file_size_,
+    const boost::filesystem::path& file_path_, const std::size_t file_size_,
     google::protobuf::Arena& arena_, stream_t* stream_) {
-    std::ofstream out_file;
+    boost::filesystem::ofstream out_file;
     try {
-        out_file.open(file_path_);
+        out_file.open(file_path_, std::ios_base::binary);
     } catch (const std::exception&) {
         throw exceptions::failed_precondition("Could not open output file.");
     }
@@ -133,7 +133,7 @@ void transfer(
 }
 
 void finalize(
-    const std::filesystem::path& file_path_,
+    const boost::filesystem::path& file_path_,
     const std::string& source_sha1_hex_, google::protobuf::Arena& arena_,
     stream_t* stream_) {
     get_request_checked(arena_, stream_, api::UploadFileRequest::kFinalize);
