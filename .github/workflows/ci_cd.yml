@@ -81,7 +81,7 @@ jobs:
     env:
       REGISTRY: ghcr.io
       IMAGE_OWNER: ansys
-      IMAGE_NAME_BASE: filetransfer-server
+      IMAGE_NAME_BASE: utilities-filetransfer
     steps:
       - uses: actions/checkout@v3
         with:
