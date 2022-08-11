@@ -69,7 +69,7 @@ jobs:
         run: |
           conan install -if build --build missing --profile ./conan/${{ matrix.conan_config }} ./conan
           cmake -B build .
-          cmake --build build --config Release
+          cmake --build build --config Release --parallel
       # - name: Test
       #   run: |
       #     ./build/bin/server
