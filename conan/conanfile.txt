@@ -1,5 +1,5 @@
 [requires]
-grpc/1.47.0
+grpc/1.48.0
 protobuf/3.21.1
 boost/1.79.0
 
