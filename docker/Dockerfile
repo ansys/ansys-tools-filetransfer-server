@@ -23,7 +23,7 @@ COPY --chown=container \
     ./conan /home/container/conan
 
 RUN . dev_env/bin/activate && \
-    conan install -if build --profile ./conan/linux_x86_64_Release ./conan
+    conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
 
 COPY --chown=container \
     --chmod=755 \
