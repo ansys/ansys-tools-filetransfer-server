@@ -8,8 +8,10 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
+#ifdef _WIN32
 #include <boost/filesystem/path.hpp>
 #include <boost/locale.hpp>
+#endif
 
 #include <boost/log/trivial.hpp>
 #include <boost/program_options.hpp>
@@ -27,9 +29,12 @@
 #include <filetransfer_service.h>
 
 void run_server(const std::string& server_address) {
-    // Set encoding for paths to UTF-8
+// Set encoding for paths to UTF-8
+// This is only needed on Windows, because Linux uses UTF-8 by default.
+#ifdef _WIN32
     boost::filesystem::path::imbue(
         boost::locale::generator().generate("en_US.UTF-8"));
+#endif
 
     grpc::EnableDefaultHealthCheckService(true);
     grpc::reflection::InitProtoReflectionServerBuilderPlugin();
