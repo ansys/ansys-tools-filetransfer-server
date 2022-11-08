@@ -16,7 +16,7 @@ WORKDIR /home/container/
 
 RUN python3 -m venv dev_env && \
     . dev_env/bin/activate && \
-    pip install conan==1.50.0
+    pip install conan==1.54.0
 
 COPY --chown=container \
     --chmod=755 \
@@ -39,26 +39,34 @@ FROM ubuntu:22.04 AS app_full
 RUN useradd container
 
 COPY --from=builder \
-    --chown=container \
+    --chown=root \
     --chmod=755 \
-    /home/container/build/bin/server /home/container/server
+    /home/container/build/bin/server /usr/local/bin/filetransfer_server
 
 EXPOSE 50000
 
+RUN mkdir -p /home/container/workdir && chown -R container:container /home/container
+
 USER container
 
-ENTRYPOINT ["/home/container/server"]
+WORKDIR /home/container/workdir
+
+ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
 CMD ["--server-address", "0.0.0.0:50000"]
 
 FROM scratch AS app_minimal
 
 COPY --from=builder \
     --chmod=755 \
-    /home/container/build/bin/server /server
-
-EXPOSE 50000
+    /home/container/build/bin/server /usr/local/bin/filetransfer_server
 
 USER 1000:1000
 
-ENTRYPOINT ["/server"]
+COPY --from=app_full --chown=1000:1000 /home/container/workdir /home/container/workdir
+
+EXPOSE 50000
+
+WORKDIR /home/container/workdir
+
+ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
 CMD ["--server-address", "0.0.0.0:50000"]
