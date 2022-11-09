@@ -50,6 +50,7 @@ RUN mkdir -p /home/container/workdir && chown -R container:container /home/conta
 USER container
 
 WORKDIR /home/container/workdir
+VOLUME /home/container/workdir
 
 ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
 CMD ["--server-address", "0.0.0.0:50000"]
