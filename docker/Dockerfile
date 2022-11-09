@@ -34,7 +34,7 @@ RUN . dev_env/bin/activate && \
     cmake --build build --parallel
 
 
-FROM ubuntu:22.04 AS app_full
+FROM ubuntu:22.04 AS app
 
 RUN useradd container
 
@@ -48,23 +48,6 @@ EXPOSE 50000
 RUN mkdir -p /home/container/workdir && chown -R container:container /home/container
 
 USER container
-
-WORKDIR /home/container/workdir
-
-ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
-CMD ["--server-address", "0.0.0.0:50000"]
-
-FROM scratch AS app_minimal
-
-COPY --from=builder \
-    --chmod=755 \
-    /home/container/build/bin/server /usr/local/bin/filetransfer_server
-
-USER 1000:1000
-
-COPY --from=app_full --chown=1000:1000 /home/container/workdir /home/container/workdir
-
-EXPOSE 50000
 
 WORKDIR /home/container/workdir
 
