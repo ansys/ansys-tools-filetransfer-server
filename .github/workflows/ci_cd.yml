@@ -19,21 +19,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v2
-      - uses: actions/cache@v3
-        name: Pip cache
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements_dev.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      - name: Install dev dependencies
+      - name: Build and run pre-commit hooks via docker
         run: |
-          pip install -r requirements_dev.txt
-      - name: Run pre-commit checks
-        run: |
-          pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
+          docker build -f docker/Dockerfile --target precommit --tag filetransfer-precommit
+          docker run filetransfer-precommit
 
   build:
     name: Compile and Test

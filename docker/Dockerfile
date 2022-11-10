@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM gcc:11-bullseye AS builder
+FROM gcc:11-bullseye AS builder_base
 
 RUN \
     --mount=type=cache,target=/var/cache/apt \
@@ -22,10 +22,13 @@ RUN conan install -if build --build missing --profile ./conan/linux_x86_64_Relea
 COPY --chmod=755 \
     . /workdir
 
-RUN cmake -B build . && \
-    cmake --build build --parallel
+RUN cmake -B build .
 
-FROM builder AS precommit
+FROM builder_base AS builder
+
+RUN cmake --build build --parallel
+
+FROM builder_base AS precommit
 
 RUN \
     --mount=type=cache,target=/var/cache/apt \
@@ -42,8 +45,7 @@ RUN \
 RUN python3 -m pip install -r requirements_dev.txt \
     && python3 -m pip cache purge
 
-RUN cmake -B build  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . && \
-    cmake --build build --parallel
+RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
 
 ENTRYPOINT [ "pre-commit" ]
 CMD ["run", "--all-files"]

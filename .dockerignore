@@ -1,5 +1,8 @@
-**/build
-.vscode
 .conan
-**/*.egg-info
+.dockerignore
+.github
+.vscode
 dev_env
+docker
+**/build
+**/*.egg-info
