@@ -23,6 +23,8 @@ jobs:
         run: |
           docker build -f docker/Dockerfile --target precommit --tag filetransfer-precommit .
           docker run filetransfer-precommit
+        env:
+          DOCKER_BUILDKIT: '1'
 
   build:
     name: Compile and Test
