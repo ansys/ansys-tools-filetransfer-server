@@ -42,23 +42,25 @@ public:
     /// <param name="context">The server context to be used.</param>
     /// <param name="stream">The stream of requests and responses to be
     /// processes.</param> <returns>The result of the operation.</returns>
-    virtual ::grpc::Status DownloadFile(
+    virtual auto DownloadFile(
         ::grpc::ServerContext* context,
         ::grpc::ServerReaderWriter<
             ::ansys::api::utilities::filetransfer::v1::DownloadFileResponse,
             ::ansys::api::utilities::filetransfer::v1::DownloadFileRequest>*
-            stream) override;
+            stream
+    ) -> ::grpc::Status override;
 
     /// <summary>Implements the "UploadFile" operation.</summary>
     /// <param name="context">The server context to be used.</param>
     /// <param name="stream">The stream of requests and responses to be
     /// processes.</param> <returns>The result of the operation.</returns>
-    virtual ::grpc::Status UploadFile(
+    virtual auto UploadFile(
         ::grpc::ServerContext* context,
         ::grpc::ServerReaderWriter<
             ::ansys::api::utilities::filetransfer::v1::UploadFileResponse,
             ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>*
-            stream) override;
+            stream
+    ) -> ::grpc::Status override;
 
 private:
 };

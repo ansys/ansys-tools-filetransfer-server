@@ -28,12 +28,13 @@
 
 #include <filetransfer_service.h>
 
-void run_server(const std::string& server_address) {
+auto run_server(const std::string& server_address) -> void {
 // Set encoding for paths to UTF-8
 // This is only needed on Windows, because Linux uses UTF-8 by default.
 #ifdef _WIN32
     boost::filesystem::path::imbue(
-        boost::locale::generator().generate("en_US.UTF-8"));
+        boost::locale::generator().generate("en_US.UTF-8")
+    );
 #endif
 
     grpc::EnableDefaultHealthCheckService(true);
@@ -64,10 +65,13 @@ namespace po = boost::program_options;
  */
 auto main(int argc, char** argv) -> int {
     po::options_description description(
-        "Ansys Filetransfer Utility server options");
+        "Ansys Filetransfer Utility server options"
+    );
     description.add_options()("help", "Show CLI help.")(
-        "server-address", po::value<std::string>()->required(),
-        "Address on which the server is listening.");
+        "server-address",
+        po::value<std::string>()->required(),
+        "Address on which the server is listening."
+    );
 
     auto variables = po::variables_map{};
     try {

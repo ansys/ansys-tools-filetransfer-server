@@ -2,8 +2,7 @@
 
 #include <stdexcept>
 
-namespace file_transfer {
-namespace exceptions {
+namespace file_transfer::exceptions {
 class not_found : public std::runtime_error {
 public:
     not_found(std::string s) : runtime_error(s){};
@@ -25,5 +24,4 @@ public:
     internal(std::string s) : runtime_error(s){};
 };
 
-} // namespace exceptions
-} // namespace file_transfer
+} // namespace file_transfer::exceptions

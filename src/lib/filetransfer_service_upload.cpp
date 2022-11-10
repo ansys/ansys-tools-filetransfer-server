@@ -38,36 +38,40 @@ namespace api = ::ansys::api::utilities::filetransfer::v1;
 using stream_t =
     ::grpc::ServerReaderWriter<api::UploadFileResponse, api::UploadFileRequest>;
 
-void get_request_checked(
-    api::UploadFileRequest* request_, stream_t* stream_,
-    const api::UploadFileRequest::SubStepCase& expected_step_) {
+auto get_request_checked(
+    api::UploadFileRequest* request_,
+    stream_t* stream_,
+    const api::UploadFileRequest::SubStepCase& expected_step_
+) -> void {
     if (!stream_->Read(request_)) {
-        throw exceptions::invalid_argument(
-            "Request stream stopped prematurely.");
+        throw exceptions::invalid_argument("Request stream stopped prematurely."
+        );
     }
     if (request_->sub_step_case() != expected_step_) {
         throw exceptions::invalid_argument(
             "Incorrect request step. Expected " +
             std::to_string(expected_step_) + ", but got " +
-            std::to_string(request_->sub_step_case()) + ".");
+            std::to_string(request_->sub_step_case()) + "."
+        );
     }
 }
 
 auto get_request_checked(
-    google::protobuf::Arena& arena_, stream_t* stream_,
-    const api::UploadFileRequest::SubStepCase& expected_step_)
-    -> api::UploadFileRequest* {
+    google::protobuf::Arena& arena_,
+    stream_t* stream_,
+    const api::UploadFileRequest::SubStepCase& expected_step_
+) -> api::UploadFileRequest* {
     auto* request =
         google::protobuf::Arena::CreateMessage<api::UploadFileRequest>(&arena_);
     get_request_checked(request, stream_, expected_step_);
     return request;
 }
 
-auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
-    -> std::tuple<
-        const boost::filesystem::path, const std::size_t, const std::string> {
+auto initialize(google::protobuf::Arena& arena_, stream_t* stream_) -> std::
+    tuple<const boost::filesystem::path, const std::size_t, const std::string> {
     auto& request = *get_request_checked(
-        arena_, stream_, api::UploadFileRequest::kInitialize);
+        arena_, stream_, api::UploadFileRequest::kInitialize
+    );
 
     const auto& file_info = request.initialize().file_info();
 
@@ -75,9 +79,9 @@ auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
     const auto file_size = boost::numeric_cast<std::size_t>(file_info.size());
     const std::string source_sha1_hex = file_info.sha1().hex_digest();
 
-    auto& response =
-        *(google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(
-            &arena_));
+    auto& response = *(
+        google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(&arena_)
+    );
     auto& progress = *response.mutable_progress();
     progress.set_state(Progress::INITIALIZED);
     stream_->Write(response);
@@ -90,9 +94,12 @@ auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
     return std::make_tuple(file_path, file_size, source_sha1_hex);
 }
 
-void transfer(
-    const boost::filesystem::path& file_path_, const std::size_t file_size_,
-    google::protobuf::Arena& arena_, stream_t* stream_) {
+auto transfer(
+    const boost::filesystem::path& file_path_,
+    const std::size_t file_size_,
+    google::protobuf::Arena& arena_,
+    stream_t* stream_
+) -> void {
     boost::filesystem::ofstream out_file;
     try {
         out_file.open(file_path_, std::ios_base::binary);
@@ -103,16 +110,17 @@ void transfer(
     std::size_t num_bytes_received = 0;
 
     auto& request =
-        *google::protobuf::Arena::CreateMessage<api::UploadFileRequest>(
-            &arena_);
+        *google::protobuf::Arena::CreateMessage<api::UploadFileRequest>(&arena_
+        );
     auto& response =
-        *google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(
-            &arena_);
+        *google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(&arena_
+        );
     auto& progress = *response.mutable_progress();
 
     while (num_bytes_received < file_size_) {
         get_request_checked(
-            &request, stream_, api::UploadFileRequest::kSendData);
+            &request, stream_, api::UploadFileRequest::kSendData
+        );
         const auto chunk = request.send_data().file_data().data();
         const auto current_chunk_size = chunk.size();
         if (current_chunk_size <= 0) {
@@ -126,23 +134,27 @@ void transfer(
         out_file << chunk;
         const auto percent_multiplier_100 = std::size_t{100};
         progress.set_state(boost::numeric_cast<pb_progress_t>(
-            (percent_multiplier_100 * num_bytes_received) / file_size_));
+            (percent_multiplier_100 * num_bytes_received) / file_size_
+        ));
         stream_->Write(response);
     }
     if (num_bytes_received != file_size_) {
         throw exceptions::invalid_argument(
-            "Received an incorrect number of bytes.");
+            "Received an incorrect number of bytes."
+        );
     }
 }
 
-void finalize(
+auto finalize(
     const boost::filesystem::path& file_path_,
-    const std::string& source_sha1_hex_, google::protobuf::Arena& arena_,
-    stream_t* stream_) {
+    const std::string& source_sha1_hex_,
+    google::protobuf::Arena& arena_,
+    stream_t* stream_
+) -> void {
     get_request_checked(arena_, stream_, api::UploadFileRequest::kFinalize);
     auto& response =
-        *google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(
-            &arena_);
+        *google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(&arena_
+        );
     auto& progress = *response.mutable_progress();
 
     if (!source_sha1_hex_.empty()) {
@@ -164,8 +176,8 @@ auto FileTransferServiceImpl::UploadFile(
     ::grpc::ServerContext* /*unused*/,
     ::grpc::ServerReaderWriter<
         ::ansys::api::utilities::filetransfer::v1::UploadFileResponse,
-        ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>* stream_)
-    -> ::grpc::Status {
+        ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>* stream_
+) -> ::grpc::Status {
 
     return exceptions::convert_exceptions_to_status_codes(
         std::function<void()>([&]() {
@@ -177,7 +189,8 @@ auto FileTransferServiceImpl::UploadFile(
             upload_impl::transfer(file_path, file_size, arena, stream_);
 
             upload_impl::finalize(file_path, source_sha1_hex, arena, stream_);
-        }));
+        })
+    );
 }
 
 } // namespace file_transfer

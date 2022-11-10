@@ -26,8 +26,8 @@
 
 namespace file_transfer::detail {
 auto get_sha1_hex_digest(
-    const boost::filesystem::path& path_, const std::streamsize chunk_size_)
-    -> std::string {
+    const boost::filesystem::path& path_, const std::streamsize chunk_size_
+) -> std::string {
     std::string buffer(chunk_size_, '\0');
     boost::filesystem::ifstream in_file{path_, std::ios_base::binary};
     boost::uuids::detail::sha1 sha_value{};

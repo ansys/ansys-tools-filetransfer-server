@@ -20,7 +20,8 @@
 namespace file_transfer {
 namespace exceptions {
 
-::grpc::Status convert_exceptions_to_status_codes(const std::function<void()>&);
+auto convert_exceptions_to_status_codes(const std::function<void()>&)
+    -> ::grpc::Status;
 
 } // namespace exceptions
 } // namespace file_transfer
