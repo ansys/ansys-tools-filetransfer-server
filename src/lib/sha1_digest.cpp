@@ -3,6 +3,7 @@
 
 #include <iomanip>
 #include <ios>
+#include <ranges>
 #include <sstream>
 #include <string>
 
@@ -23,10 +24,10 @@
 #pragma GCC diagnostic pop
 #endif
 
-namespace file_transfer {
-namespace detail {
-std::string get_sha1_hex_digest(
-    const boost::filesystem::path& path_, const std::size_t chunk_size_) {
+namespace file_transfer::detail {
+auto get_sha1_hex_digest(
+    const boost::filesystem::path& path_, const std::size_t chunk_size_)
+    -> std::string {
     std::string buffer(chunk_size_, '\0');
     boost::filesystem::ifstream in_file{path_, std::ios_base::binary};
     boost::uuids::detail::sha1 sha_value{};
@@ -43,10 +44,10 @@ std::string get_sha1_hex_digest(
     // std::format not yet supported in our toolchains
     std::stringstream ss;
     ss << std::hex;
-    for (int i = 0; i < 5; ++i) {
-        ss << std::setfill('0') << std::setw(8) << res_int[i];
+    const std::streamsize int_width_hex_8 = 8;
+    for (const auto& elem : res_int) {
+        ss << std::setfill('0') << std::setw(int_width_hex_8) << elem;
     }
     return ss.str();
 }
-} // namespace detail
-} // namespace file_transfer
+} // namespace file_transfer::detail

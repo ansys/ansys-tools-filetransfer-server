@@ -62,7 +62,7 @@ namespace po = boost::program_options;
 /**
  * Parse command-line options and start the server.
  */
-int main(int argc, char** argv) {
+auto main(int argc, char** argv) -> int {
     po::options_description description(
         "Ansys Filetransfer Utility server options");
     description.add_options()("help", "Show CLI help.")(
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
                   << std::endl;
         return EXIT_FAILURE;
     }
-    if (variables.count("help")) {
+    if (variables.count("help") != 0U) {
         std::cout << description;
         return EXIT_SUCCESS;
     }

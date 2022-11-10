@@ -1,10 +1,17 @@
 # syntax=docker/dockerfile:1
-FROM gcc:11-bullseye AS builder_base
+FROM gcc:11-bullseye AS builder
 
+# Here we install all system libraries that are needed both in the
+# 'builder' and 'precommit' stages. This makes the image slightly
+# heavier (but builder image size doesn't really matter), but increases
+# the incremental build speed.
 RUN \
     --mount=type=cache,target=/var/cache/apt \
     apt update && apt install -y \
+    clang-format-13 \
+    clang-tidy-13 \
     cmake \
+    git \
     python3-pip \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
@@ -22,21 +29,17 @@ RUN conan install -if build --build missing --profile ./conan/linux_x86_64_Relea
 COPY --chmod=755 \
     . /workdir
 
-RUN cmake -B build .
+RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . && \
+    cmake --build build --parallel
 
-FROM builder_base AS builder
 
-RUN cmake --build build --parallel
+FROM builder AS precommit
 
-FROM builder_base AS precommit
+# RUN \
+# --mount=type=cache,target=/var/cache/apt \
+# apt update && apt install -y \
 
-RUN \
-    --mount=type=cache,target=/var/cache/apt \
-    apt update && apt install -y \
-    clang-format-13 \
-    clang-tidy-13 \
-    git \
-    --no-install-recommends && rm -rf /var/lib/apt/lists/*
+# --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN \
     ln -s /usr/bin/run-clang-tidy-13 /usr/local/bin/run-clang-tidy && \
@@ -45,10 +48,9 @@ RUN \
 RUN python3 -m pip install -r requirements_dev.txt \
     && python3 -m pip cache purge
 
-RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
-
 ENTRYPOINT [ "pre-commit" ]
 CMD ["run", "--all-files"]
+
 
 FROM debian:bullseye-slim AS app
 

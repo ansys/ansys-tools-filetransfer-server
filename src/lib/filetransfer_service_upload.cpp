@@ -53,17 +53,19 @@ void get_request_checked(
     }
 }
 
-api::UploadFileRequest* get_request_checked(
+auto get_request_checked(
     google::protobuf::Arena& arena_, stream_t* stream_,
-    const api::UploadFileRequest::SubStepCase& expected_step_) {
+    const api::UploadFileRequest::SubStepCase& expected_step_)
+    -> api::UploadFileRequest* {
     auto* request =
         google::protobuf::Arena::CreateMessage<api::UploadFileRequest>(&arena_);
     get_request_checked(request, stream_, expected_step_);
     return request;
 }
 
-std::tuple<const boost::filesystem::path, const std::size_t, const std::string>
-initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
+auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
+    -> std::tuple<
+        const boost::filesystem::path, const std::size_t, const std::string> {
     auto& request = *get_request_checked(
         arena_, stream_, api::UploadFileRequest::kInitialize);
 
@@ -122,8 +124,9 @@ void transfer(
                                  << file_size_ << " bytes.";
 
         out_file << chunk;
+        const std::size_t percent_multiplier_100 = 100;
         progress.set_state(boost::numeric_cast<pb_progress_t>(
-            (100 * num_bytes_received) / file_size_));
+            (percent_multiplier_100 * num_bytes_received) / file_size_));
         stream_->Write(response);
     }
     if (num_bytes_received != file_size_) {
@@ -157,12 +160,12 @@ void finalize(
 
 } // namespace upload_impl
 
-::grpc::Status FileTransferServiceImpl::UploadFile(
-    ::grpc::ServerContext*,
+auto FileTransferServiceImpl::UploadFile(
+    ::grpc::ServerContext* /*unused*/,
     ::grpc::ServerReaderWriter<
         ::ansys::api::utilities::filetransfer::v1::UploadFileResponse,
-        ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>*
-        stream_) {
+        ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>* stream_)
+    -> ::grpc::Status {
 
     return exceptions::convert_exceptions_to_status_codes(
         std::function<void()>([&]() {

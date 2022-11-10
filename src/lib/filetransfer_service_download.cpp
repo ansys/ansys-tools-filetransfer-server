@@ -40,9 +40,10 @@ namespace api = ::ansys::api::utilities::filetransfer::v1;
 using stream_t = ::grpc::ServerReaderWriter<
     api::DownloadFileResponse, api::DownloadFileRequest>;
 
-api::DownloadFileRequest* get_request_checked(
+auto get_request_checked(
     google::protobuf::Arena& arena_, stream_t* stream_,
-    const api::DownloadFileRequest::SubStepCase& expected_step_) {
+    const api::DownloadFileRequest::SubStepCase& expected_step_)
+    -> api::DownloadFileRequest* {
     auto* request =
         google::protobuf::Arena::CreateMessage<api::DownloadFileRequest>(
             &arena_);
@@ -56,8 +57,9 @@ api::DownloadFileRequest* get_request_checked(
     return request;
 }
 
-std::tuple<const boost::filesystem::path, const std::size_t, const std::size_t>
-initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
+auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
+    -> std::tuple<
+        const boost::filesystem::path, const std::size_t, const std::size_t> {
 
     auto& request = *get_request_checked(
         arena_, stream_, api::DownloadFileRequest::kInitialize);
@@ -96,11 +98,9 @@ initialize(google::protobuf::Arena& arena_, stream_t* stream_) {
 }
 
 void transfer(
-    const boost::filesystem::path file_path_, const std::size_t file_size_,
+    const boost::filesystem::path& file_path_, const std::size_t file_size_,
     const std::size_t chunk_size_, google::protobuf::Arena& arena_,
-    stream_t* stream_
-
-) {
+    stream_t* stream_) {
 
     get_request_checked(
         arena_, stream_, api::DownloadFileRequest::kReceiveData);
@@ -120,9 +120,10 @@ void transfer(
     std::size_t chunk_index = 0;
     for (; chunk_index < num_full_chunks; ++chunk_index) {
         BOOST_LOG_TRIVIAL(debug) << "Sending chunk " << chunk_index;
+        const std::size_t percent_multiplier_100 = 100;
         transfer_response.mutable_progress()->set_state(
             boost::numeric_cast<pb_progress_t>(
-                (100 * chunk_index) / num_full_chunks));
+                (percent_multiplier_100 * chunk_index) / num_full_chunks));
 
         file_chunk.set_offset(chunk_index * chunk_size_);
 
@@ -130,7 +131,7 @@ void transfer(
         file_chunk.set_data(buffer);
         stream_->Write(transfer_response);
     }
-    if (partial_chunk_size) {
+    if (partial_chunk_size != 0U) {
         BOOST_LOG_TRIVIAL(debug) << "Sending final partial chunk.";
         transfer_response.mutable_progress()->set_state(Progress::COMPLETED);
 
@@ -158,12 +159,12 @@ void finalize(google::protobuf::Arena& arena_, stream_t* stream_) {
 
 } // namespace download_impl
 
-::grpc::Status FileTransferServiceImpl::DownloadFile(
-    ::grpc::ServerContext*,
+auto FileTransferServiceImpl::DownloadFile(
+    ::grpc::ServerContext* /*unused*/,
     ::grpc::ServerReaderWriter<
         ::ansys::api::utilities::filetransfer::v1::DownloadFileResponse,
-        ::ansys::api::utilities::filetransfer::v1::DownloadFileRequest>*
-        stream) {
+        ::ansys::api::utilities::filetransfer::v1::DownloadFileRequest>* stream)
+    -> ::grpc::Status {
 
     return exceptions::convert_exceptions_to_status_codes(
         std::function<void()>([&]() {
