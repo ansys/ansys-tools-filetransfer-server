@@ -1,8 +1,5 @@
-**
-!/api/**
-!/conan/**
-!/src/**
-!/CMakeLists.txt
-!/LICENSE
-!/README
 **/build
+.vscode
+.conan
+**/*.egg-info
+dev_env

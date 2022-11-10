@@ -11,3 +11,19 @@ repos:
         (?x)(
           ^src|
         )
+    - id: clang-tidy
+      name: clang-tidy
+      entry: run-clang-tidy
+      args: ["-p", "build"]
+      language: system
+      types: [c++]
+      require_serial: true # run-clang-tidy handles parallel execution
+      files: |
+        (?x)(
+          ^src/
+        )
+      exclude: |
+        (?x)(
+          .h$|
+          .hpp$
+        )

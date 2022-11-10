@@ -1,47 +1,61 @@
 # syntax=docker/dockerfile:1
-FROM ubuntu:22.04 AS builder
+FROM gcc:11-bullseye AS builder
 
-RUN apt update && apt install -y \
-    gcc-11 \
+RUN \
+    --mount=type=cache,target=/var/cache/apt \
+    apt update && apt install -y \
     cmake \
     python3-pip \
-    python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+    --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-RUN useradd container
-
-USER container
-
-WORKDIR /home/container/
-
-RUN python3 -m venv dev_env && \
-    . dev_env/bin/activate && \
-    pip install conan==1.54.0
+RUN python3 -m pip install conan==1.54.0 \
+    && python3 -m pip cache purge
 
 COPY --chown=container \
     --chmod=755 \
-    ./conan /home/container/conan
+    ./conan /workdir/conan
 
-RUN . dev_env/bin/activate && \
-    conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
+WORKDIR /workdir/
 
-COPY --chown=container \
-    --chmod=755 \
-    . /home/container
+RUN conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
 
-RUN . dev_env/bin/activate && \
-    cmake -B build . && \
+COPY --chmod=755 \
+    . /workdir
+
+RUN cmake -B build . && \
     cmake --build build --parallel
 
+FROM builder AS precommit
 
-FROM ubuntu:22.04 AS app
+RUN \
+    --mount=type=cache,target=/var/cache/apt \
+    apt update && apt install -y \
+    clang-format-13 \
+    clang-tidy-13 \
+    git \
+    --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
+RUN \
+    ln -s /usr/bin/run-clang-tidy-13 /usr/local/bin/run-clang-tidy && \
+    ln -s /usr/bin/clang-format-13 /usr/local/bin/clang-format
+
+RUN python3 -m pip install -r requirements_dev.txt \
+    && python3 -m pip cache purge
+
+RUN cmake -B build  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . && \
+    cmake --build build --parallel
+
+ENTRYPOINT [ "pre-commit" ]
+CMD ["run", "--all-files"]
+
+FROM debian:bullseye-slim AS app
 
 RUN useradd container
 
 COPY --from=builder \
     --chown=root \
     --chmod=755 \
-    /home/container/build/bin/server /usr/local/bin/filetransfer_server
+    /workdir/build/bin/server /usr/local/bin/filetransfer_server
 
 EXPOSE 50000
 
