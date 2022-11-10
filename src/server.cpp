@@ -38,7 +38,7 @@ void run_server(const std::string& server_address) {
 
     grpc::EnableDefaultHealthCheckService(true);
     grpc::reflection::InitProtoReflectionServerBuilderPlugin();
-    grpc::ServerBuilder builder;
+    auto builder = grpc::ServerBuilder{};
 
     file_transfer::FileTransferServiceImpl file_transfer_service{};
     builder.RegisterService(&file_transfer_service);
@@ -48,7 +48,7 @@ void run_server(const std::string& server_address) {
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
 
     // Assemble the server.
-    std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
+    auto server = builder.BuildAndStart();
 
     BOOST_LOG_TRIVIAL(info) << "File transfer server started.";
 
@@ -69,7 +69,7 @@ auto main(int argc, char** argv) -> int {
         "server-address", po::value<std::string>()->required(),
         "Address on which the server is listening.");
 
-    po::variables_map variables;
+    auto variables = po::variables_map{};
     try {
         po::store(po::parse_command_line(argc, argv, description), variables);
     } catch (std::exception& e) {

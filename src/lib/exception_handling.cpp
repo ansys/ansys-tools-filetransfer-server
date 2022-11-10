@@ -23,8 +23,8 @@ namespace file_transfer::exceptions {
 
 namespace detail {
 template <typename ExceptionT>
-auto get_exception_message(const ExceptionT& e) -> std::string {
-    return std::string(e.what()) + '\n' +
+auto get_exception_message(const ExceptionT& exc) -> std::string {
+    return std::string(exc.what()) + '\n' +
            to_string(boost::stacktrace::stacktrace());
 }
 } // namespace detail
@@ -33,32 +33,34 @@ auto convert_exceptions_to_status_codes(const std::function<void()>& fun)
     -> ::grpc::Status {
     try {
         fun();
-    } catch (const exceptions::not_found& e) {
+    } catch (const exceptions::not_found& exc) {
         return {
             ::grpc::StatusCode::NOT_FOUND,
-            std::string("Not found: ") + detail::get_exception_message(e)};
-    } catch (const exceptions::failed_precondition& e) {
+            std::string("Not found: ") + detail::get_exception_message(exc)};
+    } catch (const exceptions::failed_precondition& exc) {
         return {
             ::grpc::StatusCode::FAILED_PRECONDITION,
             std::string("Failed precondition: ") +
-                detail::get_exception_message(e)};
-    } catch (const exceptions::invalid_argument& e) {
+                detail::get_exception_message(exc)};
+    } catch (const exceptions::invalid_argument& exc) {
         return {
             ::grpc::StatusCode::INVALID_ARGUMENT,
             std::string("Invalid argument: ") +
-                detail::get_exception_message(e)};
-    } catch (const exceptions::data_loss& e) {
+                detail::get_exception_message(exc)};
+    } catch (const exceptions::data_loss& exc) {
         return {
             ::grpc::StatusCode::DATA_LOSS,
-            std::string("Data loss: ") + detail::get_exception_message(e)};
-    } catch (const exceptions::internal& e) {
+            std::string("Data loss: ") + detail::get_exception_message(exc)};
+    } catch (const exceptions::internal& exc) {
         return {
             ::grpc::StatusCode::INTERNAL,
-            std::string("Internal error: ") + detail::get_exception_message(e)};
-    } catch (const std::exception& e) {
+            std::string("Internal error: ") +
+                detail::get_exception_message(exc)};
+    } catch (const std::exception& exc) {
         return {
             ::grpc::StatusCode::UNKNOWN,
-            std::string("Unknown error: ") + detail::get_exception_message(e)};
+            std::string("Unknown error: ") +
+                detail::get_exception_message(exc)};
     } catch (...) {
         return {
             ::grpc::StatusCode::UNKNOWN,

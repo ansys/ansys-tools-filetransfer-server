@@ -1,28 +1,34 @@
 # syntax=docker/dockerfile:1
-FROM gcc:11-bullseye AS builder
+FROM ubuntu:22.04 AS builder
 
 # Here we install all system libraries that are needed both in the
 # 'builder' and 'precommit' stages. This makes the image slightly
 # heavier (but builder image size doesn't really matter), but increases
 # the incremental build speed.
 RUN \
-    --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/cache/apt,id=filetransfer_server \
     apt update && apt install -y \
-    clang-format-13 \
-    clang-tidy-13 \
+    clang-format-14 \
+    clang-tidy-14 \
     cmake \
+    g++-11 \
     git \
+    make \
     python3-pip \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m pip install conan==1.54.0 \
-    && python3 -m pip cache purge
-
-COPY --chown=container \
-    --chmod=755 \
-    ./conan /workdir/conan
+ENV CC='/usr/bin/gcc-11' CPP='/usr/bin/cpp-11' CXX='/usr/bin/g++-11'
 
 WORKDIR /workdir/
+
+COPY --chmod=755 \
+    ./requirements_dev.txt /workdir/requirements_dev.txt
+
+RUN python3 -m pip install -r /workdir/requirements_dev.txt \
+    && python3 -m pip cache purge
+
+COPY --chmod=755 \
+    ./conan /workdir/conan
 
 RUN conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
 
@@ -35,24 +41,15 @@ RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . && \
 
 FROM builder AS precommit
 
-# RUN \
-# --mount=type=cache,target=/var/cache/apt \
-# apt update && apt install -y \
-
-# --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
 RUN \
-    ln -s /usr/bin/run-clang-tidy-13 /usr/local/bin/run-clang-tidy && \
-    ln -s /usr/bin/clang-format-13 /usr/local/bin/clang-format
-
-RUN python3 -m pip install -r requirements_dev.txt \
-    && python3 -m pip cache purge
+    ln -s /usr/bin/run-clang-tidy-14 /usr/local/bin/run-clang-tidy && \
+    ln -s /usr/bin/clang-format-14 /usr/local/bin/clang-format
 
 ENTRYPOINT [ "pre-commit" ]
 CMD ["run", "--all-files"]
 
 
-FROM debian:bullseye-slim AS app
+FROM ubuntu:22.04 AS app
 
 RUN useradd container
 

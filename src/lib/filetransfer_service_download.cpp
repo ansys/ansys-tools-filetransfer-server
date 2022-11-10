@@ -59,15 +59,16 @@ auto get_request_checked(
 
 auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
     -> std::tuple<
-        const boost::filesystem::path, const std::size_t, const std::size_t> {
+        const boost::filesystem::path, const std::size_t,
+        const std::streamsize> {
 
     auto& request = *get_request_checked(
         arena_, stream_, api::DownloadFileRequest::kInitialize);
 
     const auto& initialize = request.initialize();
     const boost::filesystem::path file_path{initialize.filename()};
-    const std::size_t chunk_size =
-        initialize.chunk_size() > 0 ? initialize.chunk_size() : 1 << 16;
+    const auto chunk_size = boost::numeric_cast<std::streamsize>(
+        initialize.chunk_size() > 0 ? initialize.chunk_size() : 1 << 16);
 
     if (!boost::filesystem::exists(file_path)) {
         throw exceptions::not_found(
@@ -99,46 +100,48 @@ auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
 
 void transfer(
     const boost::filesystem::path& file_path_, const std::size_t file_size_,
-    const std::size_t chunk_size_, google::protobuf::Arena& arena_,
+    const std::streamsize chunk_size_, google::protobuf::Arena& arena_,
     stream_t* stream_) {
 
     get_request_checked(
         arena_, stream_, api::DownloadFileRequest::kReceiveData);
 
-    boost::filesystem::ifstream input_file_stream{
-        file_path_, std::ios_base::binary};
+    auto input_file_stream =
+        boost::filesystem::ifstream{file_path_, std::ios_base::binary};
 
-    const std::size_t num_full_chunks = file_size_ / chunk_size_;
-    const std::size_t partial_chunk_size = file_size_ % chunk_size_;
+    const auto num_full_chunks =
+        boost::numeric_cast<std::streamsize>(file_size_ / chunk_size_);
+    const auto partial_chunk_size =
+        boost::numeric_cast<std::streamsize>(file_size_ % chunk_size_);
 
     auto& transfer_response =
         *(google::protobuf::Arena::CreateMessage<api::DownloadFileResponse>(
             &arena_));
     auto& file_chunk = *transfer_response.mutable_file_data();
-    std::string buffer(chunk_size_, '\0');
+    auto buffer = std::string(chunk_size_, '\0');
 
-    std::size_t chunk_index = 0;
+    auto chunk_index = std::streamsize{0};
     for (; chunk_index < num_full_chunks; ++chunk_index) {
         BOOST_LOG_TRIVIAL(debug) << "Sending chunk " << chunk_index;
-        const std::size_t percent_multiplier_100 = 100;
+        const auto percent_multiplier_100 = std::size_t{100};
         transfer_response.mutable_progress()->set_state(
             boost::numeric_cast<pb_progress_t>(
                 (percent_multiplier_100 * chunk_index) / num_full_chunks));
 
         file_chunk.set_offset(chunk_index * chunk_size_);
 
-        input_file_stream.read(&buffer[0], chunk_size_);
+        input_file_stream.read(buffer.data(), chunk_size_);
         file_chunk.set_data(buffer);
         stream_->Write(transfer_response);
     }
-    if (partial_chunk_size != 0U) {
+    if (partial_chunk_size != 0) {
         BOOST_LOG_TRIVIAL(debug) << "Sending final partial chunk.";
         transfer_response.mutable_progress()->set_state(Progress::COMPLETED);
 
         file_chunk.set_offset(chunk_index * chunk_size_);
 
         buffer.resize(partial_chunk_size);
-        input_file_stream.read(&buffer[0], partial_chunk_size);
+        input_file_stream.read(buffer.data(), partial_chunk_size);
         file_chunk.set_data(buffer);
 
         stream_->Write(transfer_response);
