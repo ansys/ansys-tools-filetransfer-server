@@ -16,7 +16,7 @@ jobs:
   style:
     name: Pre-commit Check
     runs-on: ubuntu-22.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v3
       - name: Build and run pre-commit hooks via docker
