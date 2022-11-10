@@ -1,14 +1,17 @@
 # syntax=docker/dockerfile:1
 FROM ubuntu:22.04 AS builder
 
+RUN useradd container
+
 RUN apt update && apt install -y \
-    gcc-11 \
     cmake \
+    g++-12 \
+    make \
     python3-pip \
     python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+    --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-RUN useradd container
+ENV CC=/usr/bin/gcc-12 CPP=/usr/bin/cpp-12 CXX=/usr/bin/g++-12
 
 USER container
 
@@ -33,6 +36,9 @@ RUN . dev_env/bin/activate && \
     cmake -B build . && \
     cmake --build build --parallel
 
+# FROM builder as clang-tidy
+
+# RUN cmake -B build compilecommands
 
 FROM ubuntu:22.04 AS app
 
