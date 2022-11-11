@@ -1,8 +1,8 @@
-**
-!/api/**
-!/conan/**
-!/src/**
-!/CMakeLists.txt
-!/LICENSE
-!/README
+.conan
+.dockerignore
+.github
+.vscode
+dev_env
+docker
 **/build
+**/*.egg-info

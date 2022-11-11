@@ -19,7 +19,9 @@
 
 namespace file_transfer {
 namespace detail {
-std::string get_sha1_hex_digest(
-    const boost::filesystem::path& path_, const std::size_t chunk_size_ = 1024);
+auto get_sha1_hex_digest(
+    const boost::filesystem::path& path_,
+    const std::streamsize chunk_size_ = 1024
+) -> std::string;
 } // namespace detail
 } // namespace file_transfer

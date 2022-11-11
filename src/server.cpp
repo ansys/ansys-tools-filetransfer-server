@@ -28,17 +28,18 @@
 
 #include <filetransfer_service.h>
 
-void run_server(const std::string& server_address) {
+auto run_server(const std::string& server_address) -> void {
 // Set encoding for paths to UTF-8
 // This is only needed on Windows, because Linux uses UTF-8 by default.
 #ifdef _WIN32
     boost::filesystem::path::imbue(
-        boost::locale::generator().generate("en_US.UTF-8"));
+        boost::locale::generator().generate("en_US.UTF-8")
+    );
 #endif
 
     grpc::EnableDefaultHealthCheckService(true);
     grpc::reflection::InitProtoReflectionServerBuilderPlugin();
-    grpc::ServerBuilder builder;
+    auto builder = grpc::ServerBuilder{};
 
     file_transfer::FileTransferServiceImpl file_transfer_service{};
     builder.RegisterService(&file_transfer_service);
@@ -48,7 +49,7 @@ void run_server(const std::string& server_address) {
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
 
     // Assemble the server.
-    std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
+    auto server = builder.BuildAndStart();
 
     BOOST_LOG_TRIVIAL(info) << "File transfer server started.";
 
@@ -62,14 +63,17 @@ namespace po = boost::program_options;
 /**
  * Parse command-line options and start the server.
  */
-int main(int argc, char** argv) {
+auto main(int argc, char** argv) -> int {
     po::options_description description(
-        "Ansys Filetransfer Utility server options");
+        "Ansys Filetransfer Utility server options"
+    );
     description.add_options()("help", "Show CLI help.")(
-        "server-address", po::value<std::string>()->required(),
-        "Address on which the server is listening.");
+        "server-address",
+        po::value<std::string>()->required(),
+        "Address on which the server is listening."
+    );
 
-    po::variables_map variables;
+    auto variables = po::variables_map{};
     try {
         po::store(po::parse_command_line(argc, argv, description), variables);
     } catch (std::exception& e) {
@@ -77,7 +81,7 @@ int main(int argc, char** argv) {
                   << std::endl;
         return EXIT_FAILURE;
     }
-    if (variables.count("help")) {
+    if (variables.count("help") != 0U) {
         std::cout << description;
         return EXIT_SUCCESS;
     }

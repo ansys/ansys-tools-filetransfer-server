@@ -6,6 +6,8 @@ Language: Cpp
 PointerAlignment: Left
 AccessModifierOffset: -4
 IndentAccessModifiers: False
-AlignAfterOpenBracket: AlwaysBreak
-# QualifierAlignment: Left # only available from clang-format 14
+AlignAfterOpenBracket: BlockIndent
+BinPackArguments: false
+BinPackParameters: false
+QualifierAlignment: Left # only available from clang-format 14
 ---
