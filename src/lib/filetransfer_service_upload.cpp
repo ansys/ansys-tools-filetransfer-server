@@ -132,9 +132,8 @@ auto transfer(
                                  << file_size_ << " bytes.";
 
         out_file << chunk;
-        const auto percent_multiplier_100 = std::size_t{100};
         progress.set_state(boost::numeric_cast<pb_progress_t>(
-            (percent_multiplier_100 * num_bytes_received) / file_size_
+            (100 * num_bytes_received) / file_size_
         ));
         stream_->Write(response);
     }

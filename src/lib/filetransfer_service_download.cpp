@@ -134,10 +134,9 @@ auto transfer(
     auto chunk_index = std::streamsize{0};
     for (; chunk_index < num_full_chunks; ++chunk_index) {
         BOOST_LOG_TRIVIAL(debug) << "Sending chunk " << chunk_index;
-        const auto percent_multiplier_100 = std::size_t{100};
         transfer_response.mutable_progress()->set_state(
             boost::numeric_cast<pb_progress_t>(
-                (percent_multiplier_100 * chunk_index) / num_full_chunks
+                (100 * chunk_index) / num_full_chunks
             )
         );
 
