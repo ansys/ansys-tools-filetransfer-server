@@ -44,9 +44,8 @@ auto get_sha1_hex_digest(
     // std::format not yet supported in our toolchains
     std::stringstream res_stream;
     res_stream << std::hex;
-    const std::streamsize int_width_hex_8 = 8;
     for (const auto& elem : res_int) {
-        res_stream << std::setfill('0') << std::setw(int_width_hex_8) << elem;
+        res_stream << std::setfill('0') << std::setw(8) << elem;
     }
     return res_stream.str();
 }
