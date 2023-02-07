@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.13)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+include(${CONAN_BUILD_DIRS_PROTOBUF}/protobuf-generate.cmake)
+
 if(WIN32)
     # The boost library we get from Conan is compiled for Windows 7+
     # If we don't specify the BOOST_USE_WINAPI_VERSION, there will be
