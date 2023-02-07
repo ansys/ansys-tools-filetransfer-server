@@ -7,7 +7,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#include <ansys/api/utilities/filetransfer/v1/file_transfer_service.grpc.pb.h>
+#include <ansys/api/tools/filetransfer/v1/file_transfer_service.grpc.pb.h>
 
 #ifdef _MSC_VER
 #pragma warning(pop)
@@ -19,10 +19,9 @@ namespace file_transfer {
 
 // namespace detail {
 using pb_progress_t =
-    decltype(::ansys::api::utilities::filetransfer::v1::ProgressResponse()
-                 .state());
+    decltype(::ansys::api::tools::filetransfer::v1::ProgressResponse().state());
 using pb_filesize_t =
-    decltype(::ansys::api::utilities::filetransfer::v1::FileInfo().size());
+    decltype(::ansys::api::tools::filetransfer::v1::FileInfo().size());
 
 enum Progress : pb_progress_t {
     INITIALIZED = 0,
@@ -31,9 +30,8 @@ enum Progress : pb_progress_t {
 // }
 
 /// <summary>This class implements the file transfer service.</summary>
-class FileTransferServiceImpl final
-    : public ::ansys::api::utilities::filetransfer::v1::FileTransferService::
-          Service {
+class FileTransferServiceImpl final : public ::ansys::api::tools::filetransfer::
+                                          v1::FileTransferService::Service {
 
 public:
     // ---------- RPC services [file transfer] ----------
@@ -45,9 +43,8 @@ public:
     virtual auto DownloadFile(
         ::grpc::ServerContext* context,
         ::grpc::ServerReaderWriter<
-            ::ansys::api::utilities::filetransfer::v1::DownloadFileResponse,
-            ::ansys::api::utilities::filetransfer::v1::DownloadFileRequest>*
-            stream
+            ::ansys::api::tools::filetransfer::v1::DownloadFileResponse,
+            ::ansys::api::tools::filetransfer::v1::DownloadFileRequest>* stream
     ) -> ::grpc::Status override;
 
     /// <summary>Implements the "UploadFile" operation.</summary>
@@ -57,9 +54,8 @@ public:
     virtual auto UploadFile(
         ::grpc::ServerContext* context,
         ::grpc::ServerReaderWriter<
-            ::ansys::api::utilities::filetransfer::v1::UploadFileResponse,
-            ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>*
-            stream
+            ::ansys::api::tools::filetransfer::v1::UploadFileResponse,
+            ::ansys::api::tools::filetransfer::v1::UploadFileRequest>* stream
     ) -> ::grpc::Status override;
 
 private:

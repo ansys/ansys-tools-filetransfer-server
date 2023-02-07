@@ -1,8 +1,10 @@
-project(ansys_utilities_filetransfer_server)
+project(ansys_tools_filetransfer_server)
 cmake_minimum_required(VERSION 3.13)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
+
+include(${CONAN_BUILD_DIRS_PROTOBUF}/protobuf-generate.cmake)
 
 if(WIN32)
     # The boost library we get from Conan is compiled for Windows 7+
