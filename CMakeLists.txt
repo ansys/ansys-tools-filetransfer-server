@@ -1,4 +1,4 @@
-project(ansys_utilities_filetransfer_server)
+project(ansys_tools_filetransfer_server)
 cmake_minimum_required(VERSION 3.13)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)

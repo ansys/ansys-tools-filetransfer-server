@@ -36,7 +36,7 @@
 namespace file_transfer {
 namespace download_impl {
 
-namespace api = ::ansys::api::utilities::filetransfer::v1;
+namespace api = ::ansys::api::tools::filetransfer::v1;
 using stream_t = ::grpc::
     ServerReaderWriter<api::DownloadFileResponse, api::DownloadFileRequest>;
 
@@ -178,9 +178,8 @@ auto finalize(google::protobuf::Arena& arena_, stream_t* stream_) -> void {
 auto FileTransferServiceImpl::DownloadFile(
     ::grpc::ServerContext* /*unused*/,
     ::grpc::ServerReaderWriter<
-        ::ansys::api::utilities::filetransfer::v1::
-            DownloadFileResponse /*unused*/,
-        ::ansys::api::utilities::filetransfer::v1::DownloadFileRequest>* stream
+        ::ansys::api::tools::filetransfer::v1::DownloadFileResponse /*unused*/,
+        ::ansys::api::tools::filetransfer::v1::DownloadFileRequest>* stream
 ) -> ::grpc::Status {
 
     return exceptions::convert_exceptions_to_status_codes(

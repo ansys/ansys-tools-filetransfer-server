@@ -34,7 +34,7 @@ namespace file_transfer {
 
 namespace upload_impl {
 
-namespace api = ::ansys::api::utilities::filetransfer::v1;
+namespace api = ::ansys::api::tools::filetransfer::v1;
 using stream_t =
     ::grpc::ServerReaderWriter<api::UploadFileResponse, api::UploadFileRequest>;
 
@@ -174,8 +174,8 @@ auto finalize(
 auto FileTransferServiceImpl::UploadFile(
     ::grpc::ServerContext* /*unused*/,
     ::grpc::ServerReaderWriter<
-        ::ansys::api::utilities::filetransfer::v1::UploadFileResponse,
-        ::ansys::api::utilities::filetransfer::v1::UploadFileRequest>* stream_
+        ::ansys::api::tools::filetransfer::v1::UploadFileResponse,
+        ::ansys::api::tools::filetransfer::v1::UploadFileRequest>* stream_
 ) -> ::grpc::Status {
 
     return exceptions::convert_exceptions_to_status_codes(
