@@ -9,7 +9,7 @@ This code implements the server-side in C++.
 The easiest way to use the Filetransfer Utility Server is through the provided docker container:
 
 ```bash
-docker run ghcr.io/ansys/utilities-filetransfer
+docker run ghcr.io/ansys/tools-filetransfer
 ```
 
 To expose the uploaded files to another process, you can for example share a volume between two Docker containers. A docker compose file might look like this:
@@ -25,9 +25,9 @@ services:
     volumes:
       - "shared_data:/home/container/workdir/"
     user: "1000:1000"
-  ansys-utilities-filetransfer:
+  ansys-tools-filetransfer:
     restart: unless-stopped
-    image: ${IMAGE_NAME_FILETRANSFER:-ghcr.io/ansys/utilities-filetransfer:latest}
+    image: ${IMAGE_NAME_FILETRANSFER:-ghcr.io/ansys/tools-filetransfer:latest}
     ports:
       - "${PORT_FILETRANSFER:-50556}:50000"
     working_dir: /home/container/workdir
@@ -46,8 +46,8 @@ volumes:
 To build the server, we first need to clone the repository and its submodules
 
 ```bash
-git clone https://github.com/ansys/ansys-utilities-filetransfer-server
-cd ansys-utilities-filetransfer-server
+git clone https://github.com/ansys/ansys-tools-filetransfer-server
+cd ansys-tools-filetransfer-server
 git submodule update --init --recursive
 ```
 

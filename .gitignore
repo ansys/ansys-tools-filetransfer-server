@@ -2,3 +2,4 @@
 .conan
 build
 dev_env
+.venv
