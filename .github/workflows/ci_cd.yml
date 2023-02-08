@@ -47,7 +47,7 @@ jobs:
           submodules: true
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
       - uses: actions/cache@v3
         name: Pip cache
         with:
