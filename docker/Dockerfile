@@ -30,7 +30,7 @@ RUN python3 -m pip install -r /workdir/requirements_dev.txt \
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
+RUN conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
 
 COPY --chmod=755 \
     . /workdir

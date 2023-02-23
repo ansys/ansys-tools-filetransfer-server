@@ -67,13 +67,13 @@ Fetch the dependencies with
 On Windows:
 
 ```bash
-conan install -if build --build missing --profile ./conan/windows_x86_64_Release ./conan
+conan install -of build --build missing --profile:host=./conan/windows_x86_64_Release --profile:build=./conan/windows_x86_64_Release ./conan
 ```
 
 On Linux:
 
 ```bash
-conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
+conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
 ```
 
 ### Configure + Build

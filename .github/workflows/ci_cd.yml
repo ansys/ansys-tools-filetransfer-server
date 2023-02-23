@@ -63,7 +63,7 @@ jobs:
           pip install -r requirements_dev.txt
       - name: Run Conan and build with CMake
         run: |
-          conan install -if build --build missing --profile ./conan/${{ matrix.conan_config }} ./conan
+          conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
           cmake -B build .
           cmake --build build --config Release --parallel
       # - name: Test

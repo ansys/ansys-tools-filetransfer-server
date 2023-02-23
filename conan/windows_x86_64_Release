@@ -5,7 +5,3 @@ build_type=Release
 compiler=Visual Studio
 compiler.version=16
 compiler.runtime=MD
-
-[options]
-[build_requires]
-[env]
