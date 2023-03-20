@@ -1,6 +1,6 @@
 [requires]
 grpc/1.50.1
-protobuf/3.21.9
+protobuf/[~3]
 boost/1.81.0
 
 [generators]
