@@ -2,6 +2,6 @@
 arch=x86_64
 os=Windows
 build_type=Release
-compiler=Visual Studio
+compiler=msvc
 compiler.version=16
 compiler.runtime=MD
