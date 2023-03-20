@@ -4,4 +4,4 @@ os=Windows
 build_type=Release
 compiler=msvc
 compiler.version=192
-compiler.runtime=MD
+compiler.runtime=static
