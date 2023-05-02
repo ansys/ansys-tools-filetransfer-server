@@ -1,2 +1,2 @@
-pre-commit==3.2.2
+pre-commit==3.3.0
 conan==1.59.0
