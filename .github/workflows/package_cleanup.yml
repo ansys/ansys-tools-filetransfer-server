@@ -1,6 +1,5 @@
 name: Package cleanup
 on:
-  push:
   workflow_dispatch:
   schedule: # UTC at 0200
     - cron: "0 2 * * *"
