@@ -81,6 +81,6 @@ conan install -of build --build missing --profile:host=./conan/linux_x86_64_Rele
 Then use CMake to configure and build the project:
 
 ```bash
-cmake -B build .
+cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake'
 cmake --build build --config Release --parallel
 ```

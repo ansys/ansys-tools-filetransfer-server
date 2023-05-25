@@ -1,7 +1,9 @@
 [settings]
 arch=x86_64
-os=Windows
 build_type=Release
 compiler=msvc
+compiler.cppstd=14
+compiler.runtime=dynamic
+compiler.runtime_type=Release
 compiler.version=192
-compiler.runtime=static
+os=Windows
