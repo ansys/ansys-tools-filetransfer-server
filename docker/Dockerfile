@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+
 FROM ubuntu:22.04 AS builder
 
 # Here we install all system libraries that are needed both in the
@@ -35,37 +35,37 @@ RUN conan install -of build --build missing --profile:host=./conan/linux_x86_64_
 COPY --chmod=755 \
     . /workdir
 
-RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . && \
+RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' . && \
     cmake --build build --parallel
 
 
-FROM builder AS precommit
+# FROM builder AS precommit
 
-RUN \
-    ln -s /usr/bin/run-clang-tidy-14 /usr/local/bin/run-clang-tidy && \
-    ln -s /usr/bin/clang-format-14 /usr/local/bin/clang-format
+# RUN \
+#     ln -s /usr/bin/run-clang-tidy-14 /usr/local/bin/run-clang-tidy && \
+#     ln -s /usr/bin/clang-format-14 /usr/local/bin/clang-format
 
-ENTRYPOINT [ "pre-commit" ]
-CMD ["run", "--all-files"]
+# ENTRYPOINT [ "pre-commit" ]
+# CMD ["run", "--all-files"]
 
 
-FROM ubuntu:22.04 AS app
+# FROM ubuntu:22.04 AS app
 
-RUN useradd container
+# RUN useradd container
 
-COPY --from=builder \
-    --chown=root \
-    --chmod=755 \
-    /workdir/build/bin/server /usr/local/bin/filetransfer_server
+# COPY --from=builder \
+#     --chown=root \
+#     --chmod=755 \
+#     /workdir/build/bin/server /usr/local/bin/filetransfer_server
 
-EXPOSE 50000
+# EXPOSE 50000
 
-RUN mkdir -p /home/container/workdir && chown -R container:container /home/container
+# RUN mkdir -p /home/container/workdir && chown -R container:container /home/container
 
-USER container
+# USER container
 
-WORKDIR /home/container/workdir
-VOLUME /home/container/workdir
+# WORKDIR /home/container/workdir
+# VOLUME /home/container/workdir
 
-ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
-CMD ["--server-address", "0.0.0.0:50000"]
+# ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
+# CMD ["--server-address", "0.0.0.0:50000"]

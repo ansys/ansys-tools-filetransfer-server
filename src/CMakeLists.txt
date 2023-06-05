@@ -1,7 +1,9 @@
 find_package(Boost REQUIRED COMPONENTS filesystem locale log program_options stacktrace)
+# find_package(Boost REQUIRED COMPONENTS filesystem locale log program_options)
 
 if(WIN32)
     find_package(Boost REQUIRED COMPONENTS stacktrace_windbg)
+
     # The boost library we get from Conan is compiled for Windows 7+
     # If we don't specify the BOOST_USE_WINAPI_VERSION, there will be
     # undefined symbols when linking the final binary.
@@ -9,7 +11,7 @@ if(WIN32)
     add_definitions(-DBOOST_USE_WINAPI_VERSION=0x0601)
 endif()
 
-add_definitions(-DBOOST_STACKTRACE_LINK)
+
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -26,9 +28,5 @@ endif()
 add_subdirectory("lib")
 
 add_executable(server server.cpp)
-target_link_libraries(server filetransfer_service)
-target_link_libraries(server Boost::filesystem Boost::locale Boost::log Boost::program_options Boost::stacktrace)
-
-if(WIN32)
-    target_link_libraries(server Boost::stacktrace_windbg)
-endif()
+target_link_libraries(server PUBLIC filetransfer_service)
+target_link_libraries(server PUBLIC Boost::filesystem Boost::locale Boost::log Boost::program_options)

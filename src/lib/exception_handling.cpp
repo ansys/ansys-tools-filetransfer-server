@@ -24,8 +24,8 @@ namespace file_transfer::exceptions {
 namespace detail {
 template <typename ExceptionT>
 auto get_exception_message(const ExceptionT& exc) -> std::string {
-    return std::string(exc.what()) + '\n' +
-           to_string(boost::stacktrace::stacktrace());
+    return std::string(exc.what()) + '\n' + "<TODO: stacktrace goes here.>";
+    //    to_string(boost::stacktrace::stacktrace());
 }
 } // namespace detail
 
@@ -64,8 +64,8 @@ auto convert_exceptions_to_status_codes(const std::function<void()>& fun)
     } catch (...) {
         return {
             ::grpc::StatusCode::UNKNOWN,
-            std::string("Fatal error: \n") +
-                to_string(boost::stacktrace::stacktrace())};
+            std::string("Fatal error: \n") + "<TODO: stacktrace goes here.>"};
+        // to_string(boost::stacktrace::stacktrace())};
     }
     return ::grpc::Status::OK;
 }
