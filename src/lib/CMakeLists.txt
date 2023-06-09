@@ -2,6 +2,8 @@ find_package(Boost REQUIRED COMPONENTS filesystem stacktrace)
 
 if(WIN32)
     find_package(Boost REQUIRED COMPONENTS stacktrace_windbg)
+else()
+    find_package(Boost REQUIRED COMPONENTS stacktrace_addr2line)
 endif()
 
 add_definitions(-DBOOST_STACKTRACE_LINK)
@@ -22,6 +24,8 @@ target_link_libraries(filetransfer_service PUBLIC Boost::stacktrace)
 
 if(WIN32)
     target_link_libraries(filetransfer_service PUBLIC Boost::stacktrace_windbg)
+else()
+    target_link_libraries(filetransfer_service PUBLIC Boost::stacktrace_addr2line)
 endif()
 
 target_include_directories(filetransfer_service PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")

@@ -9,6 +9,8 @@ if(WIN32)
     # undefined symbols when linking the final binary.
     # _WIN32_WINNT=0x0601 corresponds to Windows 7
     add_definitions(-DBOOST_USE_WINAPI_VERSION=0x0601)
+else()
+    find_package(Boost REQUIRED COMPONENTS stacktrace_addr2line)
 endif()
 
 
