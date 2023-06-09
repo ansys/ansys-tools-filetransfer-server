@@ -56,7 +56,7 @@ RUN useradd container
 COPY --from=builder \
     --chown=root \
     --chmod=755 \
-    /workdir/build/bin/server /usr/local/bin/filetransfer_server
+    /workdir/build/src/server /usr/local/bin/filetransfer_server
 
 EXPOSE 50000
 
