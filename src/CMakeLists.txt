@@ -1,5 +1,4 @@
 find_package(Boost REQUIRED COMPONENTS filesystem locale log program_options stacktrace)
-# find_package(Boost REQUIRED COMPONENTS filesystem locale log program_options)
 
 if(WIN32)
     find_package(Boost REQUIRED COMPONENTS stacktrace_windbg)
@@ -12,8 +11,6 @@ if(WIN32)
 else()
     find_package(Boost REQUIRED COMPONENTS stacktrace_addr2line)
 endif()
-
-
 
 set(CMAKE_CXX_STANDARD 20)
 
