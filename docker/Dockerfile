@@ -1,4 +1,5 @@
 # syntax=docker/dockerfile:1
+
 FROM ubuntu:22.04 AS builder
 
 # Here we install all system libraries that are needed both in the
@@ -30,14 +31,13 @@ RUN python3 -m pip install -r /workdir/requirements_dev.txt \
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
+RUN conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
 
 COPY --chmod=755 \
     . /workdir
 
-RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . && \
-    cmake --build build --parallel
-
+RUN cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' .
+RUN cmake --build build --parallel
 
 FROM builder AS precommit
 
@@ -56,7 +56,7 @@ RUN useradd container
 COPY --from=builder \
     --chown=root \
     --chmod=755 \
-    /workdir/build/bin/server /usr/local/bin/filetransfer_server
+    /workdir/build/src/server /usr/local/bin/filetransfer_server
 
 EXPOSE 50000
 

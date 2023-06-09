@@ -63,8 +63,8 @@ jobs:
           pip install -r requirements_dev.txt
       - name: Run Conan and build with CMake
         run: |
-          conan install -if build --build missing --profile ./conan/${{ matrix.conan_config }} ./conan
-          cmake -B build .
+          conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
+          cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
       # - name: Test
       #   run: |
@@ -99,4 +99,3 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           target: app
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest

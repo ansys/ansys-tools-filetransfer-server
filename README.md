@@ -67,13 +67,13 @@ Fetch the dependencies with
 On Windows:
 
 ```bash
-conan install -if build --build missing --profile ./conan/windows_x86_64_Release ./conan
+conan install -of build --build missing --profile:host=./conan/windows_x86_64_Release --profile:build=./conan/windows_x86_64_Release ./conan
 ```
 
 On Linux:
 
 ```bash
-conan install -if build --build missing --profile ./conan/linux_x86_64_Release ./conan
+conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
 ```
 
 ### Configure + Build
@@ -81,6 +81,6 @@ conan install -if build --build missing --profile ./conan/linux_x86_64_Release .
 Then use CMake to configure and build the project:
 
 ```bash
-cmake -B build .
+cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release --parallel
 ```
