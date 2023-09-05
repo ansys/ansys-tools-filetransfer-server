@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.FILETRANSFER_SERVER_TOKEN }}
@@ -42,7 +42,7 @@ jobs:
           - os: windows-2019
             conan_config: windows_x86_64_Release
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.FILETRANSFER_SERVER_TOKEN }}
@@ -79,7 +79,7 @@ jobs:
       IMAGE_OWNER: ansys-internal
       IMAGE_NAME_BASE: tools-filetransfer
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.FILETRANSFER_SERVER_TOKEN }}
