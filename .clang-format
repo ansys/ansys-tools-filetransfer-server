@@ -10,4 +10,8 @@ AlignAfterOpenBracket: BlockIndent
 BinPackArguments: false
 BinPackParameters: false
 QualifierAlignment: Left # only available from clang-format 14
+CommentPragmas: '^The above copyright notice'
+# Without the 'CommentPragmas', a specific part of the copyright header
+# does not match the column limit. Since we don't want it to be formatted,
+# we need to tell clang-format to ignore it.
 ---
