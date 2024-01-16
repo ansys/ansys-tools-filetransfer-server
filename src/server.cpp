@@ -87,7 +87,7 @@ namespace po = boost::program_options;
  */
 auto main(int argc, char** argv) -> int {
     po::options_description description(
-        "Ansys Filetransfer Utility server options"
+        "Ansys Filetransfer Tool server options"
     );
     description.add_options()("help", "Show CLI help.")(
         "server-address",
