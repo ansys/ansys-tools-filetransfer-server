@@ -1,12 +1,18 @@
-# Filetransfer Utility Server
+# Filetransfer Tool Server
 
-The Filetranser Utility is a minimal gRPC API for transferring files between a client and a remote server.
+The Filetranser Tool is a minimal gRPC API for transferring files between a client and a remote server.
 
 This code implements the server-side in C++.
 
+**WARNING**:
+
+The filetransfer tool does not provide any security measures. Any file
+on the server component can be accessed by any client. Without additional security
+measures, it is unsuited for use over an untrusted network.
+
 ## Quickstart
 
-The easiest way to use the Filetransfer Utility Server is through the provided docker container:
+The easiest way to use the Filetransfer Tool Server is through the provided docker container:
 
 ```bash
 docker run ghcr.io/ansys/tools-filetransfer
@@ -60,7 +66,7 @@ pip install -U pip wheel
 pip install -r requirements_dev.txt
 ```
 
-If you are otherwise using ``conan``, ensure that you have a clean "default" profile, e.g. by setting the ``CONAN_USER_HOME`` to an empty directory.
+If you are otherwise using ``conan``, ensure that you have a clean "default" profile, e.g. by setting the ``CONAN_USER_HOME`` environment variable to an empty directory.
 
 Fetch the dependencies with
 
@@ -83,4 +89,12 @@ Then use CMake to configure and build the project:
 ```bash
 cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release --parallel
+```
+
+### Docker build
+
+To build the docker image, run the following command from the root of the repository:
+
+```bash
+docker build -f docker/Dockerfile .
 ```
