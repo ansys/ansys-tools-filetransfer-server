@@ -49,9 +49,13 @@ ENTRYPOINT [ "pre-commit" ]
 CMD ["run", "--all-files"]
 
 
-FROM ubuntu:22.04 AS app
+FROM ubuntu:22.04 AS workdir_creator
 
 RUN useradd container
+
+RUN mkdir -p /home/container/workdir && chown -R container:container /home/container
+
+FROM workdir_creator AS app_full
 
 COPY --from=builder \
     --chown=root \
@@ -60,12 +64,44 @@ COPY --from=builder \
 
 EXPOSE 50000
 
-RUN mkdir -p /home/container/workdir && chown -R container:container /home/container
-
 USER container
 
 WORKDIR /home/container/workdir
 VOLUME /home/container/workdir
+
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL org.opencontainers.image.created=$BUILD_DATE
+LABEL org.opencontainers.image.authors="Dominik Gresch <dominik.gresch@ansys.com>"
+LABEL org.opencontainers.image.vendor="ANSYS Inc."
+LABEL org.opencontainers.image.revision=$VCS_REF
+
+ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
+CMD ["--server-address", "0.0.0.0:50000"]
+
+FROM scratch AS app_minimal
+
+COPY --from=builder \
+    --chmod=755 \
+    /workdir/build/src/server /usr/local/bin/filetransfer_server
+
+USER 1000:1000
+
+COPY --from=workdir_creator --chown=1000:1000 --chmod=777 /home/container/workdir /home/container/workdir
+
+EXPOSE 50000
+
+WORKDIR /home/container/workdir
+VOLUME /home/container/workdir
+
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL org.opencontainers.image.created=$BUILD_DATE
+LABEL org.opencontainers.image.authors="Dominik Gresch <dominik.gresch@ansys.com>"
+LABEL org.opencontainers.image.vendor="ANSYS Inc."
+LABEL org.opencontainers.image.revision=$VCS_REF
 
 ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
 CMD ["--server-address", "0.0.0.0:50000"]
