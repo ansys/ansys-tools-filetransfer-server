@@ -58,36 +58,41 @@ auto convert_exceptions_to_status_codes(const std::function<void()>& fun)
     } catch (const exceptions::not_found& exc) {
         return {
             ::grpc::StatusCode::NOT_FOUND,
-            std::string("Not found: ") + detail::get_exception_message(exc)};
+            std::string("Not found: ") + detail::get_exception_message(exc)
+        };
     } catch (const exceptions::failed_precondition& exc) {
         return {
             ::grpc::StatusCode::FAILED_PRECONDITION,
             std::string("Failed precondition: ") +
-                detail::get_exception_message(exc)};
+                detail::get_exception_message(exc)
+        };
     } catch (const exceptions::invalid_argument& exc) {
         return {
             ::grpc::StatusCode::INVALID_ARGUMENT,
             std::string("Invalid argument: ") +
-                detail::get_exception_message(exc)};
+                detail::get_exception_message(exc)
+        };
     } catch (const exceptions::data_loss& exc) {
         return {
             ::grpc::StatusCode::DATA_LOSS,
-            std::string("Data loss: ") + detail::get_exception_message(exc)};
+            std::string("Data loss: ") + detail::get_exception_message(exc)
+        };
     } catch (const exceptions::internal& exc) {
         return {
             ::grpc::StatusCode::INTERNAL,
-            std::string("Internal error: ") +
-                detail::get_exception_message(exc)};
+            std::string("Internal error: ") + detail::get_exception_message(exc)
+        };
     } catch (const std::exception& exc) {
         return {
             ::grpc::StatusCode::UNKNOWN,
-            std::string("Unknown error: ") +
-                detail::get_exception_message(exc)};
+            std::string("Unknown error: ") + detail::get_exception_message(exc)
+        };
     } catch (...) {
         return {
             ::grpc::StatusCode::UNKNOWN,
             std::string("Fatal error: \n") +
-                to_string(boost::stacktrace::stacktrace())};
+                to_string(boost::stacktrace::stacktrace())
+        };
     }
     return ::grpc::Status::OK;
 }
