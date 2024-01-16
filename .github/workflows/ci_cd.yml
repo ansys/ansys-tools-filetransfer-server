@@ -91,11 +91,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build full image and export to GHCR
+      - name: Set the current date as build date
+        run: |
+          echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+
+      - name: Build image and export to GHCR
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./docker/Dockerfile
           push: ${{ github.ref == 'refs/heads/main' }}
-          target: app
+          target: app_minimal
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest
+          build-args: |
+            BUILD_DATE=${{ env.BUILD_DATE }}
+            VCS_REF=${{ github.sha }}
