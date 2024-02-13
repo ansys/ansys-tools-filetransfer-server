@@ -1,0 +1,27 @@
+# NOTE:
+# The Poetry setup is used only for development dependencies, since
+# this is primarily a C++ project.
+
+[tool.poetry]
+# TODO: Use package-mode = false once Poetry >1.7.1 is released.
+# See https://github.com/python-poetry/poetry/pull/8650
+# for the PR introducing this feature.
+name = "ansys-tools-filetransfer-server"
+version = "0.1.0"
+description = ""
+authors = ["ANSYS, Inc. <pyansys.core@ansys.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.6.1"
+conan = "^2.0.17"
+Sphinx = "^7.2.6"
+ansys-sphinx-theme = "^0.13.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
