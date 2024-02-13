@@ -47,7 +47,7 @@ RUN \
     ln -s /usr/bin/run-clang-tidy-14 /usr/local/bin/run-clang-tidy && \
     ln -s /usr/bin/clang-format-14 /usr/local/bin/clang-format
 
-ENTRYPOINT [ "pre-commit" ]
+ENTRYPOINT [ "poetry", "run", "pre-commit" ]
 CMD ["run", "--all-files"]
 
 
