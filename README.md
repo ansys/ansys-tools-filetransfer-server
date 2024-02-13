@@ -1,12 +1,12 @@
 # Filetransfer Tool Server
 
-The Filetranser Tool is a minimal gRPC API for transferring files between a client and a remote server.
+The Filetransfer Tool is a minimal gRPC API for transferring files between a client and a remote server.
 
 This code implements the server-side in C++.
 
 **WARNING**:
 
-The filetransfer tool does not provide any security measures. Any file
+The Filetransfer Tool does not provide any security measures. Any file
 on the server component can be accessed by any client. Without additional security
 measures, it is unsuited for use over an untrusted network.
 
@@ -17,6 +17,12 @@ The easiest way to use the Filetransfer Tool Server is through the provided dock
 ```bash
 docker run ghcr.io/ansys/tools-filetransfer
 ```
+
+**NOTE**:
+
+This Docker container is not publicly available. To use the Filetransfer Tool Server,
+you will need to build the Docker container yourself. See the
+[Building](#building) section for instructions.
 
 To expose the uploaded files to another process, you can for example share a volume between two Docker containers. A docker compose file might look like this:
 
