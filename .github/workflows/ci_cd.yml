@@ -53,16 +53,16 @@ jobs:
         name: Pip cache
         with:
           path: ${{ startsWith(runner.os, 'Linux') && '~/.cache/pip' || '~\AppData\Local\pip\Cache' }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements_dev.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-pip-
       - name: Install dev dependencies
         run: |
-          pip install -U pip wheel
-          pip install -r requirements_dev.txt
+          pip install -U poetry
+          poetry install
       - name: Run Conan and build with CMake
         run: |
-          conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
+          poetry run conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
       # - name: Test

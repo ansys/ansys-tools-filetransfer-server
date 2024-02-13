@@ -22,16 +22,18 @@ ENV CC='/usr/bin/gcc-11' CPP='/usr/bin/cpp-11' CXX='/usr/bin/g++-11'
 
 WORKDIR /workdir/
 
-COPY --chmod=755 \
-    ./requirements_dev.txt /workdir/requirements_dev.txt
-
-RUN python3 -m pip install -r /workdir/requirements_dev.txt \
+RUN python3 -m pip install poetry \
     && python3 -m pip cache purge
+
+COPY --chmod=755 \
+    ./poetry.lock ./pyproject.toml /workdir/
+
+RUN poetry install
 
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
+RUN poetry run conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
 
 COPY --chmod=755 \
     . /workdir
