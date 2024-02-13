@@ -12,7 +12,7 @@ measures, it is unsuited for use over an untrusted network.
 
 ## Quickstart
 
-The easiest way to use the Filetransfer Tool Server is through the provided docker container:
+The easiest way to use the Filetransfer Tool Server is through the Docker container:
 
 ```bash
 docker run ghcr.io/ansys/tools-filetransfer

@@ -28,7 +28,7 @@ RUN python3 -m pip install poetry \
 COPY --chmod=755 \
     ./poetry.lock ./pyproject.toml /workdir/
 
-RUN poetry install
+RUN poetry install --no-root
 
 COPY --chmod=755 \
     ./conan /workdir/conan

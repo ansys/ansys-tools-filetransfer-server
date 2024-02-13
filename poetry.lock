@@ -81,6 +81,21 @@ html5lib = ["html5lib"]
 lxml = ["lxml"]
 
 [[package]]
+name = "breathe"
+version = "4.35.0"
+description = "Sphinx Doxygen renderer"
+optional = false
+python-versions = "*"
+files = [
+    {file = "breathe-4.35.0-py3-none-any.whl", hash = "sha256:52c581f42ca4310737f9e435e3851c3d1f15446205a85fbc272f1f97ed74f5be"},
+    {file = "breathe-4.35.0.tar.gz", hash = "sha256:5165541c3c67b6c7adde8b3ecfe895c6f7844783c4076b6d8d287e4f33d62386"},
+]
+
+[package.dependencies]
+docutils = ">=0.12"
+Sphinx = ">=4.0,<5.0.0 || >5.0.0"
+
+[[package]]
 name = "certifi"
 version = "2024.2.2"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -885,4 +900,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "deb6f339b0b719f353d914c7fac5a9a1805a0bbcce53645cd808636fae576d98"
+content-hash = "4962885065ced681ea87d297f28fcf35b1279d3db9a58bf69655048d2fdeb723"
