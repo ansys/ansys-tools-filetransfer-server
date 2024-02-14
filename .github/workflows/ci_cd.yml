@@ -68,9 +68,10 @@ jobs:
           poetry run conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
-      # - name: Test
-      #   run: |
-      #     ./build/bin/server
+      - name: Run tests
+        run: |
+          ctest --output-on-failure -V
+        working-directory: build
 
   docs:
     name: Documentation

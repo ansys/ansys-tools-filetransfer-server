@@ -19,6 +19,7 @@ add_library(
     exception_handling.cpp
 )
 target_link_libraries(filetransfer_service PUBLIC file_transfer_api)
+target_link_libraries(filetransfer_service PUBLIC Boost::log)
 target_link_libraries(filetransfer_service PUBLIC Boost::filesystem)
 target_link_libraries(filetransfer_service PUBLIC Boost::stacktrace)
 
