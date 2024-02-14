@@ -18,18 +18,16 @@ release = version = "0.0.1"
 # -- General configuration ---------------------------------------------------
 extensions = [
     "sphinx.ext.autodoc",
-    # "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
-    # "sphinx.ext.doctest",
     "sphinx.ext.extlinks",
     "sphinx.ext.intersphinx",
-    # "sphinx_autodoc_typehints",
-    # "sphinx_copybutton",
+    "sphinx_copybutton",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
     "sphinx.ext.imgmath",
     "sphinx.ext.todo",
     "breathe",
+    "sphinx_design",
 ]
 
 # Intersphinx mapping
