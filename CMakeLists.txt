@@ -3,6 +3,6 @@ project(ansys_tools_filetransfer_server)
 
 add_subdirectory("api")
 add_subdirectory("src")
-add_subdirectory("test")
 
 enable_testing()
+add_subdirectory("test")
