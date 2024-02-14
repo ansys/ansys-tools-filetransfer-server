@@ -42,6 +42,11 @@
 namespace file_transfer {
 namespace exceptions {
 
+/**
+ * @brief Convert exceptions to gRPC status codes.
+ * @param fun The function to execute.
+ * @return The gRPC status code.
+ */
 auto convert_exceptions_to_status_codes(const std::function<void()>&)
     -> ::grpc::Status;
 
