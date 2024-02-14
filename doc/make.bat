@@ -31,6 +31,9 @@ if errorlevel 9009 (
 )
 
 rmdir /s /q %DOXYGENDIR%\xml > /NUL 2>&1
+pushd %DOXYGENDIR%
+doxygen
+popd
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 goto end
 
