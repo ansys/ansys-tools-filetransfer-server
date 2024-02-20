@@ -1,10 +1,16 @@
 FileTransfer Tool Server
 ========================
 
-The Ansys FileTransfer Tool is a minimal gRPC API for transferring files between
-a client and a remote server.
+The Ansys FileTransfer Tool is a simple gRPC API for transferring files between
+a client and a remote server. Its target use case are local Docker deployments or
+simple remote deployments.
 
-This repository provides the server component of the FileTansfer Tool.
+The Ansys FileTransfer Tool is composed of two parts:
+
+- A Python client, which is the tool itself and contained in the
+  `ansys-tools-filetransfer <https://github.com/ansys-internal/ansys-tools-filetransfer>`_
+  repository.  
+- A C++ server, which is contained in this repository.
 
 **WARNING**:
 
