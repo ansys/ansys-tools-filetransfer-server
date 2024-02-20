@@ -3,10 +3,11 @@
 Getting started
 ---------------
 
-Getting the code
-~~~~~~~~~~~~~~~~
+Clone the repository
+~~~~~~~~~~~~~~~~~~~~
 
-The first step to get started with the Filetransfer Tool Server is to clone the repository and its submodules:
+Your first step is to clone the Filetransfer Tool Server repository and its submodules
+with these commands:
 
 .. code-block:: bash
 
@@ -15,13 +16,13 @@ The first step to get started with the Filetransfer Tool Server is to clone the 
     git submodule update --init --recursive
 
 
-Building the server
-~~~~~~~~~~~~~~~~~~~
+Build the server
+~~~~~~~~~~~~~~~~
 
-There are two options to build the Filetransfer Tool Server:
+You have two options for building the Filetransfer Tool Server:
 
-- Using Docker: Build a Docker image that contains the server.
-- Manual build (Linux or Windows): Build the server directly on your machine.
+- Use Docker: Build a Docker image that contains the server.
+- Use a Manual build (Linux or Windows): Build the server directly on your machine.
 
 .. tab-set::
 
@@ -35,13 +36,13 @@ There are two options to build the Filetransfer Tool Server:
 
     .. tab-item:: Linux
 
-        To build on Linux, you need to have the following tools installed:
+        To build on Linux, you must have these tools installed:
 
         - ``python3``
         - ``cmake``
-        - the ``g++`` compiler
+        - ``g++`` compiler
 
-        First, you need to install the development dependencies:
+        First, you must install the development dependencies:
 
         .. code-block:: bash
 
@@ -65,13 +66,13 @@ There are two options to build the Filetransfer Tool Server:
 
     .. tab-item:: Windows
 
-        To build on Windows, you need to have the following tools installed:
+        To build on Windows, you must have these tools installed:
 
         - ``python``
         - ``cmake``
-        - the MSVC compiler
+        - MSVC compiler
 
-        First, you need to install the development dependencies:
+        First, you must install the development dependencies:
 
         .. code-block:: powershell
 
@@ -94,8 +95,8 @@ There are two options to build the Filetransfer Tool Server:
             cmake --build build --config Release --parallel
 
 
-Running the server
-~~~~~~~~~~~~~~~~~~
+Run the server
+~~~~~~~~~~~~~~
 
 After the server is built, you can run it in the following ways:
 
@@ -107,7 +108,7 @@ After the server is built, you can run it in the following ways:
 
             docker run -p 50000:50000 filetransfer-tool-server
 
-        This will start the server and expose it on port 50000.
+        This starts the server and exposes it on port 50000.
 
         To make the uploaded files available to another process, you can share a volume between two Docker containers. A Docker Compose file might look like this:
 
@@ -154,7 +155,7 @@ After the server is built, you can run it in the following ways:
 Command-line options
 ~~~~~~~~~~~~~~~~~~~~
 
-The Filetransfer Tool Server provides the following command-line options:
+The Filetransfer Tool Server provides these command-line options:
 
 - ``--help`` - Display a help message and exit.
-- ``--server-address`` - Configure the address on which the server is listening.
+- ``--server-address`` - Configure the address that the server is listening on.

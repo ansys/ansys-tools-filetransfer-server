@@ -5,29 +5,29 @@ Contribute
 
 Overall guidance on contributing to a PyAnsys library appears in the
 `Contributing <https://dev.docs.pyansys.com/overview/contributing.html>`_ topic
-in the *PyAnsys Developer's Guide*. Ensure that you are thoroughly familiar with
-it and all `Guidelines and Best Practices
-<https://dev.docs.pyansys.com/guidelines/index.html>`_ before attempting to
-contribute to the Filetransfer Tool Server repository.
+in the *PyAnsys developer's guide*. Ensure that you are thoroughly familiar with
+this guide before attempting to contribute to the FileTransfer Tool Server.
 
 
 Setup
 ~~~~~
 
-* See the :ref:`getting_started` section for instructions on how to build the server from source.
-* The documentation can be built using the following command:
+* For information on how to build the FileTransfer Tool Server from source, see
+  :ref:`getting_started`.
+
+* To build the documentation, use this command:
 
   .. code-block:: bash
 
     poetry run -C doc html
 
-* The tests can be run using the following command:
+* To run tests, use this command:
 
   .. code-block:: bash
 
     cd build; ctest; cd ..
 
-* Pre-commit style checks can be run using the following command:
+* To run ``pre-commit`` style checks, run this command:
 
   .. code-block:: bash
 
@@ -37,8 +37,9 @@ Setup
 Internal API
 ~~~~~~~~~~~~
 
-This section contains the documentation of the internals of the file transfer server. It is intended for developers who
-want to understand the inner workings of the server and possibly extend it.
+Documentation follows for the internal classes and functions of the FileTransfer Tool Server.
+This documentation is intended for developers who want to understand the inner workings
+of the server and possibly extend it.
 
 .. doxygennamespace:: file_transfer
    :project: ansys-tools-filetransfer-server
