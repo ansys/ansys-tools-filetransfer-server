@@ -31,7 +31,6 @@ information on the tool itself, see the
         :link-type: doc
 
         Explains how to build and run the FileTransfer Tool Server.
-        
     .. grid-item-card:: Contribute :fa:`people-group`
         :link: contribute
         :link-type: doc

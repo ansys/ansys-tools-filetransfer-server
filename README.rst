@@ -30,7 +30,7 @@ The FileTransfer Tool Server documentation contains these sections:
   Explains how to build and run the FileTransfer Tool Server.
 - `Contribute <https://filetransfer-server.tools.docs.pyansys.com/version/dev/contribute.html>`_:
   Explains how to set up a development environment and provides documentation for the internal
-  classes and functions of the FileTransfer Tool Server for developers who want to understanding
+  classes and functions of the FileTransfer Tool Server for developers who want to understand
   the inner workings of the server and possibly extend it.
 
 On the `FileTransfer Tool Server Issues <https://github.com/ansys-internal/ansys-tools-filetransfer-server/issues>`_
