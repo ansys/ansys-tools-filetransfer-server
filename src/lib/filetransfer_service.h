@@ -63,9 +63,9 @@ public:
 
     /**
      * @brief Implements the "DownloadFile" operation.
-     * @param context The server context to be used.
-     * @param stream The stream of requests and responses to be processed.
-     * @return The result of the operation.
+     * @param context Server context to use.
+     * @param stream Stream of requests and responses to process.
+     * @return Result of the operation.
      */
     virtual auto DownloadFile(
         ::grpc::ServerContext* context,
@@ -76,9 +76,9 @@ public:
 
     /**
      * @brief Implements the "UploadFile" operation.
-     * @param context The server context to be used.
-     * @param stream The stream of requests and responses to be processed.
-     * @return The result of the operation.
+     * @param context Server context to use.
+     * @param stream Stream of requests and responses to process.
+     * @return Result of the operation.
      */
     virtual auto UploadFile(
         ::grpc::ServerContext* context,

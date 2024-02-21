@@ -44,8 +44,8 @@ namespace exceptions {
 
 /**
  * @brief Convert exceptions to gRPC status codes.
- * @param fun The function to execute.
- * @return The gRPC status code.
+ * @param fun Function to execute.
+ * @return gRPC status code.
  */
 auto convert_exceptions_to_status_codes(const std::function<void()>&)
     -> ::grpc::Status;

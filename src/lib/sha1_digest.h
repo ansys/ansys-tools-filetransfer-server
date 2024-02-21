@@ -44,9 +44,9 @@ namespace detail {
 
 /**
  * @brief Get the SHA1 hex digest of a file.
- * @param path_ The path to the file.
- * @param chunk_size_ The size of the chunks to read from the file.
- * @return The SHA1 hex digest of the file.
+ * @param path_ Path to the file.
+ * @param chunk_size_ Size of the chunks to read from the file.
+ * @return SHA1 hex digest of the file.
  *
  * @note This function is not thread-safe.
  */
