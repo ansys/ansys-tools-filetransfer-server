@@ -3,15 +3,7 @@
 # this is primarily a C++ project.
 
 [tool.poetry]
-# TODO: Use package-mode = false once Poetry >1.7.1 is released.
-# See https://github.com/python-poetry/poetry/pull/8650
-# for the PR introducing this feature.
-name = "ansys-tools-filetransfer-server"
-version = "0.1.0"
-description = ""
-authors = ["ANSYS, Inc. <pyansys.core@ansys.com>"]
-license = "MIT"
-readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"

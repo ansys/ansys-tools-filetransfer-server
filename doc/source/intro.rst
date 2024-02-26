@@ -48,8 +48,8 @@ You have two options for building the Filetransfer Tool Server:
 
             python3 -m pip install pipx
             pipx ensurepath
-            pipx install poetry
-            poetry install --no-root
+            pipx install 'poetry>=1.8.0'
+            poetry install
 
         Then, use Conan to fetch the C++ dependencies:
 
@@ -79,7 +79,7 @@ You have two options for building the Filetransfer Tool Server:
             python -m pip install pipx
             pipx ensurepath
             pipx install poetry
-            poetry install --no-root
+            poetry install
 
         Then, use Conan to fetch the C++ dependencies:
 
