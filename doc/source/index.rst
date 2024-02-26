@@ -14,7 +14,7 @@ simple remote deployments.
 
 This documentation describes the server component of the FileTransfer Tool. For
 information on the tool itself, see the
-`FileTransfer Tool documentation <https://filetransfer.tools.docs.pyansys.com/version/dev/index.html>.
+`FileTransfer Tool documentation <https://filetransfer.tools.docs.pyansys.com/version/dev/index.html>`_.
 
 .. warning::
 
@@ -31,6 +31,7 @@ information on the tool itself, see the
         :link-type: doc
 
         Explains how to build and run the FileTransfer Tool Server.
+
     .. grid-item-card:: Contribute :fa:`people-group`
         :link: contribute
         :link-type: doc

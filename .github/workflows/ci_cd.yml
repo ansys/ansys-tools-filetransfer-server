@@ -62,7 +62,7 @@ jobs:
       - name: Install dev dependencies
         run: |
           pip install -U poetry
-          poetry install --no-root
+          poetry install
       - name: Run Conan and build with CMake
         run: |
           poetry run conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
@@ -94,7 +94,7 @@ jobs:
       - name: Install dev dependencies
         run: |
           pip install -U poetry
-          poetry install --no-root
+          poetry install
       - name: "Install OS packages for docs"
         run: |
           sudo apt-get install doxygen
