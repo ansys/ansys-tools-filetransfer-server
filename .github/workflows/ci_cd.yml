@@ -156,8 +156,6 @@ jobs:
             BUILD_DATE=${{ env.BUILD_DATE }}
             VCS_REF=${{ github.sha }}
 
-              upload_docs_dev:
-
   # release:
   #   name: Release project
   #   if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
