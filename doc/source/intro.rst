@@ -11,7 +11,7 @@ with these commands:
 
 .. code-block:: bash
 
-    git clone https://github.com/ansys-internal/ansys-tools-filetransfer-server
+    git clone https://github.com/ansys/ansys-tools-filetransfer-server
     cd ansys-tools-filetransfer-server
     git submodule update --init --recursive
 
