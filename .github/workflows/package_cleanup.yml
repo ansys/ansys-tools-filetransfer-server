@@ -16,6 +16,6 @@ jobs:
       - name: "Delete untagged package versions"
         uses: ansys/actions/hk-package-clean-untagged@main
         with:
-          package-org: 'ansys-internal'
+          package-org: 'ansys'
           package-name: 'tools-filetransfer'
           token: ${{ secrets.GITHUB_TOKEN }}

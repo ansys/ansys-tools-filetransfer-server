@@ -75,7 +75,7 @@ html_short_title = html_title = "Filetransfer Tool Server"
 html_theme = "ansys_sphinx_theme"
 html_logo = ansys_logo_black
 html_theme_options = {
-    "github_url": "https://github.com/ansys-internal/ansys-tools-filetransfer-server",
+    "github_url": "https://github.com/ansys/ansys-tools-filetransfer-server",
     "show_prev_next": False,
     "show_breadcrumbs": True,
     "additional_breadcrumbs": [

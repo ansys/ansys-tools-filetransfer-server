@@ -126,13 +126,12 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       REGISTRY: ghcr.io
-      IMAGE_OWNER: ansys-internal
+      IMAGE_OWNER: ansys
       IMAGE_NAME_BASE: tools-filetransfer
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-          token: ${{ secrets.FILETRANSFER_SERVER_TOKEN }}
 
       - name: Login to ghcr.io
         uses: docker/login-action@v3
@@ -156,8 +155,6 @@ jobs:
           build-args: |
             BUILD_DATE=${{ env.BUILD_DATE }}
             VCS_REF=${{ github.sha }}
-
-              upload_docs_dev:
 
   # release:
   #   name: Release project

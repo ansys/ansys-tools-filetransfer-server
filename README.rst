@@ -8,7 +8,7 @@ simple remote deployments.
 The Ansys FileTransfer Tool is composed of two parts:
 
 - A Python client, which is the tool itself and contained in the
-  `ansys-tools-filetransfer <https://github.com/ansys-internal/ansys-tools-filetransfer>`_
+  `ansys-tools-filetransfer <https://github.com/ansys/ansys-tools-filetransfer>`_
   repository.  
 - A C++ server, which is contained in this repository.
 
@@ -33,7 +33,7 @@ The FileTransfer Tool Server documentation contains these sections:
   classes and functions of the FileTransfer Tool Server for developers who want to understand
   the inner workings of the server and possibly extend it.
 
-On the `FileTransfer Tool Server Issues <https://github.com/ansys-internal/ansys-tools-filetransfer-server/issues>`_
+On the `FileTransfer Tool Server Issues <https://github.com/ansys/ansys-tools-filetransfer-server/issues>`_
 page, you can create issues to report bugs and request new features. On the `Discussions <https://discuss.ansys.com/>`_
 page on the Ansys Developer portal, you can post questions, share ideas, and get community feedback.
 
