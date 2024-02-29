@@ -156,17 +156,41 @@ jobs:
             BUILD_DATE=${{ env.BUILD_DATE }}
             VCS_REF=${{ github.sha }}
 
-  # release:
-  #   name: Release project
-  #   if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Release to GitHub
-  #       uses: ansys/actions/release-github@v5
-  #       with:
-  #         library-name: ${{ env.PACKAGE_NAME }}
+  release:
+    name: Release project
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Download all artifacts that got generated in the CI/CD"
+        uses: actions/download-artifact@v4
+        with:
+          path: /dist
 
+      - name: "Display the structure of the 'dist/' folder"
+        shell: bash
+        run: ls -R dist/
+
+      - name: "Compressing HTML documentation"
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: dist/documentation/documentation-html
+          dest: dist/documentation/documentation-html.zip
+
+      - name: "Compressing PDF documentation"
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: dist/documentation/documentation-pdf
+          dest: dist/documentation/documentation-pdf.zip
+
+      - name: "Release to GitHub"
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true 
+          files: |
+            dist/documentation/documentation-html.zip
+            dist/documentation/documentation-pdf.zip
+  
   upload_docs_dev:
     name: "Upload dev documentation"
     if: github.ref == 'refs/heads/main'
