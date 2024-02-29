@@ -1,5 +1,7 @@
 """Sphinx documentation configuration file."""
+
 from datetime import datetime
+import os
 import pathlib
 
 from ansys_sphinx_theme import ansys_logo_black
@@ -12,8 +14,11 @@ project = "ansys-tools-filetransfer-server"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "ANSYS Inc."
 
-# The short X.Y version
-release = version = "0.0.1"
+# Read version from VERSION file
+with open(os.path.join("..", "..", "VERSION"), "r") as f:
+    version_file = f.readline().strip()
+
+release = version = version_file
 
 # -- General configuration ---------------------------------------------------
 extensions = [
