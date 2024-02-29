@@ -144,8 +144,17 @@ jobs:
         run: |
           echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
 
+      - name: Verify conditions for building and pushing the image
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            echo "IS_A_RELEASE=true" >> $GITHUB_ENV
+          else
+            echo "IS_A_RELEASE=false" >> $GITHUB_ENV
+          fi
+
       - name: Build image and export to GHCR
         uses: docker/build-push-action@v5
+        if: env.IS_A_RELEASE == 'false'
         with:
           context: .
           file: ./docker/Dockerfile
@@ -156,6 +165,21 @@ jobs:
             BUILD_DATE=${{ env.BUILD_DATE }}
             VCS_REF=${{ github.sha }}
 
+      - name: Build image and export to GHCR
+        if: env.IS_A_RELEASE == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile
+          push: true
+          target: app_minimal
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest ,
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:${{ github.ref_name }}
+          build-args: |
+            BUILD_DATE=${{ env.BUILD_DATE }}
+            VCS_REF=${{ github.sha }}
+        
   release:
     name: Release project
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
