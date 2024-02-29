@@ -156,10 +156,26 @@ jobs:
             BUILD_DATE=${{ env.BUILD_DATE }}
             VCS_REF=${{ github.sha }}
 
+  verify-tag:
+    name: Verify tag name consistency
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify tag created matches value on VERSION file
+        run: |
+          version=$(cat VERSION)
+          if [[ ${{ github.ref_name }} != "v$version" ]]; then
+            echo "Tag ${{ github.ref_name }} does not match version value in repository: $version"
+            exit 1
+          fi
+
   release:
     name: Release project
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    needs: [build]
+    needs: [build, verify-tag]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
