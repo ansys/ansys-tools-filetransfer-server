@@ -174,7 +174,6 @@ jobs:
           push: true
           target: app_minimal
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:latest ,
             ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME_BASE }}:${{ github.ref_name }}
           build-args: |
             BUILD_DATE=${{ env.BUILD_DATE }}
