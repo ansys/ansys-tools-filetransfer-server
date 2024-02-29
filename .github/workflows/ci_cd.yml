@@ -165,7 +165,7 @@ jobs:
             BUILD_DATE=${{ env.BUILD_DATE }}
             VCS_REF=${{ github.sha }}
 
-      - name: Build image and export to GHCR
+      - name: Build image and export to GHCR (on release only)
         if: env.IS_A_RELEASE == 'true'
         uses: docker/build-push-action@v5
         with:
