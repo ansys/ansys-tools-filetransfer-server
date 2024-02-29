@@ -162,10 +162,13 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: "Download all artifacts that got generated in the CI/CD"
         uses: actions/download-artifact@v4
         with:
-          path: /dist
+          path: dist
 
       - name: "Display the structure of the 'dist/' folder"
         shell: bash
