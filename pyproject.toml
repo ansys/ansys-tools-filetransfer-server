@@ -9,7 +9,7 @@ package-mode = false
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.6.2"
+pre-commit = "^3.7.0"
 conan = "^2.2.3"
 Sphinx = "^7.3.7"
 ansys-sphinx-theme = "^0.15.2"
