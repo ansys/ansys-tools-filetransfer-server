@@ -52,7 +52,7 @@ auto FileTransferServiceImpl::DeleteFile(
 
     return exceptions::convert_exceptions_to_status_codes(
         std::function<void()>([&]() {
-            const auto filename = request->filename();
+            const auto& filename = request->filename();
             const auto file_path = boost::filesystem::path{filename};
 
             BOOST_LOG_TRIVIAL(info) << "Got deletion request for file: "

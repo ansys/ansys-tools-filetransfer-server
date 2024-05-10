@@ -52,26 +52,29 @@ auto FileTransferServiceImpl::GetFileInfo(
     ::ansys::api::tools::filetransfer::v1::GetFileInfoResponse* response
 ) -> ::grpc::Status {
 
-    return exceptions::convert_exceptions_to_status_codes(std::function<void(
-                                                          )>([&]() {
+    return exceptions::convert_exceptions_to_status_codes(
+        std::function<void()>([&]() {
+            const auto& filename = request->filename();
+            const auto file_path = boost::filesystem::path{filename};
+            const auto file_exists = boost::filesystem::exists(file_path);
+            response->set_exists(file_exists);
 
-        const auto filename = request->filename();
-        const auto file_path = boost::filesystem::path{filename};
-        const auto file_exists = boost::filesystem::exists(file_path);
-        response->set_exists(file_exists);
+            if (file_exists) {
+                auto& file_info = *(response->mutable_file_info());
+                if (request->compute_sha1_checksum()) {
+                    const auto hex_digest =
+                        detail::get_sha1_hex_digest(file_path);
+                    file_info.mutable_sha1()->set_hex_digest(hex_digest);
+                }
 
-        if(file_exists) {
-            auto& file_info = *(response->mutable_file_info());
-            if (request->compute_sha1_checksum()) {
-                const auto hex_digest = detail::get_sha1_hex_digest(file_path);
-                file_info.mutable_sha1()->set_hex_digest(hex_digest);
+                file_info.set_name(file_path.string());
+                const std::size_t file_size =
+                    boost::filesystem::file_size(file_path);
+                file_info.set_size(boost::numeric_cast<pb_filesize_t>(file_size)
+                );
             }
-
-            file_info.set_name(file_path.string());
-            const std::size_t file_size = boost::filesystem::file_size(file_path);
-            file_info.set_size(boost::numeric_cast<pb_filesize_t>(file_size));
-        }
-    }));
+        })
+    );
 }
 
 } // namespace file_transfer
