@@ -27,13 +27,13 @@ files = [
 
 [[package]]
 name = "ansys-sphinx-theme"
-version = "0.15.2"
+version = "0.16.5"
 description = "A theme devised by ANSYS, Inc. for Sphinx documentation."
 optional = false
 python-versions = "<4,>=3.9"
 files = [
-    {file = "ansys_sphinx_theme-0.15.2-py3-none-any.whl", hash = "sha256:302a3b2ecb8e7632f9f52492746adacff85dbf8cd46922510c4ae4c5019f8d79"},
-    {file = "ansys_sphinx_theme-0.15.2.tar.gz", hash = "sha256:09a1ba8385f0981f6952a2c42788563aa9bbb1554289ba1e62e0bc0f44b8d3b5"},
+    {file = "ansys_sphinx_theme-0.16.5-py3-none-any.whl", hash = "sha256:3546b1a9fde6aebbe5d1a762470248d1e3a24d70c26c6eb334d6a9f1b986e5c9"},
+    {file = "ansys_sphinx_theme-0.16.5.tar.gz", hash = "sha256:21e23524e92be937b8e6b2efc1eaa6b1afa3d500d48d4260ef4596337fdc7732"},
 ]
 
 [package.dependencies]
@@ -43,8 +43,8 @@ pydata-sphinx-theme = ">=0.14,<0.15"
 Sphinx = ">=4.2.0"
 
 [package.extras]
-autoapi = ["sphinx-autoapi (==3.0.0a4)", "sphinx-design (==0.5.0)"]
-doc = ["PyGitHub (==2.3.0)", "Sphinx (==7.2.6)", "numpydoc (==1.7.0)", "requests (==2.31.0)", "sphinx-copybutton (==0.5.2)", "sphinx-design (==0.5.0)", "sphinx-jinja (==2.0.2)", "sphinx-notfound-page (==1.0.0)"]
+autoapi = ["sphinx-autoapi (==3.1.1)", "sphinx-design (==0.6.0)", "sphinx-jinja (==2.0.2)"]
+doc = ["PyGitHub (==2.3.0)", "Sphinx (==7.3.7)", "numpydoc (==1.7.0)", "requests (==2.32.2)", "sphinx-copybutton (==0.5.2)", "sphinx-design (==0.6.0)", "sphinx-jinja (==2.0.2)", "sphinx-notfound-page (==1.0.2)"]
 
 [[package]]
 name = "babel"
@@ -954,4 +954,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "84e251d64255ef93bf4a341abe4442b9c7e5da543e0fc908f70df643b65aaf6e"
+content-hash = "21a2b7bc38b17dd84f99a805db701d48dd943de14a0f7878d70143e3a697c153"
