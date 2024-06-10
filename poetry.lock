@@ -230,12 +230,12 @@ files = [
 
 [[package]]
 name = "conan"
-version = "2.2.3"
+version = "2.4.0"
 description = "Conan C/C++ package manager"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "conan-2.2.3.tar.gz", hash = "sha256:8968d6f235255b688f2d7391168fe348b36ba9759ed0c3bcaf49f0cc74bcf60d"},
+    {file = "conan-2.4.0.tar.gz", hash = "sha256:4e2aa4c17b2d020dd6a63a01a664950c5e514eeae537c4b5974813ac0148ccfe"},
 ]
 
 [package.dependencies]
@@ -250,8 +250,9 @@ requests = ">=2.25,<3.0.0"
 urllib3 = ">=1.26.6,<1.27"
 
 [package.extras]
-dev = ["WebTest (>=2.0.18,<2.1.0)", "bottle", "mock (>=1.3.0,<1.4.0)", "parameterized (>=0.6.3)", "pytest (>=6.1.1,<7.0.0)", "pytest-xdist"]
-test = ["WebTest (>=2.0.18,<2.1.0)", "bottle", "mock (>=1.3.0,<1.4.0)", "parameterized (>=0.6.3)", "pytest (>=6.1.1,<7.0.0)", "pytest-xdist"]
+dev = ["PyJWT", "WebTest (>=2.0.18,<2.1.0)", "bottle", "docker (>=5.0.0,<6.0.0)", "mock (>=1.3.0,<1.4.0)", "parameterized (>=0.6.3)", "pluginbase", "pytest (>=7,<8.0.0)", "pytest-xdist", "setuptools"]
+runners = ["docker (>=5.0.0,<6.0.0)", "paramiko"]
+test = ["PyJWT", "WebTest (>=2.0.18,<2.1.0)", "bottle", "docker (>=5.0.0,<6.0.0)", "mock (>=1.3.0,<1.4.0)", "parameterized (>=0.6.3)", "pluginbase", "pytest (>=7,<8.0.0)", "pytest-xdist", "setuptools"]
 
 [[package]]
 name = "distlib"
@@ -955,4 +956,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "0c89c56a2a0210adb18d07a0dfe1fda8bc303e3dbb9dfe9419801c3945c5491f"
+content-hash = "1acdf2a11359032ada39635831eb98054055670f5282010e09a04d53c5c45afd"
