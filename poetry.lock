@@ -230,12 +230,12 @@ files = [
 
 [[package]]
 name = "conan"
-version = "2.4.1"
+version = "2.5.0"
 description = "Conan C/C++ package manager"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "conan-2.4.1.tar.gz", hash = "sha256:b7f2e978233a2111294cfad89067b0b6a13aa7e05fe2a1208aab5c08dae85a55"},
+    {file = "conan-2.5.0.tar.gz", hash = "sha256:b280b4139251c4e232d23ae60f291605f023324de224ab82d2cf60dffcfb8fcb"},
 ]
 
 [package.dependencies]
@@ -956,4 +956,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "a98a86314918a6104e3e118cc58a421e8fa353cf25f24d2c7151d19fd557eb43"
+content-hash = "d202d2f763056d5fcfb7f16efb88f2ab56a3259d7cd48aae4ec235903be0652b"
