@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: "weekly"
     versioning-strategy: "increase"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Update all packages together
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
