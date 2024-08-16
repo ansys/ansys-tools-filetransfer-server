@@ -11,7 +11,7 @@ python = "^3.10"
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.8.0"
 conan = "^2.6.0"
-Sphinx = "^7.4.2"
+Sphinx = "^8.0.2"
 ansys-sphinx-theme = "^1.0.3"
 breathe = "^4.35.0"
 sphinx-design = "^0.6.1"
