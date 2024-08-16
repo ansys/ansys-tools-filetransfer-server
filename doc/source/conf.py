@@ -4,8 +4,6 @@ from datetime import datetime
 import os
 import pathlib
 
-from ansys_sphinx_theme import ansys_logo_black
-
 ROOT_DIR = pathlib.Path(__file__).parent.parent.parent
 
 # -- Project information -----------------------------------------------------
@@ -78,8 +76,8 @@ copybutton_prompt_is_regexp = True
 # -- Options for HTML output -------------------------------------------------
 html_short_title = html_title = "Filetransfer Tool Server"
 html_theme = "ansys_sphinx_theme"
-html_logo = ansys_logo_black
 html_theme_options = {
+    "logo": "ansys",
     "github_url": "https://github.com/ansys/ansys-tools-filetransfer-server",
     "show_prev_next": False,
     "show_breadcrumbs": True,
