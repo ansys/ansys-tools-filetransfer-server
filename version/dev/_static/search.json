@@ -1,0 +1,65 @@
+[
+    {
+        "objectID": "intro",
+        "href": "intro.html#getting-started",
+        "title": "Getting started",
+        "section": "Getting started",
+        "text": "Your first step is to clone the Filetransfer Tool Server repository and its submodules\nwith these commands:\nYou have two options for building the Filetransfer Tool Server:\nUse Docker: Build a Docker image that contains the server.\nUse a Manual build (Linux or Windows): Build the server directly on your machine.\nTo build the Docker image, run the following command from the root of the repository:\nTo build on Linux, you must have these tools installed:\npython3\ncmake\ng++ compiler\nFirst, you must install the development dependencies:\nThen, use Conan to fetch the C++ dependencies:\nFinally, use CMake to configure and build the project:\nTo build on Windows, you must have these tools installed:\npython\ncmake\nMSVC compiler\nFirst, you must install the development dependencies:\nThen, use Conan to fetch the C++ dependencies:\nFinally, use CMake to configure and build the project:\nAfter the server is built, you can run it in the following ways:\nThis starts the server and exposes it on port 50000.\nTo make the uploaded files available to another process, you can share a volume between two Docker containers. A Docker Compose file might look like this:\nThe Filetransfer Tool Server provides these command-line options:\n--help - Display a help message and exit.\n--server-address - Configure the address that the server is listening on.\ngit clone https://github.com/ansys/ansys-tools-filetransfer-server\ncd ansys-tools-filetransfer-server\ngit submodule update --init --recursive\ndocker build -f docker/Dockerfile . --tag filetransfer-tool-server\npython3 -m pip install pipx\npipx ensurepath\npipx install 'poetry>=1.8.0'\npoetry install\npoetry run conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan\ncmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release\ncmake --build build --config Release --parallel\npython -m pip install pipx\npipx ensurepath\npipx install poetry\npoetry install\npoetry run conan install -of build --build missing --profile:host=.\\conan\\windows_x86_64_Release --profile:build=.\\conan\\windows_x86_64_Release .\\conan\ncmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release\ncmake --build build --config Release --parallel\ndocker run -p 50000:50000 filetransfer-tool-server\nversion: '3.8'\nservices:\n  other-service:\n    restart: unless-stopped\n    image: <other_service_image>\n    <any other options needed for this service>\n    working_dir: /home/container/workdir\n    volumes:\n      - \"shared_data:/home/container/workdir/\"\n    user: \"1000:1000\"\n  ansys-tools-filetransfer:\n    restart: unless-stopped\n    image: filetransfer-tool-server\n    ports:\n      - \"50000:50000\"\n    working_dir: /home/container/workdir\n    volumes:\n      - \"shared_data:/home/container/workdir/\"\n    user: \"1000:1000\"\n\nvolumes:\n  shared_data:\n./build/src/server --server-address localhost:50000\n.\\build\\src\\Release\\server.exe --server-address localhost:50000"
+    },
+    {
+        "objectID": "intro",
+        "href": "intro.html#clone-the-repository",
+        "title": "Getting started > Clone the repository",
+        "section": "Clone the repository",
+        "text": "Your first step is to clone the Filetransfer Tool Server repository and its submodules\nwith these commands:\ngit clone https://github.com/ansys/ansys-tools-filetransfer-server\ncd ansys-tools-filetransfer-server\ngit submodule update --init --recursive"
+    },
+    {
+        "objectID": "intro",
+        "href": "intro.html#build-the-server",
+        "title": "Getting started > Build the server",
+        "section": "Build the server",
+        "text": "You have two options for building the Filetransfer Tool Server:\nUse Docker: Build a Docker image that contains the server.\nUse a Manual build (Linux or Windows): Build the server directly on your machine.\nTo build the Docker image, run the following command from the root of the repository:\nTo build on Linux, you must have these tools installed:\npython3\ncmake\ng++ compiler\nFirst, you must install the development dependencies:\nThen, use Conan to fetch the C++ dependencies:\nFinally, use CMake to configure and build the project:\nTo build on Windows, you must have these tools installed:\npython\ncmake\nMSVC compiler\nFirst, you must install the development dependencies:\nThen, use Conan to fetch the C++ dependencies:\nFinally, use CMake to configure and build the project:\ndocker build -f docker/Dockerfile . --tag filetransfer-tool-server\npython3 -m pip install pipx\npipx ensurepath\npipx install 'poetry>=1.8.0'\npoetry install\npoetry run conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan\ncmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release\ncmake --build build --config Release --parallel\npython -m pip install pipx\npipx ensurepath\npipx install poetry\npoetry install\npoetry run conan install -of build --build missing --profile:host=.\\conan\\windows_x86_64_Release --profile:build=.\\conan\\windows_x86_64_Release .\\conan\ncmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release\ncmake --build build --config Release --parallel"
+    },
+    {
+        "objectID": "intro",
+        "href": "intro.html#run-the-server",
+        "title": "Getting started > Run the server",
+        "section": "Run the server",
+        "text": "After the server is built, you can run it in the following ways:\nThis starts the server and exposes it on port 50000.\nTo make the uploaded files available to another process, you can share a volume between two Docker containers. A Docker Compose file might look like this:\ndocker run -p 50000:50000 filetransfer-tool-server\nversion: '3.8'\nservices:\n  other-service:\n    restart: unless-stopped\n    image: <other_service_image>\n    <any other options needed for this service>\n    working_dir: /home/container/workdir\n    volumes:\n      - \"shared_data:/home/container/workdir/\"\n    user: \"1000:1000\"\n  ansys-tools-filetransfer:\n    restart: unless-stopped\n    image: filetransfer-tool-server\n    ports:\n      - \"50000:50000\"\n    working_dir: /home/container/workdir\n    volumes:\n      - \"shared_data:/home/container/workdir/\"\n    user: \"1000:1000\"\n\nvolumes:\n  shared_data:\n./build/src/server --server-address localhost:50000\n.\\build\\src\\Release\\server.exe --server-address localhost:50000"
+    },
+    {
+        "objectID": "intro",
+        "href": "intro.html#command-line-options",
+        "title": "Getting started > Command-line options",
+        "section": "Command-line options",
+        "text": "The Filetransfer Tool Server provides these command-line options:\n--help - Display a help message and exit.\n--server-address - Configure the address that the server is listening on."
+    },
+    {
+        "objectID": "contribute",
+        "href": "contribute.html#contribute",
+        "title": "Contribute",
+        "section": "Contribute",
+        "text": "Overall guidance on contributing to a PyAnsys library appears in the\nContributing topic\nin the PyAnsys developer’s guide. Ensure that you are thoroughly familiar with\nthis guide before attempting to contribute to the FileTransfer Tool Server.\nFor information on how to build the FileTransfer Tool Server from source, see\ngetting_started.\nTo build the documentation, use this command:\nTo run tests, use this command:\nTo run pre-commit style checks, run this command:\nDocumentation follows for the internal classes and functions of the FileTransfer Tool Server.\nThis documentation is intended for developers who want to understand the inner workings\nof the server and possibly extend it.\nNamed constants for the progress of a file transfer operation. \nValues:\nThis class implements the file transfer service. \nImplements the “DownloadFile” operation. \ncontext – Server context to use. \nstream – Stream of requests and responses to process. \nResult of the operation. \nImplements the “UploadFile” operation. \ncontext – Server context to use. \nstream – Stream of requests and responses to process. \nResult of the operation. \nGet the SHA1 hex digest of a file. \nThis function is not thread-safe. \npath_ – Path to the file. \nchunk_size_ – Size of the chunks to read from the file. \nSHA1 hex digest of the file.\nConvert exceptions to gRPC status codes. \nfun – Function to execute. \ngRPC status code. \nException type raised when an object is not found. \nException type raised when invalid parameters are provided. \nException type raised when some precondition is not met. For example, a file is expected to exist, but it does not. \nException type raised when the transmitted data is lost or corrupted. \nException type raised when an internal error occurs. \npoetry run -C doc html\ncd build; ctest; cd ..\npoetry run pre-commit run --all-files"
+    },
+    {
+        "objectID": "contribute",
+        "href": "contribute.html#setup",
+        "title": "Contribute > Setup",
+        "section": "Setup",
+        "text": "For information on how to build the FileTransfer Tool Server from source, see\ngetting_started.\nTo build the documentation, use this command:\nTo run tests, use this command:\nTo run pre-commit style checks, run this command:\npoetry run -C doc html\ncd build; ctest; cd ..\npoetry run pre-commit run --all-files"
+    },
+    {
+        "objectID": "contribute",
+        "href": "contribute.html#internal-api",
+        "title": "Contribute > Internal API",
+        "section": "Internal API",
+        "text": "Documentation follows for the internal classes and functions of the FileTransfer Tool Server.\nThis documentation is intended for developers who want to understand the inner workings\nof the server and possibly extend it.\nNamed constants for the progress of a file transfer operation. \nValues:\nThis class implements the file transfer service. \nImplements the “DownloadFile” operation. \ncontext – Server context to use. \nstream – Stream of requests and responses to process. \nResult of the operation. \nImplements the “UploadFile” operation. \ncontext – Server context to use. \nstream – Stream of requests and responses to process. \nResult of the operation. \nGet the SHA1 hex digest of a file. \nThis function is not thread-safe. \npath_ – Path to the file. \nchunk_size_ – Size of the chunks to read from the file. \nSHA1 hex digest of the file.\nConvert exceptions to gRPC status codes. \nfun – Function to execute. \ngRPC status code. \nException type raised when an object is not found. \nException type raised when invalid parameters are provided. \nException type raised when some precondition is not met. For example, a file is expected to exist, but it does not. \nException type raised when the transmitted data is lost or corrupted. \nException type raised when an internal error occurs. "
+    },
+    {
+        "objectID": "index",
+        "href": "index.html#ansys-filetransfer-tool-server-documentation",
+        "title": "Ansys FileTransfer Tool Server documentation",
+        "section": "Ansys FileTransfer Tool Server documentation",
+        "text": "The Ansys FileTransfer Tool is a simple gRPC API for moving files between a\nclient and a remote server. Its target use case are local Docker deployments or\nsimple remote deployments.\nThis documentation describes the server component of the FileTransfer Tool. For\ninformation on the tool itself, see the\nFileTransfer Tool documentation.\nThe FileTransfer Tool does not provide any security measures. Any file\non the server component can be accessed by any client. Without additional security\nmeasures, it is unsuited for use over an untrusted network.\nExplains how to build and run the FileTransfer Tool Server.\nExplains how to set up a development environment and provides documentation for\nthe internal classes and functions of the FileTransfer Tool Server for developers\nwho want to understanding the inner workings of the server and possibly extend it."
+    }
+]
