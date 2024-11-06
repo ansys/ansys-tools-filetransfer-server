@@ -79,7 +79,7 @@ html_theme = "ansys_sphinx_theme"
 html_theme_options = {
     "logo": "ansys",
     "github_url": "https://github.com/ansys/ansys-tools-filetransfer-server",
-    "show_prev_next": False,
+    "show_prev_next": True,
     "show_breadcrumbs": True,
     "additional_breadcrumbs": [
         ("PyAnsys", "https://docs.pyansys.com/"),
