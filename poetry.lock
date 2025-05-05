@@ -253,13 +253,13 @@ files = [
 
 [[package]]
 name = "conan"
-version = "2.15.1"
+version = "2.16.1"
 description = "Conan C/C++ package manager"
 optional = false
 python-versions = ">=3.6"
 groups = ["dev"]
 files = [
-    {file = "conan-2.15.1.tar.gz", hash = "sha256:c4114e197f7908409766ad16cea758f088ebc926f8426212b2a6a62829f996a3"},
+    {file = "conan-2.16.1.tar.gz", hash = "sha256:e5b2aac9dab4f23e95f62a7c62dfb33c5f4522fab34332120c8be6eca11f5bec"},
 ]
 
 [package.dependencies]
@@ -1151,4 +1151,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "3234ce93ff8f783ed93b47006d079c46d043f546af268899f3684598cead0d36"
+content-hash = "bd9949ceb7e4c14e8b830a49a3f4c894f82b03f2c5c8005c1b31c9c688c74089"
