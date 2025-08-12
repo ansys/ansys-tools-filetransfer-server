@@ -42,7 +42,7 @@ jobs:
         include:
           - os: ubuntu-22.04
             conan_config: linux_x86_64_Release
-          - os: windows-2019
+          - os: windows-2022
             conan_config: windows_x86_64_Release
     steps:
       - uses: actions/checkout@v4
