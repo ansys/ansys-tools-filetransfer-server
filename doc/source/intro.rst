@@ -55,7 +55,7 @@ You have two options for building the Filetransfer Tool Server:
 
         .. code-block:: bash
 
-            poetry run conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
+            poetry run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
         Finally, use CMake to configure and build the project:
 
@@ -85,7 +85,7 @@ You have two options for building the Filetransfer Tool Server:
 
         .. code-block:: powershell
 
-            poetry run conan install -of build --build missing --profile:host=.\conan\windows_x86_64_Release --profile:build=.\conan\windows_x86_64_Release .\conan
+            poetry run conan install -of build --build missing --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
 
         Finally, use CMake to configure and build the project:
 

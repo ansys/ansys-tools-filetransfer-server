@@ -1,0 +1,10 @@
+[requires]
+grpc/1.72.0
+boost/1.81.0
+gtest/1.16.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[imports]

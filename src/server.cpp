@@ -22,9 +22,11 @@
 
 #include <cstdlib>
 #include <locale>
+#include <memory>
 
 #ifdef _MSC_VER
 #pragma warning(push, 3)
+#pragma warning(disable : 4996)
 #else
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -42,6 +44,9 @@
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 
+#include <grpctransportlib/cli/boost_program_options.h>
+#include <grpctransportlib/grpctransportlib.h>
+
 #ifdef _MSC_VER
 #pragma warning(pop)
 #else
@@ -50,7 +55,34 @@
 
 #include <filetransfer_service.h>
 
-auto run_server(const std::string& server_address) -> void {
+struct BoostLoggerAdapter : public grpctransportlib::LoggerInterface {
+    void debug(const std::vector<std::string>& lines_) override {
+        for (const auto& line : lines_) {
+            BOOST_LOG_TRIVIAL(debug) << line;
+        }
+    }
+    void info(const std::vector<std::string>& lines_) override {
+        for (const auto& line : lines_) {
+            BOOST_LOG_TRIVIAL(info) << line;
+        }
+    }
+    void warning(const std::vector<std::string>& lines_) override {
+        for (const auto& line : lines_) {
+            BOOST_LOG_TRIVIAL(warning) << line;
+        }
+    }
+    static void error(const std::vector<std::string>& lines_
+    ) /* not required by the interface */ {
+        for (const auto& line : lines_) {
+            BOOST_LOG_TRIVIAL(error) << line;
+        }
+    }
+};
+
+auto run_server(
+    const grpctransportlib::ValidatedTransportOptions& transport_options_,
+    const std::shared_ptr<grpctransportlib::LoggerInterface>& logger_
+) -> void {
 // Set encoding for paths to UTF-8
 // This is only needed on Windows, because Linux uses UTF-8 by default.
 #ifdef _WIN32
@@ -66,14 +98,15 @@ auto run_server(const std::string& server_address) -> void {
     file_transfer::FileTransferServiceImpl file_transfer_service{};
     builder.RegisterService(&file_transfer_service);
 
-    // TODO: Add secure channel option
-    // Listen on the given address without any authentication mechanism.
-    builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+    // Configure transport options (ports, TLS, ...)
+    const auto resource_handler = grpctransportlib::configure_server_builder(
+        "ansys_tools_filetransfer", builder, transport_options_, logger_
+    );
 
     // Assemble the server.
     auto server = builder.BuildAndStart();
 
-    BOOST_LOG_TRIVIAL(info) << "File transfer server started.";
+    logger_->info({"File transfer server started."});
 
     // Wait for the server to shutdown. Note that some other thread must be
     // responsible for shutting down the server for this call to ever return.
@@ -86,12 +119,15 @@ namespace po = boost::program_options;
  * Parse command-line options and start the server.
  */
 auto main(int argc, char** argv) -> int {
-    po::options_description description("Ansys Filetransfer Tool server options"
-    );
-    description.add_options()("help", "Show CLI help.")(
-        "server-address",
-        po::value<std::string>()->required(),
-        "Address on which the server is listening."
+    const auto logger = std::make_shared<BoostLoggerAdapter>();
+
+    po::options_description description("General options");
+    description.add_options()("help", "Show CLI help.");
+
+    description.add(
+        grpctransportlib::cli::bpo::get_transport_options_description(
+            "ansys_tools_filetransfer"
+        )
     );
 
     auto variables = po::variables_map{};
@@ -115,7 +151,22 @@ auto main(int argc, char** argv) -> int {
                   << std::endl;
         return EXIT_FAILURE;
     }
-
-    run_server(variables["server-address"].as<std::string>());
+    grpctransportlib::ValidatedTransportOptions transport_options_validated;
+    try {
+        const auto transport_options =
+            grpctransportlib::cli::bpo::get_transport_options(variables);
+        transport_options_validated =
+            grpctransportlib::validate_options(transport_options, *logger);
+    } catch (std::exception& e) {
+        std::cout << "Invalid transport options: " << e.what() << '\n';
+        return EXIT_FAILURE;
+    }
+    grpctransportlib::print_options(transport_options_validated, *logger);
+    try {
+        run_server(transport_options_validated, logger);
+    } catch (std::exception& e) {
+        logger->error({e.what()});
+        return EXIT_FAILURE;
+    }
     return EXIT_SUCCESS;
 }

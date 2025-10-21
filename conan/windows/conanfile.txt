@@ -1,8 +1,8 @@
 [requires]
-grpc/1.50.1
-protobuf/[~3]
+grpc/1.72.0#bde0c02c20c1562128c8701dbf754f63
+openssl/3.5.4
 boost/1.81.0
-gtest/1.14.0
+gtest/1.16.0
 
 [generators]
 CMakeDeps
