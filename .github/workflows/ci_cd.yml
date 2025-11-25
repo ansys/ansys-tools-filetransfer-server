@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
       - name: Build and run pre-commit hooks via docker
@@ -47,7 +47,7 @@ jobs:
             conan_dir: windows
             conan_config: windows_x86_64_Release
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
       - name: Setup Python
@@ -79,7 +79,7 @@ jobs:
     name: Documentation
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
       - name: Setup Python
@@ -131,7 +131,7 @@ jobs:
       IMAGE_OWNER: ansys
       IMAGE_NAME_BASE: tools-filetransfer
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -186,7 +186,7 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Verify tag created matches value on VERSION file
         run: |
@@ -203,7 +203,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: "Download all artifacts that got generated in the CI/CD"
         uses: actions/download-artifact@v5
