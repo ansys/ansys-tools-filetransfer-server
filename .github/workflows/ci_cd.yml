@@ -20,7 +20,7 @@ jobs:
   style:
     name: Pre-commit Check
     runs-on: ubuntu-22.04
-    timeout-minutes: 20
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,14 +35,16 @@ jobs:
   build:
     name: Compile and Test
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: ubuntu-22.04
+            conan_dir: linux
             conan_config: linux_x86_64_Release
           - os: windows-2022
+            conan_dir: windows
             conan_config: windows_x86_64_Release
     steps:
       - uses: actions/checkout@v4
@@ -65,7 +67,7 @@ jobs:
           poetry install
       - name: Run Conan and build with CMake
         run: |
-          poetry run conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
+          poetry run conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
       - name: Run tests
