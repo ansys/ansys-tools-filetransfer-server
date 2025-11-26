@@ -33,7 +33,7 @@ RUN poetry install
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN poetry run conan install -of build --build missing --profile:host=./conan/linux_x86_64_Release --profile:build=./conan/linux_x86_64_Release ./conan
+RUN poetry run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
 COPY --chmod=755 \
     . /workdir
@@ -80,7 +80,6 @@ LABEL org.opencontainers.image.vendor="ANSYS Inc."
 LABEL org.opencontainers.image.revision=$VCS_REF
 
 ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
-CMD ["--server-address", "0.0.0.0:50000"]
 
 FROM scratch AS app_minimal
 
@@ -106,4 +105,3 @@ LABEL org.opencontainers.image.vendor="ANSYS Inc."
 LABEL org.opencontainers.image.revision=$VCS_REF
 
 ENTRYPOINT ["/usr/local/bin/filetransfer_server"]
-CMD ["--server-address", "0.0.0.0:50000"]

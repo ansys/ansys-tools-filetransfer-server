@@ -68,8 +68,7 @@ auto get_request_checked(
     const api::DownloadFileRequest::SubStepCase& expected_step_
 ) -> api::DownloadFileRequest* {
     auto* request =
-        google::protobuf::Arena::CreateMessage<api::DownloadFileRequest>(&arena_
-        );
+        google::protobuf::Arena::Create<api::DownloadFileRequest>(&arena_);
     if (!stream_->Read(request)) {
         throw exceptions::invalid_argument("Request stream stopped prematurely."
         );
@@ -103,9 +102,7 @@ auto initialize(google::protobuf::Arena& arena_, stream_t* stream_)
     }
 
     auto& response =
-        *google::protobuf::Arena::CreateMessage<api::DownloadFileResponse>(
-            &arena_
-        );
+        *google::protobuf::Arena::Create<api::DownloadFileResponse>(&arena_);
 
     auto& file_info = *(response.mutable_file_info());
     if (initialize.compute_sha1_checksum()) {
@@ -147,9 +144,7 @@ auto transfer(
         boost::numeric_cast<std::streamsize>(file_size_ % chunk_size_);
 
     auto& transfer_response =
-        *(google::protobuf::Arena::CreateMessage<api::DownloadFileResponse>(
-            &arena_
-        ));
+        *(google::protobuf::Arena::Create<api::DownloadFileResponse>(&arena_));
     auto& file_chunk = *transfer_response.mutable_file_data();
     auto buffer = std::string(chunk_size_, '\0');
 
@@ -186,9 +181,7 @@ auto finalize(google::protobuf::Arena& arena_, stream_t* stream_) -> void {
     get_request_checked(arena_, stream_, api::DownloadFileRequest::kFinalize);
 
     auto& response =
-        *(google::protobuf::Arena::CreateMessage<api::DownloadFileResponse>(
-            &arena_
-        ));
+        *(google::protobuf::Arena::Create<api::DownloadFileResponse>(&arena_));
     response.mutable_progress()->set_state(Progress::COMPLETED);
 
     stream_->Write(response);
