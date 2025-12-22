@@ -104,7 +104,7 @@ jobs:
         run: |
           poetry run make -C doc html
       - name: "Upload HTML Documentation"
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: documentation-html
           path: doc/_build/html
@@ -115,7 +115,7 @@ jobs:
       - name: Generate the PDF documentation
         run: poetry run make -C doc latexpdf
       - name: "Upload PDF Documentation"
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: documentation-pdf
           path: doc/_build/latex/ansys-tools-filetransfer-server.pdf
