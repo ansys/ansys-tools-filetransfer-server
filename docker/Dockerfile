@@ -28,7 +28,7 @@ RUN python3 -m pip install uv \
 COPY --chmod=755 \
     ./uv.lock ./pyproject.toml /workdir/
 
-RUN uv install
+RUN uv sync
 
 COPY --chmod=755 \
     ./conan /workdir/conan

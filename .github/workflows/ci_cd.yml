@@ -64,7 +64,7 @@ jobs:
       - name: Install dev dependencies
         run: |
           pip install -U uv
-          uv install
+          uv sync
       - name: Run Conan and build with CMake
         run: |
           uv run conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
@@ -96,7 +96,7 @@ jobs:
       - name: Install dev dependencies
         run: |
           pip install -U uv
-          uv install
+          uv sync
       - name: "Install OS packages for docs"
         run: |
           sudo apt-get install doxygen
