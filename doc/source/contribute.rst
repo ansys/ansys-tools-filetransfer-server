@@ -19,7 +19,7 @@ Setup
 
   .. code-block:: bash
 
-    uv run -C doc html
+    uv run make -C doc html
 
 * To run tests, use this command:
 
