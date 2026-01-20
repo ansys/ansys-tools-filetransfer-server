@@ -22,18 +22,18 @@ ENV CC='/usr/bin/gcc-11' CPP='/usr/bin/cpp-11' CXX='/usr/bin/g++-11'
 
 WORKDIR /workdir/
 
-RUN python3 -m pip install poetry \
+RUN python3 -m pip install uv \
     && python3 -m pip cache purge
 
 COPY --chmod=755 \
-    ./poetry.lock ./pyproject.toml /workdir/
+    ./uv.lock ./pyproject.toml /workdir/
 
-RUN poetry install
+RUN uv install
 
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN poetry run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+RUN uv run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
 COPY --chmod=755 \
     . /workdir
@@ -47,7 +47,7 @@ RUN \
     ln -s /usr/bin/run-clang-tidy-14 /usr/local/bin/run-clang-tidy && \
     ln -s /usr/bin/clang-format-14 /usr/local/bin/clang-format
 
-ENTRYPOINT [ "poetry", "run", "pre-commit" ]
+ENTRYPOINT [ "uv", "run", "pre-commit" ]
 CMD ["run", "--all-files"]
 
 
