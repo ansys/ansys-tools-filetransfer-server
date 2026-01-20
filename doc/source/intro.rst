@@ -46,8 +46,11 @@ You have two options for building the Filetransfer Tool Server:
 
         .. code-block:: bash
 
-            python3 -m pip install uv
-
+            python3 -m pip install pipx
+            pipx ensurepath
+            pipx install uv
+            uv sync
+            
         Then, use Conan to fetch the C++ dependencies:
 
         .. code-block:: bash
@@ -73,7 +76,10 @@ You have two options for building the Filetransfer Tool Server:
 
         .. code-block:: powershell
 
-            python -m pip install uv
+            python -m pip install pipx
+            pipx ensurepath
+            pipx install uv
+            uv sync
 
         Then, use Conan to fetch the C++ dependencies:
 
