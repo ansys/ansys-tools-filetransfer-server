@@ -59,6 +59,7 @@ jobs:
           uv sync
       - name: Run Conan and build with CMake
         run: |
+          uv run conan lock create --out-file=conan.lock --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
           uv run conan install -of build --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
@@ -70,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: conan-lock-${{ matrix.os }}.lock
-          path: ./conan/${{ matrix.conan_dir }}/conan.lock
+          path: ./conan.lock
 
   docs:
     name: Documentation
