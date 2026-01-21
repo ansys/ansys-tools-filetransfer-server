@@ -14,6 +14,8 @@ b2/*:compiler.version=11
 cmake/*:compiler.version=11
 protobuf/*:compiler.version=11
 zlib/*:compiler.version=11
+grpc/*:compiler.version=11
+gtest/*:compiler.version=11
 
 [options]
 boost/*:shared=False
