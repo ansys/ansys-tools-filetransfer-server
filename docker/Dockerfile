@@ -33,7 +33,7 @@ RUN uv sync
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN uv run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+RUN uv run conan install --lockfile=./conan/linux/conan.lock -of build --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
 COPY --chmod=755 \
     . /workdir

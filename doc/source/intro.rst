@@ -51,11 +51,11 @@ You have two options for building the Filetransfer Tool Server:
             pipx install uv
             uv sync
             
-        Then, use Conan to fetch the C++ dependencies:
+        Then, use Conan (conan.lock file) to fetch the C++ dependencies:
 
         .. code-block:: bash
 
-            uv run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+            uv run conan install --lockfile=./conan/linux/conan.lock -of build --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
         Finally, use CMake to configure and build the project:
 
@@ -63,6 +63,13 @@ You have two options for building the Filetransfer Tool Server:
 
             cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
             cmake --build build --config Release --parallel
+
+        The conan.lock file inside .\conan\linux can be generated (updated)
+        using the following command:
+
+        .. code-block:: bash
+
+            uv run conan lock create ./conan/linux --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release
 
     .. tab-item:: Windows
 
@@ -81,11 +88,11 @@ You have two options for building the Filetransfer Tool Server:
             pipx install uv
             uv sync
 
-        Then, use Conan to fetch the C++ dependencies:
+        Then, use Conan (conan.lock file) to fetch the C++ dependencies:
 
         .. code-block:: powershell
 
-            uv run conan install -of build --build missing --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
+            uv run conan install --lockfile=.\conan\windows\conan.lock -of build --build missing --lockfile=.\conan\windows\conan.lock --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
 
         Finally, use CMake to configure and build the project:
 
@@ -94,6 +101,12 @@ You have two options for building the Filetransfer Tool Server:
             cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
             cmake --build build --config Release --parallel
 
+        The conan.lock within .\conan\windows file can be generated (updated)
+        using the following command:
+
+        .. code-block:: powershell
+
+            uv run conan lock create .\conan\windows --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release
 
 Run the server
 ~~~~~~~~~~~~~~

@@ -59,19 +59,18 @@ jobs:
           uv sync
       - name: Run Conan and build with CMake
         run: |
-          uv run conan lock create --out-file=./conan/${{ matrix.conan_dir }}/conan_new.lock --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}
-#           uv run conan install -of build --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
-#           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
-#           cmake --build build --config Release --parallel
-#       - name: Run tests
-#         run: |
-#           ctest --output-on-failure -V
-#         working-directory: build
-      - name: upload conan lock file
-        uses: actions/upload-artifact@v4
-        with:
-          name: conan-lock-${{ matrix.os }}.lock
-          path: ./conan/${{ matrix.conan_dir }}/conan.lock
+          uv run conan install --lockfile=./conan/${{ matrix.conan_dir}}/conan.lock -of build --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
+          cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release --parallel
+      - name: Run tests
+        run: |
+          ctest --output-on-failure -V
+        working-directory: build
+#      - name: upload conan lock file
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: conan-lock-${{ matrix.os }}.lock
+#          path: ./conan/${{ matrix.conan_dir }}/conan.lock
 
   docs:
     name: Documentation
