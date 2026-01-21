@@ -48,14 +48,14 @@ You have two options for building the Filetransfer Tool Server:
 
             python3 -m pip install pipx
             pipx ensurepath
-            pipx install 'poetry>=1.8.0'
-            poetry install
-
+            pipx install uv
+            uv sync
+            
         Then, use Conan to fetch the C++ dependencies:
 
         .. code-block:: bash
 
-            poetry run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+            uv run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
         Finally, use CMake to configure and build the project:
 
@@ -78,14 +78,14 @@ You have two options for building the Filetransfer Tool Server:
 
             python -m pip install pipx
             pipx ensurepath
-            pipx install poetry
-            poetry install
+            pipx install uv
+            uv sync
 
         Then, use Conan to fetch the C++ dependencies:
 
         .. code-block:: powershell
 
-            poetry run conan install -of build --build missing --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
+            uv run conan install -of build --build missing --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
 
         Finally, use CMake to configure and build the project:
 
