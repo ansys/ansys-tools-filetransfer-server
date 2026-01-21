@@ -12,13 +12,13 @@ RUN \
     clang-format-14 \
     clang-tidy-14 \
     cmake \
-    g++-11 \
+    g++-13 \
     git \
     make \
     python3-pip \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-ENV CC='/usr/bin/gcc-11' CPP='/usr/bin/cpp-11' CXX='/usr/bin/g++-11'
+ENV CC='/usr/bin/gcc-13' CPP='/usr/bin/cpp-13' CXX='/usr/bin/g++-13'
 
 WORKDIR /workdir/
 
