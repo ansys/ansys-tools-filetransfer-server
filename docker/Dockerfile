@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:22.04 AS builder
+FROM ghcr.io/astral-sh/uv:0.7.17 AS uv-getter
+
+FROM ubuntu:24.04 AS builder
 
 # Here we install all system libraries that are needed both in the
 # 'builder' and 'precommit' stages. This makes the image slightly
@@ -12,18 +14,17 @@ RUN \
     clang-format-14 \
     clang-tidy-14 \
     cmake \
-    g++-11 \
+    g++-13 \
     git \
     make \
-    python3-pip \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-ENV CC='/usr/bin/gcc-11' CPP='/usr/bin/cpp-11' CXX='/usr/bin/g++-11'
+COPY --from=uv-getter /uv /uvx /bin/
+
+ENV CC='/usr/bin/gcc-13' CPP='/usr/bin/cpp-13' CXX='/usr/bin/g++-13'
+ENV UV_LINK_MODE=copy
 
 WORKDIR /workdir/
-
-RUN python3 -m pip install uv \
-    && python3 -m pip cache purge
 
 COPY --chmod=755 \
     ./uv.lock ./pyproject.toml /workdir/
@@ -33,7 +34,9 @@ RUN uv sync
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN uv run conan install --lockfile=./conan/linux/conan.lock -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+# RUN uv run conan graph explain --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+# RUN uv run conan install --lockfile=./conan/linux/conan.lock -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+RUN uv run conan install -of build --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
 COPY --chmod=755 \
     . /workdir

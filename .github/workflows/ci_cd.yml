@@ -40,7 +40,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             conan_dir: linux
             conan_config: linux_x86_64_Release
           - os: windows-2022
@@ -63,6 +63,10 @@ jobs:
           uv run conan install --lockfile=./conan/${{ matrix.conan_dir}}/conan.lock -of build --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
+        env:
+          CC: ${{ matrix.os == 'ubuntu-24.04' && '/usr/bin/gcc-13' || '' }}
+          CPP: ${{ matrix.os == 'ubuntu-24.04' && '/usr/bin/cpp-13' || '' }}
+          CXX: ${{ matrix.os == 'ubuntu-24.04' && '/usr/bin/g++-13' || '' }}
       - name: Run tests
         run: |
           ctest --output-on-failure -V
