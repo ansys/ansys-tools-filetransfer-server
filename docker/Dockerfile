@@ -12,8 +12,8 @@ RUN \
     --mount=type=cache,target=/var/cache/apt,id=filetransfer_server \
     apt update && apt install -y \
     ca-certificates \
-    clang-format-18 \
-    clang-tidy-18 \
+    clang-format-15\
+    clang-tidy-15 \
     cmake \
     g++-13 \
     git \
