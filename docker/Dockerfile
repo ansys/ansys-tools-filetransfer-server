@@ -34,9 +34,15 @@ RUN uv sync
 COPY --chmod=755 \
     ./conan /workdir/conan
 
+########
+# This block is kept for debugging purposes
+# show diff between available and required packages
 # RUN uv run conan graph explain --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
-# RUN uv run conan install --lockfile=./conan/linux/conan.lock -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
-RUN uv run conan install -of build --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+# write conan.lock file to ./conan/linux
+# RUN uv run conan lock create ./conan/linux --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release
+########
+
+RUN uv run conan install --lockfile=./conan/linux/conan.lock -of build --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
 COPY --chmod=755 \
     . /workdir
