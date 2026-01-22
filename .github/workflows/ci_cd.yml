@@ -60,7 +60,7 @@ jobs:
       - name: Run Conan and build with CMake
         run: |
           uv run conan remote list
-          uv run conan install --lockfile=./conan/${{ matrix.conan_dir}}/conan.lock -of build --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
+          uv run conan install --update --lockfile=./conan/${{ matrix.conan_dir}}/conan.lock -of build --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
       - name: Run tests
