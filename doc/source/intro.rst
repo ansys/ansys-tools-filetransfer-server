@@ -92,7 +92,7 @@ You have two options for building the Filetransfer Tool Server:
 
         .. code-block:: powershell
 
-            uv run conan install --lockfile=.\conan\windows\conan.lock -of build --build missing --lockfile=.\conan\windows\conan.lock --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
+            uv run conan install --lockfile=.\conan\windows\conan.lock -of build --lockfile=.\conan\windows\conan.lock --profile:host=.\conan\windows\windows_x86_64_Release --profile:build=.\conan\windows\windows_x86_64_Release .\conan\windows\
 
         Finally, use CMake to configure and build the project:
 
