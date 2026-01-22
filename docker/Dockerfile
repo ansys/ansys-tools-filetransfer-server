@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:22.04 AS builder
+FROM ghcr.io/astral-sh/uv:0.7.17 AS uv-getter
+
+FROM ubuntu:24.04 AS builder
 
 # Here we install all system libraries that are needed both in the
 # 'builder' and 'precommit' stages. This makes the image slightly
@@ -9,21 +11,21 @@ FROM ubuntu:22.04 AS builder
 RUN \
     --mount=type=cache,target=/var/cache/apt,id=filetransfer_server \
     apt update && apt install -y \
-    clang-format-14 \
-    clang-tidy-14 \
+    ca-certificates \
+    clang-format-18 \
+    clang-tidy-18 \
     cmake \
-    g++-11 \
+    g++-13 \
     git \
     make \
-    python3-pip \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-ENV CC='/usr/bin/gcc-11' CPP='/usr/bin/cpp-11' CXX='/usr/bin/g++-11'
+COPY --from=uv-getter /uv /uvx /bin/
+
+ENV CC='/usr/bin/gcc-13' CPP='/usr/bin/cpp-13' CXX='/usr/bin/g++-13'
+ENV UV_LINK_MODE=copy
 
 WORKDIR /workdir/
-
-RUN python3 -m pip install uv \
-    && python3 -m pip cache purge
 
 COPY --chmod=755 \
     ./uv.lock ./pyproject.toml /workdir/
@@ -33,7 +35,15 @@ RUN uv sync
 COPY --chmod=755 \
     ./conan /workdir/conan
 
-RUN uv run conan install -of build --build missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+########
+# This block is kept for debugging purposes
+# show diff between available and required packages
+# RUN uv run conan graph explain --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+# write conan.lock file to ./conan/linux
+# RUN uv run conan lock create ./conan/linux --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release
+########
+
+RUN uv run conan install --lockfile=./conan/linux/conan.lock -of build --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
 COPY --chmod=755 \
     . /workdir
@@ -44,8 +54,8 @@ RUN cmake --build build --parallel
 FROM builder AS precommit
 
 RUN \
-    ln -s /usr/bin/run-clang-tidy-14 /usr/local/bin/run-clang-tidy && \
-    ln -s /usr/bin/clang-format-14 /usr/local/bin/clang-format
+    ln -s /usr/bin/run-clang-tidy-18 /usr/local/bin/run-clang-tidy && \
+    ln -s /usr/bin/clang-format-18 /usr/local/bin/clang-format
 
 ENTRYPOINT [ "uv", "run", "pre-commit" ]
 CMD ["run", "--all-files"]
