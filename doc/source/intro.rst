@@ -55,7 +55,7 @@ You have two options for building the Filetransfer Tool Server:
 
         .. code-block:: bash
 
-            uv run conan install --lockfile=./conan/linux/conan.lock -of build --build-missing --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
+            uv run conan install --lockfile=./conan/linux/conan.lock -of build --profile:host=./conan/linux/linux_x86_64_Release --profile:build=./conan/linux/linux_x86_64_Release ./conan/linux
 
         Finally, use CMake to configure and build the project:
 

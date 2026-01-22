@@ -9,10 +9,6 @@ compiler.cppstd=gnu17
 compiler.libcxx=libstdc++11
 compiler.version=13
 
-# boost/*:compiler=gcc
-# boost/*:compiler.cppstd=gnu17
-# boost/*:compiler.version=13
-
 gtest/*:compiler.cppstd=17
 gtest/*:compiler.version=11
 
