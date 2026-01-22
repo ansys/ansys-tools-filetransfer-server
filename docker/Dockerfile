@@ -12,8 +12,8 @@ RUN \
     --mount=type=cache,target=/var/cache/apt,id=filetransfer_server \
     apt update && apt install -y \
     ca-certificates \
-    clang-format-15\
-    clang-tidy-15 \
+    clang-format-18 \
+    clang-tidy-18 \
     cmake \
     g++-13 \
     git \
@@ -54,8 +54,8 @@ RUN cmake --build build --parallel
 FROM builder AS precommit
 
 RUN \
-    ln -s /usr/bin/run-clang-tidy-14 /usr/local/bin/run-clang-tidy && \
-    ln -s /usr/bin/clang-format-14 /usr/local/bin/clang-format
+    ln -s /usr/bin/run-clang-tidy-18 /usr/local/bin/run-clang-tidy && \
+    ln -s /usr/bin/clang-format-18 /usr/local/bin/clang-format
 
 ENTRYPOINT [ "uv", "run", "pre-commit" ]
 CMD ["run", "--all-files"]
