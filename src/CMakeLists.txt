@@ -25,6 +25,7 @@ else()
 endif()
 
 add_subdirectory("lib")
+include_directories("vendored")
 
 add_executable(server server.cpp)
 target_link_libraries(server PUBLIC filetransfer_service)

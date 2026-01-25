@@ -1,4 +1,4 @@
-// Copyright (C) 2022 - 2025 ANSYS, Inc. and/or its affiliates.
+// Copyright (C) 2022 - 2026 ANSYS, Inc. and/or its affiliates.
 // SPDX-License-Identifier: MIT
 //
 //
@@ -84,7 +84,7 @@ auto get_request_checked(
     const api::UploadFileRequest::SubStepCase& expected_step_
 ) -> api::UploadFileRequest* {
     auto* request =
-        google::protobuf::Arena::CreateMessage<api::UploadFileRequest>(&arena_);
+        google::protobuf::Arena::Create<api::UploadFileRequest>(&arena_);
     get_request_checked(request, stream_, expected_step_);
     return request;
 }
@@ -101,9 +101,8 @@ auto initialize(google::protobuf::Arena& arena_, stream_t* stream_) -> std::
     const auto file_size = boost::numeric_cast<std::size_t>(file_info.size());
     const std::string source_sha1_hex = file_info.sha1().hex_digest();
 
-    auto& response = *(
-        google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(&arena_)
-    );
+    auto& response =
+        *(google::protobuf::Arena::Create<api::UploadFileResponse>(&arena_));
     auto& progress = *response.mutable_progress();
     progress.set_state(Progress::INITIALIZED);
     stream_->Write(response);
@@ -132,11 +131,9 @@ auto transfer(
     std::size_t num_bytes_received = 0;
 
     auto& request =
-        *google::protobuf::Arena::CreateMessage<api::UploadFileRequest>(&arena_
-        );
+        *google::protobuf::Arena::Create<api::UploadFileRequest>(&arena_);
     auto& response =
-        *google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(&arena_
-        );
+        *google::protobuf::Arena::Create<api::UploadFileResponse>(&arena_);
     auto& progress = *response.mutable_progress();
 
     while (num_bytes_received < file_size_) {
@@ -174,8 +171,7 @@ auto finalize(
 ) -> void {
     get_request_checked(arena_, stream_, api::UploadFileRequest::kFinalize);
     auto& response =
-        *google::protobuf::Arena::CreateMessage<api::UploadFileResponse>(&arena_
-        );
+        *google::protobuf::Arena::Create<api::UploadFileResponse>(&arena_);
     auto& progress = *response.mutable_progress();
 
     if (!source_sha1_hex_.empty()) {

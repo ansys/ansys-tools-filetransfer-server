@@ -19,7 +19,7 @@ Setup
 
   .. code-block:: bash
 
-    poetry run -C doc html
+    uv run make -C doc html
 
 * To run tests, use this command:
 
@@ -31,7 +31,7 @@ Setup
 
   .. code-block:: bash
 
-    poetry run pre-commit run --all-files
+    uv run pre-commit run --all-files
 
 
 Internal API

@@ -19,10 +19,10 @@ env:
 jobs:
   style:
     name: Pre-commit Check
-    runs-on: ubuntu-22.04
-    timeout-minutes: 20
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
       - name: Build and run pre-commit hooks via docker
@@ -35,39 +35,37 @@ jobs:
   build:
     name: Compile and Test
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
+            conan_dir: linux
             conan_config: linux_x86_64_Release
           - os: windows-2022
+            conan_dir: windows
             conan_config: windows_x86_64_Release
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - uses: actions/cache@v4
-        name: Pip cache
-        with:
-          path: ${{ startsWith(runner.os, 'Linux') && '~/.cache/pip' || '~\AppData\Local\pip\Cache' }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
       - name: Install dev dependencies
         run: |
-          pip install -U poetry
-          poetry install
+          uv sync
       - name: Run Conan and build with CMake
         run: |
-          poetry run conan install -of build --build missing --profile:host=./conan/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_config }} ./conan
+          uv run conan install --lockfile=./conan/${{ matrix.conan_dir}}/conan.lock -of build --profile:host=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} --profile:build=./conan/${{ matrix.conan_dir }}/${{ matrix.conan_config }} ./conan/${{ matrix.conan_dir }}/
           cmake -B build . -DCMAKE_TOOLCHAIN_FILE='build/conan_toolchain.cmake' -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release --parallel
+        env:
+          CC: ${{ matrix.os == 'ubuntu-24.04' && '/usr/bin/gcc-13' || '' }}
+          CPP: ${{ matrix.os == 'ubuntu-24.04' && '/usr/bin/cpp-13' || '' }}
+          CXX: ${{ matrix.os == 'ubuntu-24.04' && '/usr/bin/g++-13' || '' }}
       - name: Run tests
         run: |
           ctest --output-on-failure -V
@@ -77,32 +75,24 @@ jobs:
     name: Documentation
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - uses: actions/cache@v4
-        name: Pip cache
-        with:
-          path: ${{ startsWith(runner.os, 'Linux') && '~/.cache/pip' || '~\AppData\Local\pip\Cache' }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
       - name: Install dev dependencies
         run: |
-          pip install -U poetry
-          poetry install
+          uv sync
       - name: "Install OS packages for docs"
         run: |
           sudo apt-get install doxygen
       - name: Build documentation
         run: |
-          poetry run make -C doc html
+          uv run make -C doc html
       - name: "Upload HTML Documentation"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: documentation-html
           path: doc/_build/html
@@ -111,9 +101,9 @@ jobs:
         run: |
           sudo apt-get install latexmk texlive-latex-extra
       - name: Generate the PDF documentation
-        run: poetry run make -C doc latexpdf
+        run: uv run make -C doc latexpdf
       - name: "Upload PDF Documentation"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: documentation-pdf
           path: doc/_build/latex/ansys-tools-filetransfer-server.pdf
@@ -129,7 +119,7 @@ jobs:
       IMAGE_OWNER: ansys
       IMAGE_NAME_BASE: tools-filetransfer
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -184,7 +174,7 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Verify tag created matches value on VERSION file
         run: |
@@ -201,10 +191,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: "Download all artifacts that got generated in the CI/CD"
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           path: dist
 

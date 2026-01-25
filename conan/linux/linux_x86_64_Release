@@ -5,9 +5,12 @@ arch=x86_64
 build_type=Release
 
 compiler=gcc
-compiler.cppstd=17
+compiler.cppstd=gnu17
 compiler.libcxx=libstdc++11
-compiler.version=11
+compiler.version=13
+
+gtest/*:compiler.cppstd=17
+gtest/*:compiler.version=11
 
 [options]
 boost/*:shared=False
