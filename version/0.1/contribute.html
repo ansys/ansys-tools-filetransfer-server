@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contribute &#8212; Filetransfer Tool Server</title>
+
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/ansys_sphinx_theme.css?v=f64ca0e9" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+ 
+<link href="_static/css/breadcrumbs.css" rel="stylesheet" />
+
+    <script src="_static/documentation_options.js?v=38b66d78"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=49e1bf35"></script>
+    <script src="_static/js/table.js?v=b64f5182"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'contribute';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting started" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <link rel="canonical" href="https://filetransfer-server.tools.docs.pyansys.com/version/stable/contribute.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container"><!-- Debugging: html_theme_options =  -->
+
+<!-- If there is no MiliSearch enabled, use the PyData search -->
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+   
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/ansys_logo_black_cropped.jpg" class="logo__image only-light" alt="Filetransfer Tool Server - Home"/>
+    <script>document.write(`<img src="_static/ansys_logo_black_cropped.jpg" class="logo__image only-dark" alt="Filetransfer Tool Server - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="intro.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Contribute
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/ansys-tools-filetransfer-server" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+    
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="intro.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Contribute
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/ansys-tools-filetransfer-server" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://docs.pyansys.com/" class="nav-link">PyAnsys</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page">Contribute</li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="contribute">
+<span id="ref-contributing"></span><h1>Contribute<a class="headerlink" href="#contribute" title="Link to this heading">#</a></h1>
+<p>Overall guidance on contributing to a PyAnsys library appears in the
+<a class="reference external" href="https://dev.docs.pyansys.com/overview/contributing.html">Contributing</a> topic
+in the <em>PyAnsys developer’s guide</em>. Ensure that you are thoroughly familiar with
+this guide before attempting to contribute to the FileTransfer Tool Server.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>For information on how to build the FileTransfer Tool Server from source, see
+<a class="reference internal" href="intro.html#getting-started"><span class="std std-ref">Getting started</span></a>.</p></li>
+<li><p>To build the documentation, use this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>run<span class="w"> </span>-C<span class="w"> </span>doc<span class="w"> </span>html
+</pre></div>
+</div>
+</li>
+<li><p>To run tests, use this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>build<span class="p">;</span><span class="w"> </span>ctest<span class="p">;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</pre></div>
+</div>
+</li>
+<li><p>To run <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> style checks, run this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="internal-api">
+<h2>Internal API<a class="headerlink" href="#internal-api" title="Link to this heading">#</a></h2>
+<p>Documentation follows for the internal classes and functions of the FileTransfer Tool Server.
+This documentation is intended for developers who want to understand the inner workings
+of the server and possibly extend it.</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv413file_transfer">
+<span id="_CPPv313file_transfer"></span><span id="_CPPv213file_transfer"></span><span id="file_transfer"></span><span class="target" id="namespacefile__transfer"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_transfer</span></span></span><a class="headerlink" href="#_CPPv413file_transfer" title="Link to this definition">#</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13pb_progress_tE">
+<span id="_CPPv3N13file_transfer13pb_progress_tE"></span><span id="_CPPv2N13file_transfer13pb_progress_tE"></span><span class="target" id="namespacefile__transfer_1a705a3c014e7d9b1a96927d96068c6275"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pb_progress_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">decltype</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ansys</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filetransfer</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ProgressResponse</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N13file_transfer13pb_progress_tE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13pb_filesize_tE">
+<span id="_CPPv3N13file_transfer13pb_filesize_tE"></span><span id="_CPPv2N13file_transfer13pb_filesize_tE"></span><span class="target" id="namespacefile__transfer_1a1279d1904ce37249b03d554422a2073f"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pb_filesize_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">decltype</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ansys</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filetransfer</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileInfo</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N13file_transfer13pb_filesize_tE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer8ProgressE">
+<span id="_CPPv3N13file_transfer8ProgressE"></span><span id="_CPPv2N13file_transfer8ProgressE"></span><span class="target" id="namespacefile__transfer_1a6b2d17c5c29302ad457c97c481dcc6fa"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Progress</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer8ProgressE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Named constants for the progress of a file transfer operation. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer8Progress11INITIALIZEDE">
+<span id="_CPPv3N13file_transfer8Progress11INITIALIZEDE"></span><span id="_CPPv2N13file_transfer8Progress11INITIALIZEDE"></span><span class="target" id="namespacefile__transfer_1a6b2d17c5c29302ad457c97c481dcc6faa08add0c0bd7f26442f091613b6d5d8da"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">INITIALIZED</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer8Progress11INITIALIZEDE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer8Progress9COMPLETEDE">
+<span id="_CPPv3N13file_transfer8Progress9COMPLETEDE"></span><span id="_CPPv2N13file_transfer8Progress9COMPLETEDE"></span><span class="target" id="namespacefile__transfer_1a6b2d17c5c29302ad457c97c481dcc6faa94ca856eaa5b179807c3438dc3b5d816"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COMPLETED</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer8Progress9COMPLETEDE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer23FileTransferServiceImplE">
+<span id="_CPPv3N13file_transfer23FileTransferServiceImplE"></span><span id="_CPPv2N13file_transfer23FileTransferServiceImplE"></span><span id="file_transfer::FileTransferServiceImpl"></span><span class="target" id="classfile__transfer_1_1FileTransferServiceImpl"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FileTransferServiceImpl</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">ansys</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filetransfer</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileTransferService</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Service</span></span><a class="headerlink" href="#_CPPv4N13file_transfer23FileTransferServiceImplE" title="Link to this definition">#</a><br /></dt>
+<dd><p>This class implements the file transfer service. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer23FileTransferServiceImpl12DownloadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v120DownloadFileResponseEN5ansys3api5tools12filetransfer2v119DownloadFileRequestEEE">
+<span id="_CPPv3N13file_transfer23FileTransferServiceImpl12DownloadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v120DownloadFileResponseEN5ansys3api5tools12filetransfer2v119DownloadFileRequestEEE"></span><span id="_CPPv2N13file_transfer23FileTransferServiceImpl12DownloadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v120DownloadFileResponseEN5ansys3api5tools12filetransfer2v119DownloadFileRequestEEE"></span><span id="file_transfer::FileTransferServiceImpl::DownloadFile__grpc::ServerContextP.grpc::ServerReaderWriter:ansys::api::tools::filetransfer::v1::DownloadFileResponse.ansys::api::tools::filetransfer::v1::DownloadFileRequest:P"></span><span class="target" id="classfile__transfer_1_1FileTransferServiceImpl_1a4a416d53984be48993f097075f0ec208"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DownloadFile</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ServerContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span>, <span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ServerReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ansys</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filetransfer</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DownloadFileResponse</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ansys</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filetransfer</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DownloadFileRequest</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Status</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N13file_transfer23FileTransferServiceImpl12DownloadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v120DownloadFileResponseEN5ansys3api5tools12filetransfer2v119DownloadFileRequestEEE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Implements the “DownloadFile” operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – Server context to use. </p></li>
+<li><p><strong>stream</strong> – Stream of requests and responses to process. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of the operation. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer23FileTransferServiceImpl10UploadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v118UploadFileResponseEN5ansys3api5tools12filetransfer2v117UploadFileRequestEEE">
+<span id="_CPPv3N13file_transfer23FileTransferServiceImpl10UploadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v118UploadFileResponseEN5ansys3api5tools12filetransfer2v117UploadFileRequestEEE"></span><span id="_CPPv2N13file_transfer23FileTransferServiceImpl10UploadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v118UploadFileResponseEN5ansys3api5tools12filetransfer2v117UploadFileRequestEEE"></span><span id="file_transfer::FileTransferServiceImpl::UploadFile__grpc::ServerContextP.grpc::ServerReaderWriter:ansys::api::tools::filetransfer::v1::UploadFileResponse.ansys::api::tools::filetransfer::v1::UploadFileRequest:P"></span><span class="target" id="classfile__transfer_1_1FileTransferServiceImpl_1a4102437a5d6ba74f2ff8f1b99a5cbaf8"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UploadFile</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ServerContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span>, <span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ServerReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ansys</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filetransfer</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileResponse</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ansys</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filetransfer</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileRequest</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Status</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N13file_transfer23FileTransferServiceImpl10UploadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v118UploadFileResponseEN5ansys3api5tools12filetransfer2v117UploadFileRequestEEE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Implements the “UploadFile” operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – Server context to use. </p></li>
+<li><p><strong>stream</strong> – Stream of requests and responses to process. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of the operation. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer6detailE">
+<span id="_CPPv3N13file_transfer6detailE"></span><span id="_CPPv2N13file_transfer6detailE"></span><span id="file_transfer::detail"></span><span class="target" id="namespacefile__transfer_1_1detail"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">detail</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer6detailE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer6detail19get_sha1_hex_digestERKN5boost10filesystem4pathEKNSt10streamsizeE">
+<span id="_CPPv3N13file_transfer6detail19get_sha1_hex_digestERKN5boost10filesystem4pathEKNSt10streamsizeE"></span><span id="_CPPv2N13file_transfer6detail19get_sha1_hex_digestERKN5boost10filesystem4pathEKNSt10streamsizeE"></span><span id="file_transfer::detail::get_sha1_hex_digest__boost::filesystem::pathCR.std::streamsizeC"></span><span class="target" id="namespacefile__transfer_1_1detail_1ab591a41a3f271bbe7a79231c50705152"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_sha1_hex_digest</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">streamsize</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">chunk_size_</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1024</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><a class="headerlink" href="#_CPPv4N13file_transfer6detail19get_sha1_hex_digestERKN5boost10filesystem4pathEKNSt10streamsizeE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Get the SHA1 hex digest of a file. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is not thread-safe. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path_</strong> – Path to the file. </p></li>
+<li><p><strong>chunk_size_</strong> – Size of the chunks to read from the file. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SHA1 hex digest of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13download_implE">
+<span id="_CPPv3N13file_transfer13download_implE"></span><span id="_CPPv2N13file_transfer13download_implE"></span><span id="file_transfer::download_impl"></span><span class="target" id="namespacefile__transfer_1_1download__impl"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">download_impl</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer13download_implE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13download_impl8stream_tE">
+<span id="_CPPv3N13file_transfer13download_impl8stream_tE"></span><span id="_CPPv2N13file_transfer13download_impl8stream_tE"></span><span class="target" id="namespacefile__transfer_1_1download__impl_1a30c05a0e95048bc0f7f02b096a82b2c7"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stream_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ServerReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DownloadFileResponse</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DownloadFileRequest</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N13file_transfer13download_impl8stream_tE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13download_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api19DownloadFileRequest11SubStepCaseE">
+<span id="_CPPv3N13file_transfer13download_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api19DownloadFileRequest11SubStepCaseE"></span><span id="_CPPv2N13file_transfer13download_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api19DownloadFileRequest11SubStepCaseE"></span><span id="file_transfer::download_impl::get_request_checked__google::protobuf::ArenaR.stream_tP.api::DownloadFileRequest::SubStepCaseCR"></span><span class="target" id="namespacefile__transfer_1_1download__impl_1a764c5ec6db5d611d7d25a9e1406b93e8"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_request_checked</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer13download_impl8stream_tE" title="file_transfer::download_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DownloadFileRequest</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SubStepCase</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">expected_step_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DownloadFileRequest</span></span><span class="p"><span class="pre">*</span></span><a class="headerlink" href="#_CPPv4N13file_transfer13download_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api19DownloadFileRequest11SubStepCaseE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13download_impl10initializeERN6google8protobuf5ArenaEP8stream_t">
+<span id="_CPPv3N13file_transfer13download_impl10initializeERN6google8protobuf5ArenaEP8stream_t"></span><span id="_CPPv2N13file_transfer13download_impl10initializeERN6google8protobuf5ArenaEP8stream_t"></span><span id="file_transfer::download_impl::initialize__google::protobuf::ArenaR.stream_tP"></span><span class="target" id="namespacefile__transfer_1_1download__impl_1a518541ac25eeded118a67167a7219bb7"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initialize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer13download_impl8stream_tE" title="file_transfer::download_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tuple</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">streamsize</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N13file_transfer13download_impl10initializeERN6google8protobuf5ArenaEP8stream_t" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13download_impl8transferERKN5boost10filesystem4pathEKNSt6size_tEKNSt10streamsizeERN6google8protobuf5ArenaEP8stream_t">
+<span id="_CPPv3N13file_transfer13download_impl8transferERKN5boost10filesystem4pathEKNSt6size_tEKNSt10streamsizeERN6google8protobuf5ArenaEP8stream_t"></span><span id="_CPPv2N13file_transfer13download_impl8transferERKN5boost10filesystem4pathEKNSt6size_tEKNSt10streamsizeERN6google8protobuf5ArenaEP8stream_t"></span><span id="file_transfer::download_impl::transfer__boost::filesystem::pathCR.std::sC.std::streamsizeC.google::protobuf::ArenaR.stream_tP"></span><span class="target" id="namespacefile__transfer_1_1download__impl_1a8a6017c7f514e43f55b6a43c127bc465"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">transfer</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file_path_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">file_size_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">streamsize</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">chunk_size_</span></span>, <span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer13download_impl8stream_tE" title="file_transfer::download_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><a class="headerlink" href="#_CPPv4N13file_transfer13download_impl8transferERKN5boost10filesystem4pathEKNSt6size_tEKNSt10streamsizeERN6google8protobuf5ArenaEP8stream_t" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer13download_impl8finalizeERN6google8protobuf5ArenaEP8stream_t">
+<span id="_CPPv3N13file_transfer13download_impl8finalizeERN6google8protobuf5ArenaEP8stream_t"></span><span id="_CPPv2N13file_transfer13download_impl8finalizeERN6google8protobuf5ArenaEP8stream_t"></span><span id="file_transfer::download_impl::finalize__google::protobuf::ArenaR.stream_tP"></span><span class="target" id="namespacefile__transfer_1_1download__impl_1adf74926e384626be404b859c40a38a32"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">finalize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer13download_impl8stream_tE" title="file_transfer::download_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><a class="headerlink" href="#_CPPv4N13file_transfer13download_impl8finalizeERN6google8protobuf5ArenaEP8stream_t" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptionsE">
+<span id="_CPPv3N13file_transfer10exceptionsE"></span><span id="_CPPv2N13file_transfer10exceptionsE"></span><span id="file_transfer::exceptions"></span><span class="target" id="namespacefile__transfer_1_1exceptions"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">exceptions</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptionsE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptions34convert_exceptions_to_status_codesERKNSt8functionIFvvEEE">
+<span id="_CPPv3N13file_transfer10exceptions34convert_exceptions_to_status_codesERKNSt8functionIFvvEEE"></span><span id="_CPPv2N13file_transfer10exceptions34convert_exceptions_to_status_codesERKNSt8functionIFvvEEE"></span><span class="target" id="namespacefile__transfer_1_1exceptions_1a6ac2418478f2028d38743fb9e10bfd09"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">convert_exceptions_to_status_codes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">void</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Status</span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptions34convert_exceptions_to_status_codesERKNSt8functionIFvvEEE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Convert exceptions to gRPC status codes. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fun</strong> – Function to execute. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>gRPC status code. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptions9not_foundE">
+<span id="_CPPv3N13file_transfer10exceptions9not_foundE"></span><span id="_CPPv2N13file_transfer10exceptions9not_foundE"></span><span id="file_transfer::exceptions::not_found"></span><span class="target" id="classfile__transfer_1_1exceptions_1_1not__found"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">not_found</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">runtime_error</span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptions9not_foundE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Exception type raised when an object is not found. </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptions16invalid_argumentE">
+<span id="_CPPv3N13file_transfer10exceptions16invalid_argumentE"></span><span id="_CPPv2N13file_transfer10exceptions16invalid_argumentE"></span><span id="file_transfer::exceptions::invalid_argument"></span><span class="target" id="classfile__transfer_1_1exceptions_1_1invalid__argument"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">invalid_argument</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">runtime_error</span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptions16invalid_argumentE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Exception type raised when invalid parameters are provided. </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptions19failed_preconditionE">
+<span id="_CPPv3N13file_transfer10exceptions19failed_preconditionE"></span><span id="_CPPv2N13file_transfer10exceptions19failed_preconditionE"></span><span id="file_transfer::exceptions::failed_precondition"></span><span class="target" id="classfile__transfer_1_1exceptions_1_1failed__precondition"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">failed_precondition</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">runtime_error</span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptions19failed_preconditionE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Exception type raised when some precondition is not met. For example, a file is expected to exist, but it does not. </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptions9data_lossE">
+<span id="_CPPv3N13file_transfer10exceptions9data_lossE"></span><span id="_CPPv2N13file_transfer10exceptions9data_lossE"></span><span id="file_transfer::exceptions::data_loss"></span><span class="target" id="classfile__transfer_1_1exceptions_1_1data__loss"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">data_loss</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">runtime_error</span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptions9data_lossE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Exception type raised when the transmitted data is lost or corrupted. </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptions8internalE">
+<span id="_CPPv3N13file_transfer10exceptions8internalE"></span><span id="_CPPv2N13file_transfer10exceptions8internalE"></span><span id="file_transfer::exceptions::internal"></span><span class="target" id="classfile__transfer_1_1exceptions_1_1internal"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">internal</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">runtime_error</span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptions8internalE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Exception type raised when an internal error occurs. </p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer10exceptions6detailE">
+<span id="_CPPv3N13file_transfer10exceptions6detailE"></span><span id="_CPPv2N13file_transfer10exceptions6detailE"></span><span id="file_transfer::exceptions::detail"></span><span class="target" id="namespacefile__transfer_1_1exceptions_1_1detail"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">detail</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer10exceptions6detailE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN13file_transfer10exceptions6detail21get_exception_messageENSt6stringERK10ExceptionT">
+<span id="_CPPv3I0EN13file_transfer10exceptions6detail21get_exception_messageERK10ExceptionT"></span><span id="_CPPv2I0EN13file_transfer10exceptions6detail21get_exception_messageERK10ExceptionT"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExceptionT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacefile__transfer_1_1exceptions_1_1detail_1ac4bd19e6061531c8657530f6093818c8"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_exception_message</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN13file_transfer10exceptions6detail21get_exception_messageENSt6stringERK10ExceptionT" title="file_transfer::exceptions::detail::get_exception_message::ExceptionT"><span class="n"><span class="pre">ExceptionT</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">exc</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><a class="headerlink" href="#_CPPv4I0EN13file_transfer10exceptions6detail21get_exception_messageENSt6stringERK10ExceptionT" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer11upload_implE">
+<span id="_CPPv3N13file_transfer11upload_implE"></span><span id="_CPPv2N13file_transfer11upload_implE"></span><span id="file_transfer::upload_impl"></span><span class="target" id="namespacefile__transfer_1_1upload__impl"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">upload_impl</span></span></span><a class="headerlink" href="#_CPPv4N13file_transfer11upload_implE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer11upload_impl8stream_tE">
+<span id="_CPPv3N13file_transfer11upload_impl8stream_tE"></span><span id="_CPPv2N13file_transfer11upload_impl8stream_tE"></span><span class="target" id="namespacefile__transfer_1_1upload__impl_1af2b5a69f574b75bda4285d928d295250"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stream_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ServerReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileResponse</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileRequest</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N13file_transfer11upload_impl8stream_tE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer11upload_impl19get_request_checkedEPN3api17UploadFileRequestEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE">
+<span id="_CPPv3N13file_transfer11upload_impl19get_request_checkedEPN3api17UploadFileRequestEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE"></span><span id="_CPPv2N13file_transfer11upload_impl19get_request_checkedEPN3api17UploadFileRequestEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE"></span><span id="file_transfer::upload_impl::get_request_checked__api::UploadFileRequestP.stream_tP.api::UploadFileRequest::SubStepCaseCR"></span><span class="target" id="namespacefile__transfer_1_1upload__impl_1ab0e555925f4646851739c891dce3b16b"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_request_checked</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileRequest</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">request_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer11upload_impl8stream_tE" title="file_transfer::upload_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileRequest</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SubStepCase</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">expected_step_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><a class="headerlink" href="#_CPPv4N13file_transfer11upload_impl19get_request_checkedEPN3api17UploadFileRequestEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer11upload_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE">
+<span id="_CPPv3N13file_transfer11upload_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE"></span><span id="_CPPv2N13file_transfer11upload_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE"></span><span id="file_transfer::upload_impl::get_request_checked__google::protobuf::ArenaR.stream_tP.api::UploadFileRequest::SubStepCaseCR"></span><span class="target" id="namespacefile__transfer_1_1upload__impl_1af9f2aba5330605f565b5481155b77efa"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_request_checked</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer11upload_impl8stream_tE" title="file_transfer::upload_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileRequest</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SubStepCase</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">expected_step_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">UploadFileRequest</span></span><span class="p"><span class="pre">*</span></span><a class="headerlink" href="#_CPPv4N13file_transfer11upload_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer11upload_impl10initializeERN6google8protobuf5ArenaEP8stream_t">
+<span id="_CPPv3N13file_transfer11upload_impl10initializeERN6google8protobuf5ArenaEP8stream_t"></span><span id="_CPPv2N13file_transfer11upload_impl10initializeERN6google8protobuf5ArenaEP8stream_t"></span><span id="file_transfer::upload_impl::initialize__google::protobuf::ArenaR.stream_tP"></span><span class="target" id="namespacefile__transfer_1_1upload__impl_1a64e85aaad84c764f5df94aeae36a88be"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initialize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer11upload_impl8stream_tE" title="file_transfer::upload_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">tuple</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N13file_transfer11upload_impl10initializeERN6google8protobuf5ArenaEP8stream_t" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer11upload_impl8transferERKN5boost10filesystem4pathEKNSt6size_tERN6google8protobuf5ArenaEP8stream_t">
+<span id="_CPPv3N13file_transfer11upload_impl8transferERKN5boost10filesystem4pathEKNSt6size_tERN6google8protobuf5ArenaEP8stream_t"></span><span id="_CPPv2N13file_transfer11upload_impl8transferERKN5boost10filesystem4pathEKNSt6size_tERN6google8protobuf5ArenaEP8stream_t"></span><span id="file_transfer::upload_impl::transfer__boost::filesystem::pathCR.std::sC.google::protobuf::ArenaR.stream_tP"></span><span class="target" id="namespacefile__transfer_1_1upload__impl_1a41135ee2c8fbbeb9df6e2a4b5f0b21fe"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">transfer</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file_path_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">file_size_</span></span>, <span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer11upload_impl8stream_tE" title="file_transfer::upload_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><a class="headerlink" href="#_CPPv4N13file_transfer11upload_impl8transferERKN5boost10filesystem4pathEKNSt6size_tERN6google8protobuf5ArenaEP8stream_t" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13file_transfer11upload_impl8finalizeERKN5boost10filesystem4pathERKNSt6stringERN6google8protobuf5ArenaEP8stream_t">
+<span id="_CPPv3N13file_transfer11upload_impl8finalizeERKN5boost10filesystem4pathERKNSt6stringERN6google8protobuf5ArenaEP8stream_t"></span><span id="_CPPv2N13file_transfer11upload_impl8finalizeERKN5boost10filesystem4pathERKNSt6stringERN6google8protobuf5ArenaEP8stream_t"></span><span id="file_transfer::upload_impl::finalize__boost::filesystem::pathCR.ssCR.google::protobuf::ArenaR.stream_tP"></span><span class="target" id="namespacefile__transfer_1_1upload__impl_1a39ee2ce835d5b8e5a69177eef101357d"></span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">finalize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file_path_</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">source_sha1_hex_</span></span>, <span class="n"><span class="pre">google</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">protobuf</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Arena</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">arena_</span></span>, <a class="reference internal" href="#_CPPv4N13file_transfer11upload_impl8stream_tE" title="file_transfer::upload_impl::stream_t"><span class="n"><span class="pre">stream_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stream_</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><a class="headerlink" href="#_CPPv4N13file_transfer11upload_impl8finalizeERKN5boost10filesystem4pathERKNSt6stringERN6google8protobuf5ArenaEP8stream_t" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-api">Internal API</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv413file_transfer"><code class="docutils literal notranslate"><span class="pre">file_transfer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13pb_progress_tE"><code class="docutils literal notranslate"><span class="pre">file_transfer::pb_progress_t</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13pb_filesize_tE"><code class="docutils literal notranslate"><span class="pre">file_transfer::pb_filesize_t</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer8ProgressE"><code class="docutils literal notranslate"><span class="pre">file_transfer::Progress</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer8Progress11INITIALIZEDE"><code class="docutils literal notranslate"><span class="pre">file_transfer::Progress::INITIALIZED</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer8Progress9COMPLETEDE"><code class="docutils literal notranslate"><span class="pre">file_transfer::Progress::COMPLETED</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer23FileTransferServiceImplE"><code class="docutils literal notranslate"><span class="pre">file_transfer::FileTransferServiceImpl</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer23FileTransferServiceImpl12DownloadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v120DownloadFileResponseEN5ansys3api5tools12filetransfer2v119DownloadFileRequestEEE"><code class="docutils literal notranslate"><span class="pre">file_transfer::FileTransferServiceImpl::DownloadFile()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer23FileTransferServiceImpl10UploadFileEPN4grpc13ServerContextEPN4grpc18ServerReaderWriterIN5ansys3api5tools12filetransfer2v118UploadFileResponseEN5ansys3api5tools12filetransfer2v117UploadFileRequestEEE"><code class="docutils literal notranslate"><span class="pre">file_transfer::FileTransferServiceImpl::UploadFile()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer6detailE"><code class="docutils literal notranslate"><span class="pre">file_transfer::detail</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer6detail19get_sha1_hex_digestERKN5boost10filesystem4pathEKNSt10streamsizeE"><code class="docutils literal notranslate"><span class="pre">file_transfer::detail::get_sha1_hex_digest()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13download_implE"><code class="docutils literal notranslate"><span class="pre">file_transfer::download_impl</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13download_impl8stream_tE"><code class="docutils literal notranslate"><span class="pre">file_transfer::download_impl::stream_t</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13download_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api19DownloadFileRequest11SubStepCaseE"><code class="docutils literal notranslate"><span class="pre">file_transfer::download_impl::get_request_checked()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13download_impl10initializeERN6google8protobuf5ArenaEP8stream_t"><code class="docutils literal notranslate"><span class="pre">file_transfer::download_impl::initialize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13download_impl8transferERKN5boost10filesystem4pathEKNSt6size_tEKNSt10streamsizeERN6google8protobuf5ArenaEP8stream_t"><code class="docutils literal notranslate"><span class="pre">file_transfer::download_impl::transfer()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer13download_impl8finalizeERN6google8protobuf5ArenaEP8stream_t"><code class="docutils literal notranslate"><span class="pre">file_transfer::download_impl::finalize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptionsE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptions34convert_exceptions_to_status_codesERKNSt8functionIFvvEEE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::convert_exceptions_to_status_codes()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptions9not_foundE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::not_found</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptions16invalid_argumentE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::invalid_argument</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptions19failed_preconditionE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::failed_precondition</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptions9data_lossE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::data_loss</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptions8internalE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::internal</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer10exceptions6detailE"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::detail</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4I0EN13file_transfer10exceptions6detail21get_exception_messageENSt6stringERK10ExceptionT"><code class="docutils literal notranslate"><span class="pre">file_transfer::exceptions::detail::get_exception_message()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer11upload_implE"><code class="docutils literal notranslate"><span class="pre">file_transfer::upload_impl</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer11upload_impl8stream_tE"><code class="docutils literal notranslate"><span class="pre">file_transfer::upload_impl::stream_t</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer11upload_impl19get_request_checkedEPN3api17UploadFileRequestEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE"><code class="docutils literal notranslate"><span class="pre">file_transfer::upload_impl::get_request_checked()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer11upload_impl19get_request_checkedERN6google8protobuf5ArenaEP8stream_tRKN3api17UploadFileRequest11SubStepCaseE"><code class="docutils literal notranslate"><span class="pre">file_transfer::upload_impl::get_request_checked()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer11upload_impl10initializeERN6google8protobuf5ArenaEP8stream_t"><code class="docutils literal notranslate"><span class="pre">file_transfer::upload_impl::initialize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer11upload_impl8transferERKN5boost10filesystem4pathEKNSt6size_tERN6google8protobuf5ArenaEP8stream_t"><code class="docutils literal notranslate"><span class="pre">file_transfer::upload_impl::transfer()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N13file_transfer11upload_impl8finalizeERKN5boost10filesystem4pathERKNSt6stringERN6google8protobuf5ArenaEP8stream_t"><code class="docutils literal notranslate"><span class="pre">file_transfer::upload_impl::finalize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+<!-- If there is no fix edit button function, use the PyData edit-this-button-->
+</div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/contribute.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2024 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  0.13.4. <br />Last updated on
+  <span id="date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var lastModifiedDate = new Date(document.lastModified);
+  var date = lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("date").innerHTML = date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
