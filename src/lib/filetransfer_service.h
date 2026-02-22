@@ -87,6 +87,31 @@ public:
             ::ansys::api::tools::filetransfer::v1::UploadFileRequest>* stream
     ) -> ::grpc::Status override;
 
+    /**
+     * @brief Implements the "DeleteFile" operation.
+     * @param context Server context to use.
+     * @param request Request to process.
+     * @param response Response to populate.
+     */
+    virtual auto DeleteFile(
+        ::grpc::ServerContext* context,
+        const ::ansys::api::tools::filetransfer::v1::DeleteFileRequest* request,
+        ::ansys::api::tools::filetransfer::v1::DeleteFileResponse* response
+    ) -> ::grpc::Status override;
+
+    /**
+     * @brief Implements the "GetFileInfo" operation.
+     * @param context Server context to use.
+     * @param request Request to process.
+     * @param response Response to populate.
+     */
+    virtual auto GetFileInfo(
+        ::grpc::ServerContext* context,
+        const ::ansys::api::tools::filetransfer::v1::GetFileInfoRequest*
+            request,
+        ::ansys::api::tools::filetransfer::v1::GetFileInfoResponse* response
+    ) -> ::grpc::Status override;
+
 private:
 };
 
