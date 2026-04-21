@@ -1,4 +1,6 @@
 [project]
+license = "MIT"
+license-files = ["LICENSE"]
 name = ""
 version = "0.0.1"
 requires-python = ">=3.10,<4"
@@ -14,10 +16,10 @@ classifiers = [
 [dependency-groups]
 dev = [
     "pre-commit>=4.5.1,<5",
-    "conan>=2.24.0,<3",
+    "conan>=2.27.0,<3",
     "Sphinx>=8.1.3,<9",
-    "ansys-sphinx-theme>=1.6.4,<2",
-    "breathe>=4.35.0,<5",
+    "ansys-sphinx-theme>=1.7.2,<2",
+    "breathe>=4.36.0,<5",
     "sphinx-design>=0.6.1,<0.7",
     "sphinx-copybutton>=0.5.2,<0.6",
 ]
@@ -26,5 +28,5 @@ dev = [
 package = false
 
 [build-system]
-requires = ["uv_build>=0.9.26,<0.12.0"]
+requires = ["uv_build>=0.11.3,<0.12.0"]
 build-backend = "uv_build"
