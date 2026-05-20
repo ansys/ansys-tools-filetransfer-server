@@ -1,7 +1,7 @@
 [project]
 license = "MIT"
 license-files = ["LICENSE"]
-name = ""
+name = "ansys-tools-filetransfer-server"
 version = "0.0.1"
 requires-python = ">=3.10,<4"
 classifiers = [
