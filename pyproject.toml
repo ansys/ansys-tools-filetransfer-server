@@ -15,8 +15,8 @@ classifiers = [
 
 [dependency-groups]
 dev = [
-    "pre-commit>=4.6.1,<5",
-    "conan>=2.31.1,<3",
+    "pre-commit>=4.6.2,<5",
+    "conan>=2.31.2,<3",
     "Sphinx>=8.1.3,<9",
     "ansys-sphinx-theme>=1.9.0,<2",
     "breathe>=4.36.0,<5",
@@ -28,5 +28,5 @@ dev = [
 package = false
 
 [build-system]
-requires = ["uv_build>=0.12.1,<0.13.0"]
+requires = ["uv_build>=0.12.3,<0.13.0"]
 build-backend = "uv_build"
