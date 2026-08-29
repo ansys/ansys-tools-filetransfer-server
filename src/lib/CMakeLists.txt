@@ -15,6 +15,8 @@ add_library(
     STATIC
     filetransfer_service_upload.cpp
     filetransfer_service_download.cpp
+    filetransfer_service_delete.cpp
+    filetransfer_service_info.cpp
     sha1_digest.cpp
     exception_handling.cpp
 )
